@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/sobre-a-hemissul/",
+      "destination": "/quem-somos",
+      "permanent": true
+    },
+    {
+      "source": "/sobre-a-hemissul/:path*",
+      "destination": "/quem-somos",
+      "permanent": true
+    },
+    {
+      "source": "/area-do-associado/",
+      "destination": "/central-do-associado",
+      "permanent": true
+    },
+    {
+      "source": "/area-do-associado/:path*",
+      "destination": "/central-do-associado",
+      "permanent": true
+    },
+    {
+      "source": "/contatos/",
+      "destination": "/contato",
+      "permanent": true
+    },
+    {
+      "source": "/contatos/:path*",
+      "destination": "/contato",
+      "permanent": true
+    },
+    {
+      "source": "/protecao-veicular-lp/",
+      "destination": "https://cotacao.me/B5G8N1Qk",
+      "permanent": false
+    },
+    {
+      "source": "/protecao-veicular-lp/:path*",
+      "destination": "https://cotacao.me/B5G8N1Qk",
+      "permanent": false
+    },
+    {
+      "source": "/lp-protecao-veicular/",
+      "destination": "https://cotacao.me/B5G8N1Qk",
+      "permanent": false
+    },
+    {
+      "source": "/lp-protecao-veicular/:path*",
+      "destination": "https://cotacao.me/B5G8N1Qk",
+      "permanent": false
+    },
+    {
+      "source": "/indenizacao-hemissul-mais-um-processo-concluido-com-sucesso/",
+      "destination": "/blog/indenizacao-hemissul-mais-um-processo-concluido-com-sucesso",
+      "permanent": true
+    },
+    {
+      "source": "/indenizacao-hemissul-mais-um-processo-concluido-com-sucesso/:path*",
+      "destination": "/blog/indenizacao-hemissul-mais-um-processo-concluido-com-sucesso",
+      "permanent": true
+    },
+    {
+      "source": "/o-ano-da-expansao-hemissul-chega-a-manaus-em-breve/",
+      "destination": "/blog/o-ano-da-expansao-hemissul-chega-a-manaus-em-breve",
+      "permanent": true
+    },
+    {
+      "source": "/o-ano-da-expansao-hemissul-chega-a-manaus-em-breve/:path*",
+      "destination": "/blog/o-ano-da-expansao-hemissul-chega-a-manaus-em-breve",
+      "permanent": true
+    },
+    {
+      "source": "/evento-amarr-pascoa-com-proposito-para-empresas-transformam-sorrisos-em-futuro/",
+      "destination": "/blog/evento-amarr-pascoa-com-proposito-para-empresas-transformam-sorrisos-em-futuro",
+      "permanent": true
+    },
+    {
+      "source": "/evento-amarr-pascoa-com-proposito-para-empresas-transformam-sorrisos-em-futuro/:path*",
+      "destination": "/blog/evento-amarr-pascoa-com-proposito-para-empresas-transformam-sorrisos-em-futuro",
+      "permanent": true
+    },
+    {
+      "source": "/club-de-beneficios-sky-fit-vantagens-exclusivas/",
+      "destination": "/blog/club-de-beneficios-sky-fit-vantagens-exclusivas",
+      "permanent": true
+    },
+    {
+      "source": "/club-de-beneficios-sky-fit-vantagens-exclusivas/:path*",
+      "destination": "/blog/club-de-beneficios-sky-fit-vantagens-exclusivas",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
