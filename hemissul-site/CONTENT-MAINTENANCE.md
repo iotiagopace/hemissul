@@ -26,3 +26,22 @@ integrado depois, caso a equipe precise publicar sem alterar código.
 
 Não publique números, condições de cobertura, prazos, parceiros ou documentos
 que não tenham sido confirmados pela Hemissul.
+
+## Deploy
+
+O projeto Vercel está configurado com:
+
+- **Root Directory**: `hemissul-site`
+- **Framework**: Vite
+- **Branch de produção**: `main`
+
+A partir disso, todo `git push origin main` dispara build automático e
+substitui `hemissul.vercel.app`. Não é mais necessário rodar `vercel deploy`
+manualmente.
+
+Para deploys manuais (rollback, hotfix urgente), ainda funciona:
+
+```bash
+cd hemissul-site
+npx vercel deploy --prod --yes
+```
