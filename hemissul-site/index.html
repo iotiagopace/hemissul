@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1267a8" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <title>Proteção Veicular em Boa Vista e no Brasil | Hemissul</title>
-    <meta name="description" content="Proteção veicular para carros, motos e caminhões, com assistência 24h e atendimento nacional. Faça sua cotação com a Hemissul." />
-    <meta property="og:title" content="Proteção Veicular em Boa Vista e no Brasil | Hemissul" />
-    <meta property="og:description" content="Proteção veicular para carros, motos e caminhões, com assistência 24h e atendimento nacional." />
+    <title>Hemissul — Proteção Veicular em Boa Vista e no Brasil</title>
+    <meta name="description" content="Proteção veicular mutualista para carros, motos e caminhões. Assistência 24 horas, rastreamento e atendimento nacional. Associe-se à Hemissul." />
+    <meta property="og:title" content="Hemissul — Proteção Veicular em Boa Vista e no Brasil" />
+    <meta property="og:description" content="Proteção veicular mutualista para carros, motos e caminhões. Assistência 24 horas, rastreamento e atendimento nacional." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Hemissul" />
@@ -18,7 +18,11 @@
     <meta property="og:image" content="https://hemissul.vercel.app/social/hemissul-og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Hemissul — Proteção Veicular em Boa Vista e no Brasil" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hemissul — Proteção Veicular em Boa Vista e no Brasil" />
+    <meta name="twitter:description" content="Proteção veicular mutualista para carros, motos e caminhões. Assistência 24 horas e atendimento nacional." />
+    <meta name="twitter:image" content="https://hemissul.vercel.app/social/hemissul-og.png" />
     <link rel="canonical" href="https://hemissul.vercel.app/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,21 +30,62 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Hemissul",
-        "legalName": "Hemissul — Associação de Proteção Patrimonial Mutualista",
-        "url": "https://hemissul.vercel.app/",
-        "logo": "https://hemissul.vercel.app/favicon.png",
-        "telephone": "+55 95 4020-1719",
-        "email": "contato@hemissul.com.br",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Av. Mário Homem de Melo, 3999, Buritis",
-          "addressLocality": "Boa Vista",
-          "addressRegion": "RR",
-          "postalCode": "69309-198",
-          "addressCountry": "BR"
-        }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://hemissul.vercel.app/#organization",
+            "name": "Hemissul",
+            "legalName": "Hemissul — Associação de Proteção Patrimonial Mutualista",
+            "url": "https://hemissul.vercel.app/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://hemissul.vercel.app/favicon.png"
+            },
+            "foundingDate": "2019",
+            "description": "Associação de proteção patrimonial mutualista com sede em Boa Vista, Roraima. Proteção veicular para carros, motos e caminhões com assistência 24 horas e atendimento nacional.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Av. Mário Homem de Melo, 3999, Buritis",
+              "addressLocality": "Boa Vista",
+              "addressRegion": "RR",
+              "postalCode": "69309-198",
+              "addressCountry": "BR"
+            },
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "telephone": "+558009402163",
+                "availableLanguage": "Portuguese",
+                "contactOption": "TollFree"
+              },
+              {
+                "@type": "ContactPoint",
+                "contactType": "sales",
+                "telephone": "+5595991381037",
+                "availableLanguage": "Portuguese",
+                "contactOption": "WhatsApp"
+              }
+            ],
+            "email": "contato@hemissul.com.br",
+            "sameAs": [
+              "https://www.instagram.com/hemissuloficial/",
+              "https://www.facebook.com/hemissuloficial/",
+              "https://www.youtube.com/@hemissuloficial",
+              "https://wa.me/5595991381037"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://hemissul.vercel.app/#website",
+            "url": "https://hemissul.vercel.app/",
+            "name": "Hemissul",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://hemissul.vercel.app/#organization"
+            }
+          }
+        ]
       }
     </script>
   </head>
