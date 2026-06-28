@@ -476,3 +476,21 @@ funções, conteúdos e caminhos que não poderiam desaparecer na troca.
 - O layout foi validado nas larguras de 320, 375, 390, 414 e 768 pixels.
 - Foi corrigido o bloqueio de largura mínima que causava rolagem horizontal em
   celulares de 320 pixels.
+
+## Atualização executada — paridade entre desktop e mobile
+
+- Foram removidas regras mobile que ocultavam as imagens e descrições das
+  modalidades Carros, Motos e Caminhões.
+- O conteúdo da Home passou a preservar no celular a mesma hierarquia,
+  informações, provas e recursos apresentados no desktop.
+- As entradas no scroll foram recalibradas para telas pequenas, com menor
+  deslocamento, sem desfoque inicial e gatilho antecipado para evitar áreas
+  aparentemente vazias.
+- Cards e linhas interativas receberam estados azuis próprios para toque,
+  substituindo a dependência exclusiva de `hover`.
+- Tipografia, espaçamento, mockup, campanha e blocos editoriais foram ajustados
+  para manter presença visual sem alongar excessivamente a página.
+- O aviso de cookies foi compactado no celular e os botões passaram a ocupar
+  duas colunas, reduzindo a obstrução do conteúdo.
+- Os SVGs sociais passaram a transformar corretamente a propriedade `size` em
+  largura e altura, corrigindo o botão flutuante de WhatsApp vazio no mobile.
