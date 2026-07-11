@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Pause, Play } from 'lucide-react'
 import RotatingWords from './RotatingWords'
+import HeroHeadline from './HeroHeadline'
 
 function HeroAction({ action, className }) {
   if (!action) return null
@@ -163,7 +164,7 @@ export default function HomeHero({ slides }) {
                 activeSlide.eyebrow
               )}
             </p>
-            <h1>{activeSlide.title}</h1>
+            <HeroHeadline key={`${activeSlide.id}-title`} text={activeSlide.title} />
             <p className="home-banner__description">{activeSlide.description}</p>
             <div className="home-banner__actions">
               <HeroAction
