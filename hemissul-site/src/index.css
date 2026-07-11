@@ -727,6 +727,14 @@
     padding-block: clamp(4rem, 7vw, 6rem);
   }
 
+  /* Mobile: reduz repetição e scroll — oculta bloco institucional
+     redundante (a mesma mensagem já aparece no infográfico e em Quem Somos) */
+  @media (max-width: 47.99rem) {
+    .home-section--compact {
+      display: none;
+    }
+  }
+
   .home-section__intro {
     display: grid;
     gap: var(--space-xl);
@@ -2994,6 +3002,119 @@
     border-bottom: var(--rule-hair) solid var(--color-ink-rule);
   }
 
+  /* Teasers de notícias e podcast (Home) ------------------------------- */
+  .home-teasers__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .teaser-grid {
+    margin-block-start: var(--space-2xl);
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+  }
+
+  .teaser-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .teaser-card__media {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-paper-3);
+  }
+
+  .teaser-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-medium) var(--ease-out);
+  }
+
+  .teaser-card:hover .teaser-card__media img {
+    transform: scale(1.04);
+  }
+
+  .teaser-card__play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-cta);
+    color: var(--color-cta-ink);
+    box-shadow: 0 1rem 2rem -1rem var(--color-ink);
+  }
+
+  .teaser-card__body {
+    padding-block-start: var(--space-md);
+  }
+
+  .teaser-card__meta {
+    color: var(--color-accent-dark);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .teaser-card__title {
+    margin-block-start: var(--space-2xs);
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .home-teasers__social {
+    margin-block-start: var(--space-xl);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+  }
+
+  .home-teasers__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    color: var(--color-ink-2);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .home-teasers__social a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 40rem) {
+    .teaser-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .teaser-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
   .podcast-embed {
     min-height: 28rem;
     overflow: hidden;
@@ -3440,6 +3561,103 @@
 
   @media (min-width: 70rem) {
     .values-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Infográfico de números (Quem Somos) -------------------------------- */
+  .stat-band {
+    padding-block: var(--space-xl);
+    background: var(--color-paper-2);
+    border-block: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .stat-band__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-md);
+    text-align: center;
+  }
+
+  .stat-band__value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    color: var(--color-accent-dark);
+  }
+
+  .stat-band__label {
+    display: block;
+    margin-block-start: var(--space-2xs);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 55rem) {
+    .stat-band__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Cards de liderança (sócios) ---------------------------------------- */
+  .leadership-grid {
+    margin-block-start: var(--space-3xl);
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .leader-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .leader-card__photo {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-dark);
+  }
+
+  .leader-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .leader-card__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .leader-card__role {
+    margin-block-start: var(--space-2xs);
+    color: var(--color-accent-dark);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .leader-card__desc {
+    margin-block-start: var(--space-xs);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 40rem) {
+    .leadership-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .leadership-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }

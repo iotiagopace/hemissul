@@ -2,10 +2,50 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Shield, Users, MapPinned, Sparkles } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import AnimatedText from '../components/AnimatedText'
+import { SITE } from '../config/site'
 import sedeImg from '../assets/fotos-reais/sede-fachada-2.jpg'
 import equipeImg from '../assets/fotos-reais/equipe-1.jpg'
 import equipe2 from '../assets/fotos-reais/equipe-2.jpg'
 import equipe3 from '../assets/fotos-reais/equipe-3.jpg'
+
+import marcosGomes from '../assets/lideranca/marcos-gomes.jpg'
+import gabrielAmaral from '../assets/lideranca/gabriel-amaral.jpg'
+import keniaCarla from '../assets/lideranca/kenia-carla.jpg'
+import jaquelineGomes from '../assets/lideranca/jaqueline-gomes.jpg'
+
+const numeros = [
+  ['2019', 'Fundada em Boa Vista — RR'],
+  [SITE.metrics.protectedVehicles, 'veículos protegidos'],
+  [SITE.metrics.repairsInvested, 'em reparos e indenizações'],
+  ['SUSEP', 'associação regulamentada'],
+]
+
+const lideranca = [
+  {
+    name: 'Marcos Gomes',
+    role: 'Presidente',
+    desc: 'Fundador, responsável pela visão estratégica e pela expansão da Hemissul.',
+    photo: marcosGomes,
+  },
+  {
+    name: 'Gabriel Amaral',
+    role: 'Diretor Financeiro',
+    desc: 'Conduz a gestão financeira com transparência e sustentabilidade.',
+    photo: gabrielAmaral,
+  },
+  {
+    name: 'Kenia Carla',
+    role: 'Diretora de RH',
+    desc: 'Cuida da cultura organizacional e do desenvolvimento das pessoas.',
+    photo: keniaCarla,
+  },
+  {
+    name: 'Jaqueline Gomes',
+    role: 'Diretora de Marketing & Growth',
+    desc: 'Lidera comunicação, posicionamento e crescimento da associação.',
+    photo: jaquelineGomes,
+  },
+]
 
 const valores = [
   {
@@ -38,7 +78,7 @@ const marcos = [
   ['2019', 'Fundação', 'A Hemissul nasce em Boa Vista com o propósito de oferecer proteção patrimonial mutualista.'],
   ['2021', 'Crescimento da rede', 'Ampliação da rede de prestadores e do atendimento em todo o território nacional.'],
   ['2023', 'Aplicativo do associado', 'Lançamento do app com boletos, benefícios, oficinas, assistência e comunicação de eventos.'],
-  ['2025', 'Mais de 13 mil veículos', 'A comunidade ultrapassa 13 mil veículos protegidos e R$ 12 mi investidos em reparos.'],
+  ['2025', 'Mais de 13 mil veículos', 'A comunidade ultrapassa 13 mil veículos protegidos e R$ 15 milhões investidos em reparos e indenizações.'],
 ]
 
 export default function QuemSomos() {
@@ -68,6 +108,17 @@ export default function QuemSomos() {
           </FadeIn>
         </div>
       </header>
+
+      <section className="stat-band" aria-label="Hemissul em números">
+        <div className="site-container stat-band__grid">
+          {numeros.map(([value, label], index) => (
+            <FadeIn className="stat-band__item" key={label} delay={index * 0.05}>
+              <strong className="stat-band__value">{value}</strong>
+              <span className="stat-band__label">{label}</span>
+            </FadeIn>
+          ))}
+        </div>
+      </section>
 
       <section className="page-section page-section--paper">
         <div className="site-container split">
@@ -206,6 +257,41 @@ export default function QuemSomos() {
               </div>
             </dl>
           </FadeIn>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <p className="pill-tag pill-tag--accent">Liderança</p>
+            <h2 className="home-section__title">
+              Quem conduz a Hemissul.
+            </h2>
+            <p className="home-section__copy">
+              Um time próximo, que decide com transparência e responsabilidade
+              por cada associado.
+            </p>
+          </FadeIn>
+
+          <div className="leadership-grid">
+            {lideranca.map(({ name, role, desc, photo }, index) => (
+              <FadeIn
+                as="article"
+                className="leader-card"
+                key={name}
+                delay={index * 0.06}
+              >
+                <figure className="leader-card__photo">
+                  <img src={photo} alt={`${name}, ${role} da Hemissul`} loading="lazy" />
+                </figure>
+                <div className="leader-card__body">
+                  <h3 className="leader-card__name">{name}</h3>
+                  <p className="leader-card__role">{role}</p>
+                  <p className="leader-card__desc">{desc}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 

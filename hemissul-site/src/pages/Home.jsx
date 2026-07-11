@@ -5,6 +5,7 @@ import {
   Clock3,
   MapPin,
   PhoneCall,
+  Play,
   Star,
 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
@@ -17,6 +18,10 @@ import HomeHero from '../components/HomeHero'
 import { WhatsappIcon } from '../components/SocialIcons'
 import { SITE } from '../config/site'
 import { HOME_HERO_SLIDES } from '../content/homeHero'
+import { posts } from '../content/posts'
+
+const PODCAST_TEASER_VIDEO = '8VSYQa0wgHI'
+const latestPosts = posts.slice(0, 3)
 
 import iconCarros from '../assets/icon-carros.png'
 import iconMotos from '../assets/icon-motos.png'
@@ -339,18 +344,66 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="social-presence">
-        <div className="site-container social-presence__inner">
-          <FadeIn>
-            <p className="page-header__eyebrow">Acompanhe a Hemissul</p>
-            <h2>Notícias, bastidores e ações da comunidade.</h2>
+      <section className="home-section home-teasers">
+        <div className="site-container">
+          <FadeIn className="home-teasers__head">
+            <div>
+              <p className="page-header__eyebrow">Acompanhe a Hemissul</p>
+              <h2 className="home-section__title">
+                Notícias, bastidores e podcast.
+              </h2>
+            </div>
+            <Link to="/blog" className="type-link">
+              Ver todas as notícias <ArrowRight size={17} aria-hidden="true" />
+            </Link>
           </FadeIn>
-          <FadeIn className="social-presence__links" delay={0.1}>
+
+          <div className="teaser-grid">
+            {latestPosts.map((post, index) => (
+              <FadeIn key={post.slug} delay={index * 0.06}>
+                <Link to={`/blog/${post.slug}`} className="teaser-card">
+                  <figure className="teaser-card__media">
+                    <img src={post.image} alt="" loading="lazy" />
+                  </figure>
+                  <div className="teaser-card__body">
+                    <p className="teaser-card__meta">
+                      {post.category} · {post.date}
+                    </p>
+                    <h3 className="teaser-card__title">{post.title}</h3>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+
+            <FadeIn delay={0.18}>
+              <Link to="/podcast" className="teaser-card teaser-card--podcast">
+                <figure className="teaser-card__media">
+                  <img
+                    src={`https://img.youtube.com/vi/${PODCAST_TEASER_VIDEO}/hqdefault.jpg`}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <span className="teaser-card__play" aria-hidden="true">
+                    <Play size={22} fill="currentColor" />
+                  </span>
+                </figure>
+                <div className="teaser-card__body">
+                  <p className="teaser-card__meta">Podcast Hemissul</p>
+                  <h3 className="teaser-card__title">
+                    Conversas sobre propósito, rotina e proteção.
+                  </h3>
+                </div>
+              </Link>
+            </FadeIn>
+          </div>
+
+          <FadeIn className="home-teasers__social" delay={0.24}>
             <a href={SITE.links.instagram} target="_blank" rel="noopener noreferrer">
-              Instagram <ArrowUpRight size={17} aria-hidden="true" />
+              Instagram <ArrowUpRight size={16} aria-hidden="true" />
             </a>
-            <Link to="/blog">Últimas notícias <ArrowRight size={17} aria-hidden="true" /></Link>
-            <Link to="/podcast">Podcast <ArrowRight size={17} aria-hidden="true" /></Link>
+            <Link to="/podcast">
+              Ver o podcast <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </FadeIn>
         </div>
       </section>
