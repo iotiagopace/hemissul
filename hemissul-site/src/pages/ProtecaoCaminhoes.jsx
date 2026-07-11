@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Truck, Info } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
-import caminhaoEstrada from '../assets/fotos-reais/caminhao-estrada-unsplash.jpg'
+import caminhaoEstrada from '../assets/fotos-reais/caminhao-por-do-sol.jpg'
 
 const oferta = [
   ['Assistência emergencial 24 h', 'Conforme limites de quilometragem e serviços contratados.'],

@@ -14,8 +14,9 @@ export default function WhatsAppFloat() {
       rel="noopener noreferrer"
       aria-label="Falar com a Hemissul pelo WhatsApp"
     >
-      <WhatsappIcon size={24} />
-      <span>Fale conosco</span>
+      <span className="whatsapp-float__pulse" aria-hidden="true" />
+      <WhatsappIcon size={28} />
+      <span className="whatsapp-float__label">Fale conosco</span>
     </a>
   )
 }

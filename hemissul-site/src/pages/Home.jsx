@@ -12,7 +12,8 @@ import FadeIn from '../components/FadeIn'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
 import VideoEmbed from '../components/VideoEmbed'
 import StoreBadges from '../components/StoreBadges'
-import ScrollMarquee from '../components/ScrollMarquee'
+import AutoMarquee from '../components/AutoMarquee'
+import VideoTestimonials from '../components/VideoTestimonials'
 import AppMockupStory from '../components/AppMockupStory'
 import HomeHero from '../components/HomeHero'
 import { WhatsappIcon } from '../components/SocialIcons'
@@ -279,7 +280,7 @@ export default function Home() {
           </FadeIn>
         </div>
 
-        <ScrollMarquee items={indenizacoesRow} direction="left" speed={0.2} />
+        <AutoMarquee items={indenizacoesRow} className="indemnity-marquee" seconds={48} />
       </section>
 
       <section className="home-section app-section">
@@ -341,6 +342,25 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="home-section video-testimonials-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <h2 className="home-section__title">
+              Depoimentos de quem é associado.
+            </h2>
+            <p className="home-section__copy">
+              Histórias reais, contadas por quem viveu o atendimento da
+              Hemissul. Toque para assistir.
+            </p>
+          </FadeIn>
+        </div>
+        <div className="site-container">
+          <FadeIn>
+            <VideoTestimonials />
+          </FadeIn>
         </div>
       </section>
 

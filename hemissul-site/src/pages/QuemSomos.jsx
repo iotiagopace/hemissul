@@ -34,7 +34,7 @@ const lideranca = [
     photo: gabrielAmaral,
   },
   {
-    name: 'Kenia Carla',
+    name: 'Carla Homes',
     role: 'Diretora de RH',
     desc: 'Cuida da cultura organizacional e do desenvolvimento das pessoas.',
     photo: keniaCarla,
