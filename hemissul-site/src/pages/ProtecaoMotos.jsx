@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, AlertTriangle, Bike } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
-import motociclistasImg from '../assets/publicos/motociclistas.png'
+import motociclistasImg from '../assets/fotos-reais/motociclista-real.jpg'
 
 const beneficios = [
   ['Colisão, roubo, furto e perda total', 'Conforme o regulamento.'],

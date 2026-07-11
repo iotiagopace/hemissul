@@ -40,9 +40,9 @@ export const HOME_HERO_SLIDES = [
       'Clube de benefícios',
       'Proteção contra roubo e furto',
     ],
-    title: 'Não conte com a sorte. Conte com a Hemissul.',
+    title: 'Roubo, colisão ou perda total? A Hemissul resolve — sem letra miúda.',
     description:
-      'Proteção para carros, motos e caminhões, com atendimento em todo o Brasil.',
+      'Proteção para carros, motos e caminhões, assistência 24h e atendimento em todo o Brasil.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a proteção', to: '/protecao-veicular' },
     mediaPosition: 'center center',
