@@ -3087,54 +3087,110 @@
     color: var(--color-muted);
   }
 
-  .benefit-category-grid {
-    margin-block-start: var(--space-2xl);
-    display: grid;
-    gap: var(--space-md);
+  /* Clube de Benefícios ------------------------------------------------- */
+  .clube-section {
+    padding-block: clamp(3rem, 6vw, 5rem);
   }
 
-  .benefit-category {
-    margin: 0;
+  .service-grid {
+    margin-block-start: var(--space-2xl);
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     overflow: hidden;
     border-radius: var(--radius-card);
     background: var(--color-paper);
+    border: var(--rule-hair) solid var(--color-rule);
   }
 
-  .benefit-category img {
+  .service-card__media {
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+  }
+
+  .service-card__media img {
     width: 100%;
-    aspect-ratio: 16 / 10;
+    height: 100%;
     object-fit: cover;
+    transition: transform var(--dur-medium) var(--ease-out);
   }
 
-  .benefit-category figcaption {
+  .service-card:hover .service-card__media img {
+    transform: scale(1.05);
+  }
+
+  .service-card__body {
+    padding: var(--space-lg);
     display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .service-card__tag {
+    display: inline-flex;
     align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    font-family: var(--font-display);
-    font-size: var(--text-md);
-    font-weight: 700;
-  }
-
-  .partner-list {
-    display: grid;
-  }
-
-  .partner-list__item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding-block: var(--space-md);
-    border-top: var(--rule-hair) solid var(--color-rule);
-    font-weight: 600;
-  }
-
-  .partner-list__item:last-child {
-    border-bottom: var(--rule-hair) solid var(--color-rule);
-  }
-
-  .partner-list__item svg {
+    gap: 0.35rem;
+    align-self: flex-start;
+    margin-block-end: var(--space-2xs);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-paper-2);
     color: var(--color-accent-dark);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .service-card__body h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .service-card__body p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .partner-logo-grid {
+    margin-block-start: var(--space-2xl);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .partner-logo-cell {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    border: var(--rule-hair) solid var(--color-rule);
+    background: #fff;
+    transition:
+      transform var(--dur-short) var(--ease-out),
+      box-shadow var(--dur-short) var(--ease-out);
+  }
+
+  .partner-logo-cell:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem -1rem var(--color-ink);
+  }
+
+  .partner-logo-cell img {
+    max-width: 100%;
+    max-height: 3.5rem;
+    width: auto;
+    object-fit: contain;
   }
 
   .social-presence {
@@ -3591,9 +3647,21 @@
   }
 
   @media (min-width: 40rem) {
-    .benefit-category-grid,
-    .blog-grid {
+    .blog-grid,
+    .service-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .partner-logo-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .service-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .partner-logo-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
   }
 
