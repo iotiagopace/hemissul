@@ -327,6 +327,22 @@ const routeMeta = {
       ]),
     ],
   },
+  '/protecao-veicular/motorista-aplicativo': {
+    title: 'Proteção para Motorista de Aplicativo | Hemissul',
+    description:
+      'Proteção veicular para motoristas de Uber, 99 e apps de entrega. Cobertura contra colisão, roubo e furto com assistência 24h.',
+    schemas: [
+      serviceBase(
+        'Proteção Veicular para Motorista de Aplicativo',
+        'Proteção contra colisão, roubo e furto com assistência 24h para quem trabalha dirigindo por aplicativo.',
+        '/protecao-veicular/motorista-aplicativo',
+      ),
+      breadcrumb([
+        ['Proteção Veicular', '/protecao-veicular'],
+        ['Motorista de aplicativo', '/protecao-veicular/motorista-aplicativo'],
+      ]),
+    ],
+  },
   '/assistencia-24h': {
     title: 'Assistência Veicular 24 Horas | Hemissul',
     description:

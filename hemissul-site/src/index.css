@@ -865,6 +865,13 @@
     border-radius: 50%;
   }
 
+  .vehicle-row__icon--glyph {
+    display: grid;
+    place-items: center;
+    background: var(--color-paper-2);
+    color: var(--color-accent-dark);
+  }
+
   .vehicle-row__content {
     min-width: 0;
     display: grid;
@@ -3188,8 +3195,9 @@
 
   .partner-logo-cell img {
     max-width: 100%;
-    max-height: 3.5rem;
+    max-height: 100%;
     width: auto;
+    height: auto;
     object-fit: contain;
   }
 

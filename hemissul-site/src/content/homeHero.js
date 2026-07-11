@@ -54,10 +54,10 @@ export const HOME_HERO_SLIDES = [
     id: 'reparos-indenizacoes',
     type: 'image',
     src: sedeFachada,
-    eyebrow: 'Proteção que já provou o seu valor',
-    title: `${SITE.metrics.repairsInvested} devolvidos em reparos e indenizações.`,
+    eyebrow: 'Resultado que dá pra medir',
+    title: `${SITE.metrics.repairsInvested} pagos em reparos e indenizações.`,
     description:
-      'Associados protegidos e amparados quando mais precisaram — com regras claras e atendimento humano.',
+      'Dinheiro que voltou para quem teve o carro batido, roubado ou com perda total.',
     primaryAction: { label: 'Quero proteger meu veículo', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a Hemissul', to: '/quem-somos' },
     mediaPosition: 'center center',
@@ -72,7 +72,7 @@ export const HOME_HERO_SLIDES = [
     eyebrow: 'Para quem vive na estrada',
     title: 'Seu trabalho não pode parar. Sua proteção também não.',
     description:
-      'Assistência 24h e proteção pensadas para caminhoneiros, frotistas e motoristas de aplicativo.',
+      'Cobertura e assistência 24h para caminhoneiros, frotistas e motoristas de aplicativo.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Proteção para caminhões', to: '/protecao-veicular/caminhoes' },
     mediaPosition: '50% center',

@@ -8,18 +8,29 @@ import servFarmacia from '../assets/clube/servicos/farmacia.jpg'
 import servAcademia from '../assets/clube/servicos/academia.jpg'
 import servOficina from '../assets/clube/servicos/oficina.jpg'
 
-import logoEstacio from '../assets/clube/parceiros/estacio.png'
-import logoUnicesumar from '../assets/clube/parceiros/unicesumar.png'
-import logoFarmaFormula from '../assets/clube/parceiros/farma-formula.jpg'
-import logoSantoRemedio from '../assets/clube/parceiros/santo-remedio.webp'
-import logoRondobras from '../assets/clube/parceiros/rondobras.png'
-import logoAprovar from '../assets/clube/parceiros/aprovar-mais.png'
-import logoLeticia from '../assets/clube/parceiros/leticia-kerolly.jpg'
-import logoBfCarnes from '../assets/clube/parceiros/bf-carnes.jpg'
-import logoOip from '../assets/clube/parceiros/oip.jpg'
-import logoGasparzinho from '../assets/clube/parceiros/gasparzinho.jpg'
-import logoMigos from '../assets/clube/parceiros/migos.png'
-import logoChilli from '../assets/clube/parceiros/chilli.jpg'
+import logoSkyfit from '../assets/clube/parceiros/skyfit-academia.webp'
+import logoVolkswagen from '../assets/clube/parceiros/volkswagen.webp'
+import logoEstacio from '../assets/clube/parceiros/estacio.webp'
+import logoUnicesumar from '../assets/clube/parceiros/unicesumar.webp'
+import logoAprovar from '../assets/clube/parceiros/aprovar-mais.webp'
+import logoHapvida from '../assets/clube/parceiros/hapvida.webp'
+import logoSantoRemedio from '../assets/clube/parceiros/santoremedio.webp'
+import logoNmOficina from '../assets/clube/parceiros/nm-oficina-mecanica.webp'
+import logoAcare from '../assets/clube/parceiros/acare-autopecas.webp'
+import logoBrasilAuto from '../assets/clube/parceiros/brasil-auto-pecas.webp'
+import logoBrunoMoto from '../assets/clube/parceiros/bruno-moto-pecas.webp'
+import logoAmazonPneus from '../assets/clube/parceiros/amazon-pneus-manaus.webp'
+import logoObjetiva from '../assets/clube/parceiros/objetiva-estetica-automotiva.webp'
+import logoGaspartinho from '../assets/clube/parceiros/gaspartinho-sound-car.webp'
+import logoGrupoTotal from '../assets/clube/parceiros/grupo-total.webp'
+import logoBvLocadora from '../assets/clube/parceiros/bv-locadora.webp'
+import logoCrosby from '../assets/clube/parceiros/crosby.webp'
+import logoMigo from '../assets/clube/parceiros/migo-donuts.webp'
+import logoLoveSports from '../assets/clube/parceiros/love-sports.webp'
+import logoJetfast from '../assets/clube/parceiros/jetfast.webp'
+import logoBfCarnes from '../assets/clube/parceiros/bf-carnes.webp'
+import logoDraHelen from '../assets/clube/parceiros/dra-helen-pereira.webp'
+import logoDraAria from '../assets/clube/parceiros/dra-aria-claudia-cavalcante.webp'
 
 const categorias = [
   {
@@ -45,18 +56,29 @@ const categorias = [
 ]
 
 const parceiros = [
+  { name: 'SkyFit Academia', src: logoSkyfit },
+  { name: 'Volkswagen', src: logoVolkswagen },
   { name: 'Estácio', src: logoEstacio },
   { name: 'UniCesumar', src: logoUnicesumar },
-  { name: 'Farma Fórmula', src: logoFarmaFormula },
-  { name: 'Santo Remédio', src: logoSantoRemedio },
-  { name: 'Rondobras Autopeças', src: logoRondobras },
   { name: 'Aprovar+', src: logoAprovar },
-  { name: 'Letícia Kerolly Estética', src: logoLeticia },
+  { name: 'Hapvida', src: logoHapvida },
+  { name: 'Santo Remédio', src: logoSantoRemedio },
+  { name: 'NM Oficina Mecânica', src: logoNmOficina },
+  { name: 'Açaré Autopeças', src: logoAcare },
+  { name: 'Brasil Auto Peças', src: logoBrasilAuto },
+  { name: 'Bruno Moto Peças', src: logoBrunoMoto },
+  { name: 'Amazon Pneus Manaus', src: logoAmazonPneus },
+  { name: 'Objetiva Estética Automotiva', src: logoObjetiva },
+  { name: 'Gaspartinho Sound Car', src: logoGaspartinho },
+  { name: 'Grupo Total', src: logoGrupoTotal },
+  { name: 'BV Locadora', src: logoBvLocadora },
+  { name: 'Crosby', src: logoCrosby },
+  { name: 'Migo Donuts', src: logoMigo },
+  { name: 'Love Sports', src: logoLoveSports },
+  { name: 'Jetfast', src: logoJetfast },
   { name: 'B&F Carnes', src: logoBfCarnes },
-  { name: 'OIP', src: logoOip },
-  { name: 'Gasparzinho', src: logoGasparzinho },
-  { name: 'Migos Donuts', src: logoMigos },
-  { name: 'Chilli Mexican Food', src: logoChilli },
+  { name: 'Dra. Helen Pereira', src: logoDraHelen },
+  { name: 'Dra. Aria Claudia Cavalcante', src: logoDraAria },
 ]
 
 export default function ClubeBeneficios() {
@@ -145,7 +167,7 @@ export default function ClubeBeneficios() {
 
       <section className="closing-section">
         <div className="site-container closing-section__inner">
-          <FadeIn as="h2">Vantagens que cabem no seu dia a dia.</FadeIn>
+          <FadeIn as="h2">Faça sua cotação e comece a usar o clube.</FadeIn>
           <FadeIn delay={0.1}>
             <Link to="/cotacao" className="button-cta">
               Quero ser associado <ArrowRight size={18} aria-hidden="true" />

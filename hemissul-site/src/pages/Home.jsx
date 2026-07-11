@@ -6,6 +6,7 @@ import {
   MapPin,
   PhoneCall,
   Play,
+  Smartphone,
   Star,
 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
@@ -80,24 +81,27 @@ const benefits = [
 const vehicles = [
   {
     title: 'Carros',
-    description:
-      'Proteção para uso particular e outras categorias aceitas pelo programa.',
+    description: 'Uso particular e famílias, com cobertura contra colisão, roubo e furto.',
     image: iconCarros,
     to: '/protecao-veicular/carros',
   },
   {
     title: 'Motos',
-    description:
-      'Benefícios para quem depende da motocicleta todos os dias.',
+    description: 'Para quem usa a moto no trabalho ou para se locomover.',
     image: iconMotos,
     to: '/protecao-veicular/motos',
   },
   {
     title: 'Caminhões',
-    description:
-      'Assistência e proteção para veículos que mantêm o trabalho em movimento.',
+    description: 'Cobertura e assistência na estrada para quem vive de rodar.',
     image: iconCaminhoes,
     to: '/protecao-veicular/caminhoes',
+  },
+  {
+    title: 'Motorista de aplicativo',
+    description: 'Uber, 99 e entregas: proteção para quem trabalha o dia todo no trânsito.',
+    Icon: Smartphone,
+    to: '/protecao-veicular/motorista-aplicativo',
   },
 ]
 
@@ -168,12 +172,11 @@ export default function Home() {
         <div className="site-container">
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">
-              Proteção que funciona na vida real.
+              O que a proteção cobre.
             </h2>
             <p className="home-section__copy">
-              Imprevistos não seguem horário. O programa reúne proteção
-              patrimonial, assistência e tecnologia para apoiar o associado
-              dentro das condições previstas no regulamento.
+              Colisão, roubo, furto, perda total, danos a terceiros, assistência
+              24h e rastreamento — tudo conforme as regras do regulamento.
             </p>
           </FadeIn>
 
@@ -208,7 +211,7 @@ export default function Home() {
       <section className="vehicle-section">
         <div className="site-container">
           <FadeIn className="vehicle-section__head">
-            <h2>Uma proteção para cada maneira de seguir.</h2>
+            <h2>Escolha pelo seu tipo de veículo.</h2>
           </FadeIn>
 
           <div>
@@ -218,14 +221,20 @@ export default function Home() {
                   <span className="vehicle-row__number">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <img
-                    className="vehicle-row__icon"
-                    src={vehicle.image}
-                    alt=""
-                    width="64"
-                    height="64"
-                    loading="lazy"
-                  />
+                  {vehicle.image ? (
+                    <img
+                      className="vehicle-row__icon"
+                      src={vehicle.image}
+                      alt=""
+                      width="64"
+                      height="64"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className="vehicle-row__icon vehicle-row__icon--glyph">
+                      <vehicle.Icon size={32} aria-hidden="true" />
+                    </span>
+                  )}
                   <div className="vehicle-row__content">
                     <h3>{vehicle.title}</h3>
                     <p>{vehicle.description}</p>
@@ -242,12 +251,11 @@ export default function Home() {
         <div className="site-container">
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">
-              Reparos reais. Veículos de volta à rua.
+              Antes e depois dos reparos.
             </h2>
             <p className="home-section__copy">
-              Arraste para revelar como cada veículo voltou a rodar.
-              Cada atendimento segue análise, limites e condições do plano
-              contratado.
+              Arraste a imagem para ver o antes e o depois. Cada caso segue os
+              limites e condições do plano contratado.
             </p>
           </FadeIn>
 
@@ -270,12 +278,11 @@ export default function Home() {
         <div className="site-container">
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">
-              Indenizações que a gente cumpre.
+              Indenizações que a gente paga.
             </h2>
             <p className="home-section__copy">
-              Associados que contaram com a Hemissul no momento mais difícil e
-              receberam o que foi combinado, dentro das condições do
-              regulamento.
+              Quem teve o veículo roubado ou com perda total e recebeu o valor
+              combinado, dentro das regras do regulamento.
             </p>
           </FadeIn>
         </div>
@@ -292,7 +299,7 @@ export default function Home() {
             />
           </FadeIn>
           <FadeIn className="app-layout__content" delay={0.1}>
-            <h2>Seu plano e seus serviços no mesmo lugar.</h2>
+            <h2>Tudo do seu plano no aplicativo.</h2>
             <p>
               Consulte boletos, benefícios, oficinas credenciadas, assistência
               24 h e comunicação de eventos pelo aplicativo Hemissul.
@@ -313,11 +320,10 @@ export default function Home() {
         <div className="site-container">
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">
-              O que dizem os associados.
+              O que os associados falam.
             </h2>
             <p className="home-section__copy">
-              Histórias compartilhadas por quem confia no programa todos os
-              dias.
+              Comentários de quem já é associado e usou a proteção.
             </p>
           </FadeIn>
 
@@ -352,8 +358,8 @@ export default function Home() {
               Depoimentos de quem é associado.
             </h2>
             <p className="home-section__copy">
-              Histórias reais, contadas por quem viveu o atendimento da
-              Hemissul. Toque para assistir.
+              Associados falando do atendimento que receberam. Toque para
+              assistir.
             </p>
           </FadeIn>
         </div>
@@ -448,13 +454,12 @@ export default function Home() {
       <section className="home-section home-section--compact">
         <div className="site-container home-section__intro">
           <FadeIn as="h2" className="home-section__title">
-            Próxima no atendimento. Ampla na assistência.
+            Atendimento perto. Assistência em todo o Brasil.
           </FadeIn>
           <FadeIn delay={0.08}>
             <p className="home-section__copy">
-              Desde 2019, a Hemissul trabalha para levar conforto, segurança e
-              tranquilidade aos associados, sempre com regras claras e
-              atendimento humano.
+              A Hemissul protege veículos desde 2019, com sede em Boa Vista e
+              rede de prestadores em todo o país. Regras claras, sem letra miúda.
             </p>
             <Link to="/quem-somos" className="type-link home-section__link">
               Conhecer a Hemissul <ArrowRight size={17} aria-hidden="true" />
@@ -512,7 +517,7 @@ export default function Home() {
       <section className="closing-section">
         <div className="site-container closing-section__inner">
           <FadeIn as="h2">
-            Seu veículo merece um plano para os imprevistos.
+            Faça a cotação e proteja seu veículo hoje.
           </FadeIn>
           <FadeIn delay={0.1}>
             <Link to="/cotacao" className="button-cta">

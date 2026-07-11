@@ -89,7 +89,7 @@ export default function QuemSomos() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Quem somos</p>
             <h1 className="page-header__title">
-              Uma comunidade criada para levar mais tranquilidade aos caminhos.
+              Uma associação de Boa Vista para todo o Brasil.
             </h1>
             <p className="page-header__lede">
               A Hemissul nasceu em Boa Vista, em 2019, para oferecer proteção
@@ -268,8 +268,8 @@ export default function QuemSomos() {
               Quem conduz a Hemissul.
             </h2>
             <p className="home-section__copy">
-              Um time próximo, que decide com transparência e responsabilidade
-              por cada associado.
+              Os sócios que tocam a Hemissul e respondem pelas decisões do dia a
+              dia.
             </p>
           </FadeIn>
 

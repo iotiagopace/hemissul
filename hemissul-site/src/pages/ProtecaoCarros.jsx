@@ -43,7 +43,7 @@ export default function ProtecaoCarros() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Para carros</p>
             <h1 className="page-header__title">
-              Seu carro protegido para você seguir em frente.
+              Proteção para o seu carro particular.
             </h1>
             <p className="page-header__lede">
               Conte com proteção para os principais imprevistos do trânsito,
@@ -73,7 +73,7 @@ export default function ProtecaoCarros() {
         <div className="site-container">
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">
-              Benefícios que acompanham sua rotina.
+              O que o plano do seu carro cobre.
             </h2>
             <p className="home-section__copy">
               O plano para carros reúne os benefícios mais utilizados pelos

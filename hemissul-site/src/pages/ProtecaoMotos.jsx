@@ -18,12 +18,11 @@ export default function ProtecaoMotos() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Para motos</p>
             <h1 className="page-header__title">
-              Proteção para sua moto acompanhar todos os caminhos.
+              Proteção para sua moto, no trabalho ou na estrada.
             </h1>
             <p className="page-header__lede">
-              Para trabalho ou mobilidade diária, conte com suporte para os
-              imprevistos previstos no programa e assistência quando você
-              precisar.
+              Cobertura contra colisão, roubo e furto, com assistência 24h em
+              todo o Brasil — para quem usa a moto todo dia.
             </p>
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-primary">
