@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BadgePercent, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, BadgePercent } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
+import PartnerLogos from '../components/PartnerLogos'
 import capa from '../assets/clube/capa.png'
 import ensino from '../assets/clube/ensino.png'
 import farmacias from '../assets/clube/farmacias.png'
 import estetica from '../assets/clube/estetica.png'
 import oficinas from '../assets/clube/oficinas.png'
+
+import logoFarmaFormula from '../assets/clube/parceiros/farma-formula.jpg'
+import logoSantoRemedio from '../assets/clube/parceiros/santo-remedio.webp'
+import logoOip from '../assets/clube/parceiros/oip.jpg'
+import logoBfCarnes from '../assets/clube/parceiros/bf-carnes.jpg'
+import logoGasparzinho from '../assets/clube/parceiros/gasparzinho.jpg'
 
 const categorias = [
   ['Ensino bilíngue', ensino],
@@ -14,7 +21,13 @@ const categorias = [
   ['Oficinas e autopeças', oficinas],
 ]
 
-const parceiros = ['Sky Fit Ville Roy', 'Farma Fórmula', 'Santo Remédio', 'OIP', 'B&F Carnes', 'Gasparzinho']
+const parceiros = [
+  { name: 'Farma Fórmula', src: logoFarmaFormula },
+  { name: 'Santo Remédio', src: logoSantoRemedio },
+  { name: 'OIP', src: logoOip },
+  { name: 'B&F Carnes', src: logoBfCarnes },
+  { name: 'Gasparzinho', src: logoGasparzinho },
+]
 
 export default function ClubeBeneficios() {
   return (
@@ -63,20 +76,18 @@ export default function ClubeBeneficios() {
       </section>
 
       <section className="page-section">
-        <div className="site-container split split--start">
-          <FadeIn>
-            <h2 className="home-section__title">Parceiros divulgados pela Hemissul.</h2>
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <h2 className="home-section__title">Parceiros do Clube de Benefícios.</h2>
             <p className="home-section__copy">
-              A relação completa e as regras de uso ficam disponíveis nos canais oficiais.
+              Marcas parceiras que oferecem condições especiais aos associados. A
+              relação completa e as regras de uso ficam disponíveis nos canais
+              oficiais.
             </p>
           </FadeIn>
-          <div className="partner-list">
-            {parceiros.map((partner, index) => (
-              <FadeIn key={partner} className="partner-list__item" delay={index * 0.04}>
-                <CheckCircle2 size={18} aria-hidden="true" /> {partner}
-              </FadeIn>
-            ))}
-          </div>
+          <FadeIn delay={0.1}>
+            <PartnerLogos logos={parceiros} />
+          </FadeIn>
         </div>
       </section>
     </div>

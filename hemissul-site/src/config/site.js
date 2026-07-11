@@ -29,6 +29,7 @@ export const SITE = {
   },
   metrics: {
     protectedVehicles: '13 mil+',
+    repairsInvested: 'R$ 15 milhões',
   },
   analytics: {
     gtmId: 'GTM-5C3GN7RM',

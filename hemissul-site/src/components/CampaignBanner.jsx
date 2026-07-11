@@ -6,7 +6,7 @@ export default function CampaignBanner() {
   const { pathname } = useLocation()
   const campaign = SITE.campaign
   const isCommercialRoute =
-    pathname === '/' || pathname === '/cotacao' || pathname.startsWith('/protecao-veicular')
+    pathname === '/cotacao' || pathname.startsWith('/protecao-veicular')
   const isActive =
     isCommercialRoute &&
     campaign.enabled &&

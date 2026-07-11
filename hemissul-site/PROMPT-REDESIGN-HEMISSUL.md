@@ -494,3 +494,55 @@ funções, conteúdos e caminhos que não poderiam desaparecer na troca.
   duas colunas, reduzindo a obstrução do conteúdo.
 - Os SVGs sociais passaram a transformar corretamente a propriedade `size` em
   largura e altura, corrigindo o botão flutuante de WhatsApp vazio no mobile.
+
+## Atualização executada — hero em vídeo e navegação premium
+
+- O hero dividido entre texto e fotografia foi substituído por uma composição
+  full-bleed inspirada na hierarquia da referência da Porto, sem copiar sua
+  identidade visual.
+- O vídeo aprovado pelo cliente foi comprimido de aproximadamente 45 MB para
+  cerca de 4,5 MB, convertido para 24 fps e recebeu poster próprio para
+  carregamento e fallback.
+- O vídeo funciona sem áudio, em reprodução automática, loop e `playsInline`,
+  com controle acessível para pausar ou reproduzir.
+- A camada de contraste foi adaptada separadamente para desktop e mobile,
+  mantendo texto e CTAs legíveis durante todos os takes.
+- O conteúdo do hero foi centralizado em `src/content/homeHero.js`. O componente
+  aceita uma lista de banners com imagem ou vídeo, ações e enquadramento
+  específicos, ficando preparado para uma futura integração com CMS.
+- A campanha deixou de ocupar uma faixa antes do hero na Home e continua
+  disponível nas páginas comerciais específicas.
+- A barra superior passou a agrupar cotação e menu em um único controle visual,
+  com hierarquia mais limpa.
+- “Menu” permanece visível também no celular; a Área do Associado e o telefone
+  aparecem progressivamente conforme o espaço disponível.
+- O menu expandido ganhou entrada animada, chamada institucional, grupos
+  editoriais, atalhos de assistência e proteção, fechamento por `Escape` e
+  bloqueio correto do scroll de fundo.
+- O botão flutuante de WhatsApp é ocultado enquanto o menu estiver aberto para
+  não competir com a navegação.
+- O consentimento de cookies foi convertido em um painel compacto no canto
+  direito do desktop, preservando a leitura e os CTAs do hero. Enquanto ele
+  estiver aberto, o WhatsApp também é ocultado para não haver sobreposição.
+- A campanha de caminhonetes passou a ocupar o segundo slide do hero, usando
+  uma imagem real de Ranger do acervo. O vídeo institucional permanece como
+  primeiro e principal destaque.
+- O slide promocional reutiliza texto, ativação e data final de
+  `SITE.campaign`; ao expirar, desaparece automaticamente e o vídeo volta a ser
+  o único destaque, inclusive sem exigir atualização manual da página.
+
+## Atualização executada — fotografias reais em carros e caminhões
+
+- A página de proteção para carros deixou de usar as artes ilustradas de
+  públicos e passou a exibir registros fotográficos reais do acervo Hemissul.
+- Os três contextos de uso (particulares, aplicativo e frotistas) agora são
+  acompanhados por veículos reais após reparo, preservando o conteúdo comercial
+  e a hierarquia editorial da página.
+- A página de caminhões deixou de usar a ilustração genérica de frotistas e
+  passou a mostrar um caminhão de carga real em movimento na estrada.
+- Como o acervo fornecido não contém uma fotografia própria de caminhão, foi
+  usada uma imagem de Artem Balashevsky publicada no Unsplash, disponível sob a
+  Licença Unsplash:
+  `https://unsplash.com/photos/a-white-semi-truck-driving-down-a-rural-road-ZhNYKwjRMh4`.
+- A imagem foi incorporada ao projeto para evitar dependência de carregamento
+  externo e recebeu texto alternativo descritivo.

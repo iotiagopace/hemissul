@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CONSENT_KEY } from '../config/site'
 
@@ -6,6 +6,11 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(
     () => window.localStorage.getItem(CONSENT_KEY) === null,
   )
+
+  useEffect(() => {
+    document.body.classList.toggle('cookie-open', visible)
+    return () => document.body.classList.remove('cookie-open')
+  }, [visible])
 
   const choose = (value) => {
     window.localStorage.setItem(CONSENT_KEY, value)

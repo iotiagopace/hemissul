@@ -5,6 +5,8 @@ Este projeto concentra os dados que mudam com mais frequência em dois arquivos:
 - `src/config/site.js`: contatos, endereço, redes sociais, campanha, links de
   cotação, canais do associado, métricas e integrações;
 - `src/content/posts.js`: textos, datas, imagens e rotas do blog.
+- `src/content/homeHero.js`: banners principais da Home, com imagem ou vídeo,
+  textos, ações e enquadramento responsivo.
 
 ## Antes de publicar
 

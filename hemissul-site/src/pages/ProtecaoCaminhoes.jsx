@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Truck, Info } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
-import frotistasImg from '../assets/publicos/frotistas.png'
+import caminhaoEstrada from '../assets/fotos-reais/caminhao-estrada-unsplash.jpg'
 
 const oferta = [
   ['Assistência emergencial 24 h', 'Conforme limites de quilometragem e serviços contratados.'],
@@ -36,8 +36,8 @@ export default function ProtecaoCaminhoes() {
           <FadeIn delay={0.1}>
             <figure className="figure-frame">
               <img
-                src={frotistasImg}
-                alt="Veículo de frota representando proteção para o trabalho"
+                src={caminhaoEstrada}
+                alt="Caminhão de carga em movimento na estrada"
                 loading="lazy"
               />
             </figure>

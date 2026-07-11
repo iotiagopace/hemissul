@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Car, Users, Briefcase, MapPin } from 'lucide-react'
+import { ArrowRight, MapPin } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
-import imgParticulares from '../assets/publicos/carros-particulares.png'
-import imgApp from '../assets/publicos/motorista-app.png'
-import imgFrota from '../assets/publicos/frotistas.png'
+import depoisGol from '../assets/antes-depois/depois-gol.jpeg'
+import depoisHb20 from '../assets/antes-depois/depois-hb20.jpeg'
 import depoisOnix from '../assets/antes-depois/depois-onix.jpeg'
+import depoisS10 from '../assets/antes-depois/depois-s10.jpeg'
 
 const coberturas = [
   ['Colisão e perda total', 'Conforme critérios do regulamento.'],
@@ -18,20 +18,20 @@ const publicos = [
   {
     title: 'Carros particulares',
     desc: 'Para uso pessoal e familiar com regras claras.',
-    image: imgParticulares,
-    icon: Car,
+    image: depoisGol,
+    alt: 'Gol após reparo registrado no acervo real da Hemissul',
   },
   {
     title: 'Motoristas de aplicativo',
     desc: 'Condições específicas para transporte por aplicativo.',
-    image: imgApp,
-    icon: Users,
+    image: depoisHb20,
+    alt: 'HB20 após reparo registrado no acervo real da Hemissul',
   },
   {
     title: 'Frotistas',
     desc: 'Atendimento dedicado para frota corporativa.',
-    image: imgFrota,
-    icon: Briefcase,
+    image: depoisS10,
+    alt: 'S10 após reparo registrado no acervo real da Hemissul',
   },
 ]
 
@@ -61,7 +61,7 @@ export default function ProtecaoCarros() {
             <figure className="figure-frame">
               <img
                 src={depoisOnix}
-                alt="Onix após o reparo Hemissul"
+                alt="Onix após reparo registrado no acervo real da Hemissul"
                 loading="lazy"
               />
             </figure>
@@ -114,18 +114,16 @@ export default function ProtecaoCarros() {
           </FadeIn>
 
           <div className="channel-grid" style={{ marginTop: '3rem' }}>
-            {publicos.map(({ title, desc, image, icon: Icon }, index) => (
+            {publicos.map(({ title, desc, image, alt }, index) => (
               <FadeIn key={title} delay={index * 0.06}>
                 <article className="channel-card" style={{ height: '100%' }}>
                   <figure
                     className="figure-frame"
                     style={{ aspectRatio: '4/3', marginBottom: '0.75rem' }}
                   >
-                    <img src={image} alt={title} loading="lazy" />
+                    <img src={image} alt={alt} loading="lazy" />
                   </figure>
-                  <span className="channel-card__icon">
-                    <Icon size={18} aria-hidden="true" />
-                  </span>
+                  <p className="page-header__eyebrow">Registro real Hemissul</p>
                   <p className="channel-card__title">{title}</p>
                   <p className="channel-card__desc">{desc}</p>
                 </article>

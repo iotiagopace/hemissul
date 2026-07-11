@@ -13,24 +13,28 @@ import VideoEmbed from '../components/VideoEmbed'
 import StoreBadges from '../components/StoreBadges'
 import ScrollMarquee from '../components/ScrollMarquee'
 import AppMockupStory from '../components/AppMockupStory'
-import HeroMedia from '../components/HeroMedia'
+import HomeHero from '../components/HomeHero'
 import { WhatsappIcon } from '../components/SocialIcons'
 import { SITE } from '../config/site'
+import { HOME_HERO_SLIDES } from '../content/homeHero'
 
-import heroImg from './../assets/fotos-reais/sede-fachada.jpg'
 import iconCarros from '../assets/icon-carros.png'
 import iconMotos from '../assets/icon-motos.png'
 import iconCaminhoes from '../assets/icon-caminhoes.png'
 
 import antesGol from '../assets/antes-depois/antes-gol.jpeg'
 import depoisGol from '../assets/antes-depois/depois-gol.jpeg'
-import depoisHb20 from '../assets/antes-depois/depois-hb20.jpeg'
 import antesOnix from '../assets/antes-depois/antes-onix.jpeg'
 import depoisOnix from '../assets/antes-depois/depois-onix.jpeg'
-import depoisOroch from '../assets/antes-depois/depois-oroch.jpg'
 import antesRanger from '../assets/antes-depois/antes-ranger.jpeg'
 import depoisRanger from '../assets/antes-depois/depois-ranger.jpeg'
-import depoisS10 from '../assets/antes-depois/depois-s10.jpeg'
+
+import indenizacao1 from '../assets/indenizacoes/indenizacao-1.jpeg'
+import indenizacao2 from '../assets/indenizacoes/indenizacao-2.jpeg'
+import indenizacao3 from '../assets/indenizacoes/indenizacao-3.jpeg'
+import indenizacao4 from '../assets/indenizacoes/indenizacao-4.jpeg'
+import indenizacao5 from '../assets/indenizacoes/indenizacao-5.jpeg'
+import indenizacao6 from '../assets/indenizacoes/indenizacao-6.jpeg'
 
 import sedeImg from '../assets/fotos-reais/sede-fachada-2.jpg'
 
@@ -117,48 +121,19 @@ const beforeAfterCases = [
   { label: 'Onix', before: antesOnix, after: depoisOnix },
 ]
 
-const marqueeRow = [
-  { src: depoisGol, alt: 'Gol restaurado', label: 'Gol · reparo concluído' },
-  { src: depoisHb20, alt: 'HB20 restaurado', label: 'HB20 · reparo concluído' },
-  { src: depoisOnix, alt: 'Onix restaurado', label: 'Onix · reparo concluído' },
-  { src: depoisOroch, alt: 'Oroch restaurada', label: 'Oroch · reparo concluído' },
-  { src: depoisRanger, alt: 'Ranger restaurada', label: 'Ranger · reparo concluído' },
-  { src: depoisS10, alt: 'S10 restaurada', label: 'S10 · reparo concluído' },
+const indenizacoesRow = [
+  { src: indenizacao1, alt: 'Associada recebendo indenização da Hemissul', label: 'Indenização paga' },
+  { src: indenizacao2, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
+  { src: indenizacao3, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
+  { src: indenizacao4, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
+  { src: indenizacao5, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
+  { src: indenizacao6, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
 ]
 
 export default function Home() {
   return (
     <div className="home-page">
-      <section className="home-hero">
-        <div className="home-hero__copy">
-          <FadeIn as="p" className="home-hero__kicker" delay={0.05}>
-            Proteção veicular, assistência 24 horas e atendimento em todo o Brasil.
-          </FadeIn>
-          <FadeIn as="h1" className="home-hero__title" delay={0.1}>
-            Não conte com a sorte. Conte com a Hemissul.
-          </FadeIn>
-          <FadeIn as="p" className="home-hero__lede" delay={0.2}>
-            Proteção para carros, motos e caminhões, com uma equipe próxima
-            quando você mais precisa.
-          </FadeIn>
-          <FadeIn className="home-hero__actions" delay={0.3}>
-            <Link to="/cotacao" className="button-primary">
-              Fazer cotação <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-            <Link to="/central-do-associado" className="button-secondary">
-              Acessar área do associado
-            </Link>
-          </FadeIn>
-        </div>
-
-        <HeroMedia
-          photoSrc={heroImg}
-          photoAlt="Sede da Hemissul em Boa Vista, Roraima"
-          videoSrc="/video/hero-antes-depois.mp4"
-          videoPoster={heroImg}
-          caption="Boa Vista, Roraima · Desde 2019"
-        />
-      </section>
+      <HomeHero slides={HOME_HERO_SLIDES} />
 
       <section className="home-proof" aria-label="Números da Hemissul">
         <div className="home-proof__grid">
@@ -167,10 +142,14 @@ export default function Home() {
             <span className="home-proof__label">veículos protegidos</span>
           </FadeIn>
           <FadeIn className="home-proof__item" delay={0.05}>
+            <strong className="home-proof__value">{SITE.metrics.repairsInvested}</strong>
+            <span className="home-proof__label">em reparos e indenizações</span>
+          </FadeIn>
+          <FadeIn className="home-proof__item" delay={0.1}>
             <strong className="home-proof__value">Desde 2019</strong>
             <span className="home-proof__label">presença e atendimento próximo</span>
           </FadeIn>
-          <FadeIn className="home-proof__item" delay={0.1}>
+          <FadeIn className="home-proof__item" delay={0.15}>
             <strong className="home-proof__value">24 h</strong>
             <span className="home-proof__label">
               assistência em todo o Brasil
@@ -279,8 +258,23 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
 
-        <ScrollMarquee items={marqueeRow} direction="left" speed={0.25} />
+      <section className="home-section indemnity-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <h2 className="home-section__title">
+              Indenizações que a gente cumpre.
+            </h2>
+            <p className="home-section__copy">
+              Associados que contaram com a Hemissul no momento mais difícil e
+              receberam o que foi combinado, dentro das condições do
+              regulamento.
+            </p>
+          </FadeIn>
+        </div>
+
+        <ScrollMarquee items={indenizacoesRow} direction="left" speed={0.2} />
       </section>
 
       <section className="home-section app-section">
@@ -448,7 +442,7 @@ export default function Home() {
             Seu veículo merece um plano para os imprevistos.
           </FadeIn>
           <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-primary">
+            <Link to="/cotacao" className="button-cta">
               Solicitar cotação <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </FadeIn>
