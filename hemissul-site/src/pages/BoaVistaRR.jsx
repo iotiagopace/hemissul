@@ -187,7 +187,7 @@ export default function BoaVistaRR() {
           <FadeIn className="home-section__intro">
             <h2 className="home-section__title">A região e a chegada.</h2>
             <p className="home-section__copy">
-              Pontos para você se planejar antes de visitar.
+              Informações úteis antes de ir até a sede.
             </p>
           </FadeIn>
 

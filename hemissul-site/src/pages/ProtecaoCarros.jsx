@@ -50,7 +50,7 @@ export default function ProtecaoCarros() {
               assistência 24 horas e atendimento em todo o Brasil.
             </p>
             <div className="home-hero__actions">
-              <Link to="/cotacao" className="button-primary">
+              <Link to="/cotacao" className="button-cta">
                 Cotar proteção para meu carro{' '}
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
@@ -156,7 +156,7 @@ export default function ProtecaoCarros() {
               apresenta as opções disponíveis e explica cada condição.
             </p>
             <div className="home-hero__actions">
-              <Link to="/cotacao" className="button-primary">
+              <Link to="/cotacao" className="button-cta">
                 Começar cotação <ArrowRight size={18} aria-hidden="true" />
               </Link>
             </div>

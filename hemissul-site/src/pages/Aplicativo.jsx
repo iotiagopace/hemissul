@@ -46,8 +46,8 @@ export default function Aplicativo() {
               O que você encontra no aplicativo.
             </h2>
             <p className="home-section__copy">
-              Recursos pensados para resolver o dia a dia do associado em poucos
-              toques.
+              Tudo que o associado resolve direto pelo aplicativo, sem ligar para
+              a central.
             </p>
           </FadeIn>
 
@@ -93,7 +93,7 @@ export default function Aplicativo() {
               Rastreamento
             </p>
             <h2 className="home-section__title">
-              O rastreio do seu veículo na palma da mão.
+              Rastreie seu veículo pelo aplicativo.
             </h2>
             <p
               className="home-section__copy"

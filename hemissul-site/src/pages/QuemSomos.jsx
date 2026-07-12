@@ -311,7 +311,7 @@ export default function QuemSomos() {
         <div className="site-container closing-section__inner">
           <FadeIn as="h2">Não conte com a sorte. Conte com a Hemissul.</FadeIn>
           <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-primary">
+            <Link to="/cotacao" className="button-cta">
               Fazer cotação <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </FadeIn>

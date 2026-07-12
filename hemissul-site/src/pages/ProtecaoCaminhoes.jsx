@@ -26,7 +26,7 @@ export default function ProtecaoCaminhoes() {
               regulamento.
             </p>
             <div className="home-hero__actions">
-              <Link to="/cotacao" className="button-primary">
+              <Link to="/cotacao" className="button-cta">
                 Cotar proteção para caminhão{' '}
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
@@ -104,7 +104,7 @@ export default function ProtecaoCaminhoes() {
         <div className="site-container closing-section__inner">
           <FadeIn as="h2">Pronto para proteger seu caminhão?</FadeIn>
           <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-primary">
+            <Link to="/cotacao" className="button-cta">
               <Truck size={18} aria-hidden="true" /> Solicitar cotação
             </Link>
           </FadeIn>

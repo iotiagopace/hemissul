@@ -28,7 +28,7 @@ export default function ProtecaoVeicular() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Proteção veicular</p>
             <h1 className="page-header__title">
-              Proteção para cuidar do seu patrimônio todos os dias.
+              Proteção patrimonial para o seu veículo.
             </h1>
             <p className="page-header__lede">
               A Hemissul reúne associados em um programa de proteção patrimonial
@@ -36,7 +36,7 @@ export default function ProtecaoVeicular() {
               furto e outros imprevistos previstos no regulamento.
             </p>
             <div className="home-hero__actions">
-              <Link to="/cotacao" className="button-primary">
+              <Link to="/cotacao" className="button-cta">
                 Fazer cotação <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link to="/documentos" className="button-secondary">
@@ -185,7 +185,7 @@ export default function ProtecaoVeicular() {
             Pronto para conhecer as opções para o seu veículo?
           </FadeIn>
           <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-primary">
+            <Link to="/cotacao" className="button-cta">
               Solicitar cotação <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </FadeIn>

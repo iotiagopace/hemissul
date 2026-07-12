@@ -25,7 +25,7 @@ export default function ProtecaoMotos() {
               todo o Brasil, para quem usa a moto todo dia.
             </p>
             <div className="home-hero__actions">
-              <Link to="/cotacao" className="button-primary">
+              <Link to="/cotacao" className="button-cta">
                 Cotar proteção para minha moto{' '}
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
@@ -103,7 +103,7 @@ export default function ProtecaoMotos() {
         <div className="site-container closing-section__inner">
           <FadeIn as="h2">Solicite uma cotação para sua moto.</FadeIn>
           <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-primary">
+            <Link to="/cotacao" className="button-cta">
               <Bike size={18} aria-hidden="true" /> Fazer cotação
             </Link>
           </FadeIn>
