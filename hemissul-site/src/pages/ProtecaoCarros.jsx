@@ -3,8 +3,8 @@ import { ArrowRight, MapPin } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import depoisGol from '../assets/antes-depois/depois-gol.jpeg'
 import depoisHb20 from '../assets/antes-depois/depois-hb20.jpeg'
-import depoisOnix from '../assets/antes-depois/depois-onix.jpeg'
 import depoisS10 from '../assets/antes-depois/depois-s10.jpeg'
+import onixHeader from '../assets/fotos-reais/onix-particular.jpg'
 
 const coberturas = [
   ['Colisão e perda total', 'Conforme critérios do regulamento.'],
@@ -60,8 +60,8 @@ export default function ProtecaoCarros() {
           <FadeIn delay={0.1}>
             <figure className="figure-frame">
               <img
-                src={depoisOnix}
-                alt="Onix após reparo registrado no acervo real da Hemissul"
+                src={onixHeader}
+                alt="Carro particular protegido pela Hemissul"
                 loading="lazy"
               />
             </figure>
