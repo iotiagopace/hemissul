@@ -695,10 +695,10 @@
 
   .home-proof__item {
     padding-block: var(--space-lg);
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: baseline;
-    gap: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3xs);
     border-bottom: var(--rule-hair) solid var(--color-rule-2);
   }
 
@@ -715,8 +715,12 @@
     letter-spacing: -0.04em;
   }
 
+  .home-proof__value {
+    line-height: 1;
+  }
+
   .home-proof__label {
-    max-width: 20ch;
+    max-width: 24ch;
     color: var(--color-muted);
     font-size: var(--text-sm);
     line-height: 1.35;
