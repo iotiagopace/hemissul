@@ -43,7 +43,7 @@ import indenizacao4 from '../assets/indenizacoes/indenizacao-4.jpeg'
 import indenizacao5 from '../assets/indenizacoes/indenizacao-5.jpeg'
 import indenizacao6 from '../assets/indenizacoes/indenizacao-6.jpeg'
 
-import sedeImg from '../assets/fotos-reais/sede-fachada-2.jpg'
+import sedeImg from '../assets/fotos-reais/fachada-hemissul.webp'
 
 const benefits = [
   {

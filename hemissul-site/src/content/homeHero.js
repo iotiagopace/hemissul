@@ -1,5 +1,5 @@
 import caminhaoEstrada from '../assets/fotos-reais/caminhao-por-do-sol.jpg'
-import sedeFachada from '../assets/fotos-reais/sede-fachada-2.jpg'
+import sedeFachada from '../assets/fotos-reais/fachada-hemissul.webp'
 import rangerImage from '../assets/antes-depois/depois-ranger.jpeg'
 import { SITE } from '../config/site'
 

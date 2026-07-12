@@ -2,7 +2,7 @@ import { Mail, MapPin, Phone, Clock3, Navigation } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import { WhatsappIcon } from '../components/SocialIcons'
 import sedeImg from '../assets/fotos-reais/sede-fachada.jpg'
-import sedeImg2 from '../assets/fotos-reais/sede-fachada-2.jpg'
+import sedeImg2 from '../assets/fotos-reais/fachada-hemissul.webp'
 
 const horarios = [
   ['Segunda a sexta', '8h às 18h'],
