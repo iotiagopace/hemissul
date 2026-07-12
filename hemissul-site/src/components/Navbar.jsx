@@ -47,7 +47,7 @@ const navGroups = [
     title: 'Hemissul',
     links: [
       ['Quem somos', '/quem-somos'],
-      ['Boa Vista — RR', '/boa-vista-rr'],
+      ['Boa Vista/RR', '/boa-vista-rr'],
       ['Blog', '/blog'],
       ['Podcast', '/podcast'],
       ['Trabalhe conosco', '/trabalhe-conosco'],
@@ -85,7 +85,7 @@ export default function Navbar() {
   return (
     <header className={`site-nav${open ? ' site-nav--open' : ''}`}>
       <div className="site-nav__bar">
-        <Link className="site-nav__logo" to="/" aria-label="Hemissul — início">
+        <Link className="site-nav__logo" to="/" aria-label="Hemissul, página inicial">
           <img src={logo} alt="Hemissul" width="800" height="300" />
         </Link>
 

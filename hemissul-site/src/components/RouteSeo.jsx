@@ -16,7 +16,7 @@ const orgSchema = {
       '@type': 'Organization',
       '@id': ORG_ID,
       name: 'Hemissul',
-      legalName: 'Hemissul — Associação de Proteção Patrimonial Mutualista',
+      legalName: 'Hemissul - Associação de Proteção Patrimonial Mutualista',
       url: `${DOMAIN}/`,
       logo: { '@type': 'ImageObject', url: LOGO },
       foundingDate: '2019',
@@ -155,8 +155,8 @@ const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   '@id': `${DOMAIN}/boa-vista-rr#local`,
-  name: 'Hemissul — Boa Vista, RR',
-  legalName: 'Hemissul — Associação de Proteção Patrimonial Mutualista',
+  name: 'Hemissul · Boa Vista, RR',
+  legalName: 'Hemissul - Associação de Proteção Patrimonial Mutualista',
   url: `${DOMAIN}/boa-vista-rr`,
   image: `${DOMAIN}/social/hemissul-og.png`,
   logo: LOGO,
@@ -213,7 +213,7 @@ const appSchema = {
   '@context': 'https://schema.org',
   '@type': 'MobileApplication',
   '@id': `${DOMAIN}/aplicativo#app`,
-  name: 'Hemissul — Clube de Benefícios',
+  name: 'Hemissul · Clube de Benefícios',
   operatingSystem: ['Android', 'iOS'],
   applicationCategory: 'UtilitiesApplication',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
@@ -261,7 +261,7 @@ const breadcrumb = (items) => ({
 
 const routeMeta = {
   '/': {
-    title: 'Hemissul — Proteção Veicular em Boa Vista e no Brasil',
+    title: 'Hemissul · Proteção Veicular em Boa Vista e no Brasil',
     description:
       'Proteção veicular mutualista para carros, motos e caminhões. Assistência 24 horas, rastreamento e atendimento nacional. Associe-se à Hemissul.',
     schemas: [orgSchema],
@@ -370,7 +370,7 @@ const routeMeta = {
     ],
   },
   '/aplicativo': {
-    title: 'Aplicativo Hemissul — Android e iOS',
+    title: 'Aplicativo Hemissul · Android e iOS',
     description:
       'Baixe o app Hemissul e acesse boletos, benefícios, assistência 24h, rastreamento e atendimento direto pelo celular.',
     schemas: [appSchema, breadcrumb([['Aplicativo', '/aplicativo']])],
@@ -388,7 +388,7 @@ const routeMeta = {
     schemas: [breadcrumb([['Comunicar Evento', '/comunicar-evento']])],
   },
   '/quem-somos': {
-    title: 'Quem Somos — História e Valores | Hemissul',
+    title: 'Quem Somos · História e Valores | Hemissul',
     description:
       'Conheça a Hemissul: fundada em 2019 em Boa Vista, com mais de 13 mil veículos protegidos e atendimento em todo o Brasil.',
     schemas: [
@@ -406,10 +406,10 @@ const routeMeta = {
     ],
   },
   '/boa-vista-rr': {
-    title: 'Hemissul em Boa Vista, Roraima — Sede e Contatos',
+    title: 'Hemissul em Boa Vista, Roraima · Sede e Contatos',
     description:
-      'Sede Hemissul: Av. Mário Homem de Melo, 3999, Buritis, Boa Vista — RR. Horários, mapa e canais de atendimento.',
-    schemas: [localBusinessSchema, breadcrumb([['Boa Vista — RR', '/boa-vista-rr']])],
+      'Sede Hemissul: Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR. Horários, mapa e canais de atendimento.',
+    schemas: [localBusinessSchema, breadcrumb([['Boa Vista/RR', '/boa-vista-rr']])],
   },
   '/duvidas-frequentes': {
     title: 'Dúvidas Frequentes sobre Proteção Veicular | Hemissul',
@@ -424,19 +424,19 @@ const routeMeta = {
     schemas: [breadcrumb([['Cotação', '/cotacao']])],
   },
   '/contato': {
-    title: 'Contato | Hemissul — Assistência, WhatsApp e E-mail',
+    title: 'Contato | Hemissul · Assistência, WhatsApp e E-mail',
     description:
       'Fale com a Hemissul: assistência 24h 0800 940 2163, WhatsApp cotação, pronta resposta e e-mail. Todos os canais em um lugar.',
     schemas: [contactPageSchema, breadcrumb([['Contato', '/contato']])],
   },
   '/clube-de-beneficios': {
-    title: 'Clube de Benefícios Hemissul — Vantagens para Associados',
+    title: 'Clube de Benefícios Hemissul · Vantagens para Associados',
     description:
       'Parceiros e vantagens exclusivas para associados Hemissul: academias, saúde, bem-estar, lazer e muito mais.',
     schemas: [breadcrumb([['Clube de Benefícios', '/clube-de-beneficios']])],
   },
   '/podcast': {
-    title: 'Podcast Hemissul — Histórias e Negócios',
+    title: 'Podcast Hemissul · Histórias e Negócios',
     description:
       'Conversas sobre empreendedorismo, transformação e vida plena com o Podcast Hemissul. Assista no YouTube ou ouça no Spotify.',
     schemas: [breadcrumb([['Podcast', '/podcast']])],
@@ -448,7 +448,7 @@ const routeMeta = {
     schemas: [breadcrumb([['Trabalhe Conosco', '/trabalhe-conosco']])],
   },
   '/blog': {
-    title: 'Blog Hemissul — Notícias e Orientações',
+    title: 'Blog Hemissul · Notícias e Orientações',
     description:
       'Notícias, histórias de atendimento e orientações sobre proteção veicular, assistência e benefícios para associados Hemissul.',
     schemas: [breadcrumb([['Blog', '/blog']])],

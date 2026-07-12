@@ -93,7 +93,7 @@ export default function ClubeBeneficios() {
             </h1>
             <p className="page-header__lede">
               Descontos de até 40% em saúde, educação, bem-estar e serviços
-              automotivos — exclusivos para associados Hemissul.
+              automotivos, exclusivos para associados Hemissul.
             </p>
             <Link to="/aplicativo" className="button-cta">
               Consultar benefícios no app <ArrowRight size={18} aria-hidden="true" />

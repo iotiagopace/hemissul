@@ -118,7 +118,7 @@ export default function Cotacao() {
               Documentos que aceleram a adesão.
             </h2>
             <p className="home-section__copy">
-              Não é preciso enviar tudo na cotação inicial — esses são os
+              Não é preciso enviar tudo na cotação inicial. Estes são os
               documentos solicitados ao longo do processo.
             </p>
           </FadeIn>

@@ -22,7 +22,7 @@ export default function ProtecaoMotos() {
             </h1>
             <p className="page-header__lede">
               Cobertura contra colisão, roubo e furto, com assistência 24h em
-              todo o Brasil — para quem usa a moto todo dia.
+              todo o Brasil, para quem usa a moto todo dia.
             </p>
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-primary">

@@ -11,7 +11,7 @@ const horarios = [
 ]
 
 const proximos = [
-  ['Zona', 'Buritis, Boa Vista — RR'],
+  ['Zona', 'Buritis, Boa Vista/RR'],
   ['CEP', '69309-198'],
   ['Estacionamento', 'Vagas na via e proximidades'],
   ['Acessibilidade', 'Entrada térrea sem degraus'],
@@ -23,7 +23,7 @@ export default function BoaVistaRR() {
       <header className="page-header">
         <div className="site-container split">
           <FadeIn className="page-header__inner">
-            <p className="page-header__eyebrow">Boa Vista — RR</p>
+            <p className="page-header__eyebrow">Boa Vista/RR</p>
             <h1 className="page-header__title">
               Atendimento próximo em Roraima. Assistência em todo o Brasil.
             </h1>
@@ -77,7 +77,7 @@ export default function BoaVistaRR() {
             <address className="page-address">
               Av. Mário Homem de Melo, 3999, Buritis
               <br />
-              Boa Vista — RR, CEP 69309-198
+              Boa Vista/RR, CEP 69309-198
             </address>
 
             <div className="contact-row-list">

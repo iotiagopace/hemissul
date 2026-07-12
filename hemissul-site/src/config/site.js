@@ -1,11 +1,11 @@
 export const SITE = {
   name: 'Hemissul',
-  legalName: 'Hemissul — Associação de Proteção Patrimonial Mutualista',
+  legalName: 'Hemissul - Associação de Proteção Patrimonial Mutualista',
   cnpj: '35.224.050/0001-37',
   siteUrl: 'https://hemissul.vercel.app',
   email: 'contato@hemissul.com.br',
-  address: 'Av. Mário Homem de Melo, 3999, Buritis, Boa Vista — RR, CEP 69309-198',
-  hours: 'Seg–Sex 8h–18h · Sáb 8h–12h',
+  address: 'Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR, CEP 69309-198',
+  hours: 'Seg a Sex, 8h às 18h · Sáb, 8h às 12h',
   phone: {
     assistance: '0800 940 2163',
     assistanceHref: 'tel:08009402163',

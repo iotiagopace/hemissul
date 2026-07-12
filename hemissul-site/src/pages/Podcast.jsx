@@ -125,7 +125,7 @@ export default function Podcast() {
             <article className="podcast-feature">
               <VideoEmbed
                 videoId={destaque.videoId}
-                title={`${destaque.title} — Hemissul Podcast #${destaque.number}`}
+                title={`${destaque.title} · Hemissul Podcast #${destaque.number}`}
               />
               <p className="podcast-feature__meta">
                 Episódio #{destaque.number} · {formatDate(destaque.date)}
@@ -157,7 +157,7 @@ export default function Podcast() {
               >
                 <VideoEmbed
                   videoId={ep.videoId}
-                  title={`${ep.title} — Hemissul Podcast #${ep.number}`}
+                  title={`${ep.title} · Hemissul Podcast #${ep.number}`}
                 />
                 <p className="podcast-card__meta">
                   Episódio #{ep.number} · {formatDate(ep.date)}

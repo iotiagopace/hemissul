@@ -14,7 +14,7 @@ import keniaCarla from '../assets/lideranca/kenia-carla.jpg'
 import jaquelineGomes from '../assets/lideranca/jaqueline-gomes.jpg'
 
 const numeros = [
-  ['2019', 'Fundada em Boa Vista — RR'],
+  ['2019', 'Fundada em Boa Vista/RR'],
   [SITE.metrics.protectedVehicles, 'veículos protegidos'],
   [SITE.metrics.repairsInvested, 'em reparos e indenizações'],
   ['SUSEP', 'associação regulamentada'],
@@ -93,7 +93,7 @@ export default function QuemSomos() {
             </h1>
             <p className="page-header__lede">
               A Hemissul nasceu em Boa Vista, em 2019, para oferecer proteção
-              patrimonial mutualista e suporte próximo aos associados — em
+              patrimonial mutualista e suporte próximo aos associados em
               qualquer canto do país.
             </p>
           </FadeIn>
@@ -241,7 +241,7 @@ export default function QuemSomos() {
             <dl className="info-list">
               <div>
                 <dt>Razão social</dt>
-                <dd>Hemissul — Associação de Proteção Patrimonial Mutualista</dd>
+                <dd>Hemissul - Associação de Proteção Patrimonial Mutualista</dd>
               </div>
               <div>
                 <dt>CNPJ</dt>
@@ -249,7 +249,7 @@ export default function QuemSomos() {
               </div>
               <div>
                 <dt>Fundação</dt>
-                <dd>2019, em Boa Vista — RR</dd>
+                <dd>2019, em Boa Vista/RR</dd>
               </div>
               <div>
                 <dt>Endereço</dt>

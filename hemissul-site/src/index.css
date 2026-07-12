@@ -868,8 +868,8 @@
   .vehicle-row__icon--glyph {
     display: grid;
     place-items: center;
-    background: var(--color-paper-2);
-    color: var(--color-accent-dark);
+    background: var(--color-accent);
+    color: #fff;
   }
 
   .vehicle-row__content {
@@ -3999,7 +3999,7 @@
     letter-spacing: -0.02em;
   }
 
-  /* Stat strip (Boa Vista — RR) ------------------------------------------ */
+  /* Stat strip (Boa Vista/RR) ------------------------------------------ */
   .local-strip {
     margin-block-start: var(--space-2xl);
     display: grid;
@@ -4059,7 +4059,7 @@
     }
   }
 
-  /* Contact rows (Boa Vista — RR, Contato) ------------------------------- */
+  /* Contact rows (Boa Vista/RR, Contato) ------------------------------- */
   .page-address {
     color: var(--color-ink-2);
     font-size: var(--text-md);

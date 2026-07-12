@@ -124,7 +124,7 @@ export default function Contato() {
             <address className="page-address">
               Av. Mário Homem de Melo, 3999, Buritis
               <br />
-              Boa Vista — RR, CEP 69309-198
+              Boa Vista/RR, CEP 69309-198
             </address>
             <p className="home-section__copy">
               Segunda a sexta, 8h às 18h. Sábado, 8h às 12h. A assistência 24 h

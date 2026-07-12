@@ -16,7 +16,7 @@ const footerLinks = [
   ['Clube de Benefícios', '/clube-de-beneficios'],
   ['Central do associado', '/central-do-associado'],
   ['Quem somos', '/quem-somos'],
-  ['Boa Vista — RR', '/boa-vista-rr'],
+  ['Boa Vista/RR', '/boa-vista-rr'],
   ['Dúvidas frequentes', '/duvidas-frequentes'],
   ['Blog', '/blog'],
   ['Podcast', '/podcast'],

@@ -40,7 +40,7 @@ export const HOME_HERO_SLIDES = [
       'Clube de benefícios',
       'Proteção contra roubo e furto',
     ],
-    title: 'Roubo, colisão ou perda total? A Hemissul resolve — sem letra miúda.',
+    title: 'Roubo, colisão ou perda total? A Hemissul resolve. Sem letra miúda.',
     description:
       'Proteção para carros, motos e caminhões, assistência 24h e atendimento em todo o Brasil.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },

@@ -55,7 +55,7 @@ export default function BeforeAfterSlider({
     >
       <img
         src={afterSrc}
-        alt={`${alt} — depois`}
+        alt={`${alt} depois`}
         loading="lazy"
         draggable="false"
         className="before-after__image"

@@ -176,7 +176,7 @@ export default function Home() {
             </h2>
             <p className="home-section__copy">
               Colisão, roubo, furto, perda total, danos a terceiros, assistência
-              24h e rastreamento — tudo conforme as regras do regulamento.
+              24h e rastreamento. Tudo conforme as regras do regulamento.
             </p>
           </FadeIn>
 
