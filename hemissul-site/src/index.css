@@ -591,7 +591,8 @@
 
   .button-primary,
   .button-secondary,
-  .button-cta {
+  .button-cta,
+  .button-cta-outline {
     min-height: 3rem;
     display: inline-flex;
     align-items: center;
