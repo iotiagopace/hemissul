@@ -8,7 +8,7 @@ import mockupRastreio from '../assets/mockups/app-rastreamento.png'
 
 const recursos = [
   { title: 'Boletos digitais', desc: 'Acesso e segunda via em qualquer hora.', icon: Receipt },
-  { title: 'Assistência 24 h', desc: 'Solicitação rápida e acompanhamento.', icon: Bell },
+  { title: 'Assistência 24h', desc: 'Solicitação rápida e acompanhamento.', icon: Bell },
   { title: 'Vantagens e benefícios', desc: 'Clube de descontos para o associado.', icon: Gift },
   { title: 'Bases e oficinas', desc: 'Rede credenciada com endereço e contato.', icon: MapPin },
   { title: 'Comunicação de eventos', desc: 'Abertura de chamados em poucos passos.', icon: MessageSquare },

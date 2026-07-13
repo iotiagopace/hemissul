@@ -35,7 +35,7 @@ export default function ComunicarEvento() {
             </p>
             <div className="home-hero__actions">
               <a href="tel:08009402163" className="button-primary">
-                <Phone size={18} aria-hidden="true" /> Assistência 24 h
+                <Phone size={18} aria-hidden="true" /> Assistência 24h
               </a>
               <a
                 href="https://wa.me/5595991574355"

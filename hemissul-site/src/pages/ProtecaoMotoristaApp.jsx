@@ -5,7 +5,7 @@ import motoristaApp from '../assets/fotos-reais/motorista-app-real.jpg'
 
 const coberturas = [
   ['Colisão, roubo, furto e perda total', 'Conforme o regulamento e o plano contratado.'],
-  ['Assistência 24 horas', 'Guincho, chaveiro e apoio na estrada a qualquer hora.'],
+  ['Assistência 24h', 'Guincho, chaveiro e apoio na estrada a qualquer hora.'],
   ['Carro reserva', 'Para você não ficar parado enquanto o veículo é reparado.'],
   ['Rastreamento', 'Localização e recuperação em caso de roubo ou furto.'],
 ]

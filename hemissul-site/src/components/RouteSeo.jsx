@@ -204,7 +204,7 @@ const contactPageSchema = {
   '@id': `${DOMAIN}/contato#page`,
   name: 'Contato | Hemissul',
   url: `${DOMAIN}/contato`,
-  description: 'Canais de atendimento Hemissul: assistência 24h, WhatsApp, e-mail e pronta resposta.',
+  description: 'Canais de atendimento Hemissul: assistência 24 horas, WhatsApp, e-mail e pronta resposta.',
   publisher: { '@id': ORG_ID },
   mainEntity: localBusinessSchema,
 }
@@ -222,7 +222,7 @@ const appSchema = {
     'https://apps.apple.com/br/app/hemissul-clube-de-benef%C3%ADcios/id1525372223',
   ],
   description:
-    'Acesse boletos, benefícios, assistência 24h, rastreamento e atendimento Hemissul direto pelo celular.',
+    'Acesse boletos, benefícios, assistência 24 horas, rastreamento e atendimento Hemissul direto pelo celular.',
   screenshot: OG_IMAGE,
   publisher: { '@id': ORG_ID },
 }
@@ -269,7 +269,7 @@ const routeMeta = {
   '/protecao-veicular': {
     title: 'Proteção Veicular Mutualista | Hemissul Roraima',
     description:
-      'Conheça o programa de proteção patrimonial mutualista da Hemissul para carros, motos e caminhões com assistência 24h em todo o Brasil.',
+      'Conheça o programa de proteção patrimonial mutualista da Hemissul para carros, motos e caminhões com assistência 24 horas em todo o Brasil.',
     schemas: [
       serviceBase(
         'Proteção Veicular Mutualista',
@@ -282,11 +282,11 @@ const routeMeta = {
   '/protecao-veicular/carros': {
     title: 'Proteção para Carros em Boa Vista | Hemissul',
     description:
-      'Proteção veicular e assistência 24h para carros de uso particular. Consulte cobertura, rastreamento e benefícios disponíveis na Hemissul.',
+      'Proteção veicular e assistência 24 horas para carros de uso particular. Consulte cobertura, rastreamento e benefícios disponíveis na Hemissul.',
     schemas: [
       serviceBase(
         'Proteção Veicular para Carros',
-        'Proteção e assistência 24h para carros de uso particular em todo o Brasil.',
+        'Proteção e assistência 24 horas para carros de uso particular em todo o Brasil.',
         '/protecao-veicular/carros',
       ),
       breadcrumb([
@@ -302,7 +302,7 @@ const routeMeta = {
     schemas: [
       serviceBase(
         'Proteção Veicular para Motos',
-        'Proteção e assistência 24h para motocicletas em todo o Brasil.',
+        'Proteção e assistência 24 horas para motocicletas em todo o Brasil.',
         '/protecao-veicular/motos',
       ),
       breadcrumb([
@@ -318,7 +318,7 @@ const routeMeta = {
     schemas: [
       serviceBase(
         'Proteção Veicular para Caminhões',
-        'Proteção e assistência 24h para caminhões e veículos de trabalho em todo o Brasil.',
+        'Proteção e assistência 24 horas para caminhões e veículos de trabalho em todo o Brasil.',
         '/protecao-veicular/caminhoes',
       ),
       breadcrumb([
@@ -330,11 +330,11 @@ const routeMeta = {
   '/protecao-veicular/motorista-aplicativo': {
     title: 'Proteção para Motorista de Aplicativo | Hemissul',
     description:
-      'Proteção veicular para motoristas de Uber, 99 e apps de entrega. Cobertura contra colisão, roubo e furto com assistência 24h.',
+      'Proteção veicular para motoristas de Uber, 99 e apps de entrega. Cobertura contra colisão, roubo e furto com assistência 24 horas.',
     schemas: [
       serviceBase(
         'Proteção Veicular para Motorista de Aplicativo',
-        'Proteção contra colisão, roubo e furto com assistência 24h para quem trabalha dirigindo por aplicativo.',
+        'Proteção contra colisão, roubo e furto com assistência 24 horas para quem trabalha dirigindo por aplicativo.',
         '/protecao-veicular/motorista-aplicativo',
       ),
       breadcrumb([
@@ -350,7 +350,7 @@ const routeMeta = {
     schemas: [
       serviceBase(
         'Assistência Veicular 24 Horas',
-        'Assistência veicular 24h com reboque, pane, chaveiro e suporte em todo o território nacional.',
+        'Assistência veicular 24 horas com reboque, pane, chaveiro e suporte em todo o território nacional.',
         '/assistencia-24h',
       ),
       breadcrumb([['Assistência 24h', '/assistencia-24h']]),
@@ -372,7 +372,7 @@ const routeMeta = {
   '/aplicativo': {
     title: 'Aplicativo Hemissul · Android e iOS',
     description:
-      'Baixe o app Hemissul e acesse boletos, benefícios, assistência 24h, rastreamento e atendimento direto pelo celular.',
+      'Baixe o app Hemissul e acesse boletos, benefícios, assistência 24 horas, rastreamento e atendimento direto pelo celular.',
     schemas: [appSchema, breadcrumb([['Aplicativo', '/aplicativo']])],
   },
   '/central-do-associado': {
@@ -414,7 +414,7 @@ const routeMeta = {
   '/duvidas-frequentes': {
     title: 'Dúvidas Frequentes sobre Proteção Veicular | Hemissul',
     description:
-      'Respostas sobre proteção mutualista, assistência 24h, rastreamento, roubo, rateio e adesão à Hemissul.',
+      'Respostas sobre proteção mutualista, assistência 24 horas, rastreamento, roubo, rateio e adesão à Hemissul.',
     schemas: [faqSchema, breadcrumb([['Dúvidas Frequentes', '/duvidas-frequentes']])],
   },
   '/cotacao': {
@@ -426,7 +426,7 @@ const routeMeta = {
   '/contato': {
     title: 'Contato | Hemissul · Assistência, WhatsApp e E-mail',
     description:
-      'Fale com a Hemissul: assistência 24h 0800 940 2163, WhatsApp cotação, pronta resposta e e-mail. Todos os canais em um lugar.',
+      'Fale com a Hemissul: assistência 24 horas 0800 940 2163, WhatsApp cotação, pronta resposta e e-mail. Todos os canais em um lugar.',
     schemas: [contactPageSchema, breadcrumb([['Contato', '/contato']])],
   },
   '/clube-de-beneficios': {

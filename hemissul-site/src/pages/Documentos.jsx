@@ -43,8 +43,7 @@ export default function Documentos() {
               Como tratamos privacidade, cookies e uso.
             </h2>
             <p className="home-section__copy">
-              Documentos que regem a relação digital com a Hemissul. Sujeitos
-              à revisão jurídica conforme atualizações regulatórias.
+              Documentos que regem a relação digital com a Hemissul.
             </p>
           </FadeIn>
 

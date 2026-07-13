@@ -27,7 +27,7 @@ const navGroups = [
   {
     title: 'Serviços',
     links: [
-      ['Assistência 24 h', '/assistencia-24h'],
+      ['Assistência 24h', '/assistencia-24h'],
       ['Rastreamento', '/rastreamento-veicular'],
       ['Aplicativo', '/aplicativo'],
       ['Clube de Benefícios', '/clube-de-beneficios'],
@@ -165,7 +165,7 @@ export default function Navbar() {
                 <a href={SITE.phone.assistanceHref}>
                   <Headphones size={19} aria-hidden="true" />
                   <span>
-                    <small>Assistência 24 horas</small>
+                    <small>Assistência 24h</small>
                     <strong>{SITE.phone.assistance}</strong>
                   </span>
                 </a>

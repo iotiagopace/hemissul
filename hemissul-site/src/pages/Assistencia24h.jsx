@@ -23,7 +23,7 @@ export default function Assistencia24h() {
       <header className="page-header">
         <div className="site-container split">
           <FadeIn className="page-header__inner">
-            <p className="page-header__eyebrow">Assistência 24 h</p>
+            <p className="page-header__eyebrow">Assistência 24h</p>
             <h1 className="page-header__title">
               Precisou de assistência? Estamos disponíveis 24 horas.
             </h1>

@@ -31,18 +31,18 @@ export const HOME_HERO_SLIDES = [
     type: 'video',
     src: '/video/hero-protecao.mp4',
     poster: '/video/hero-protecao-poster.jpg',
-    eyebrow: 'Proteção veicular · assistência 24 horas',
+    eyebrow: 'Proteção veicular · assistência 24h',
     // Frases-chave que se alternam (reforço de SEO). Todas ficam no HTML.
     rotatingWords: [
       'Proteção veicular',
-      'Assistência 24 horas',
+      'Assistência 24h',
       'Rastreamento veicular',
       'Clube de benefícios',
       'Proteção contra roubo e furto',
     ],
     title: 'Roubo, colisão ou perda total? A Hemissul resolve. Sem letra miúda.',
     description:
-      'Proteção para carros, motos e caminhões, assistência 24h e atendimento em todo o Brasil.',
+      'Proteção para carros, motos e caminhões, assistência 24 horas e atendimento em todo o Brasil.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a proteção', to: '/protecao-veicular' },
     mediaPosition: 'center center',
@@ -72,7 +72,7 @@ export const HOME_HERO_SLIDES = [
     eyebrow: 'Para quem vive na estrada',
     title: 'Seu trabalho não pode parar. Sua proteção também não.',
     description:
-      'Cobertura e assistência 24h para caminhoneiros, frotistas e motoristas de aplicativo.',
+      'Cobertura e assistência 24 horas para caminhoneiros, frotistas e motoristas de aplicativo.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Proteção para caminhões', to: '/protecao-veicular/caminhoes' },
     mediaPosition: '50% center',

@@ -5,7 +5,7 @@ import motociclistasImg from '../assets/fotos-reais/moto-por-do-sol.jpg'
 
 const beneficios = [
   ['Colisão, roubo, furto e perda total', 'Conforme o regulamento.'],
-  ['Assistência 24 h', 'Emergências previstas no plano contratado.'],
+  ['Assistência 24h', 'Emergências previstas no plano contratado.'],
   ['Rastreamento', 'Para modelos e categorias em que o equipamento for exigido ou contratado.'],
   ['Atendimento nacional', 'Pela rede de prestadores Hemissul.'],
 ]

@@ -52,7 +52,7 @@ const valores = [
     icon: Shield,
     title: 'Transparência',
     desc:
-      'Regulamento aberto, comunicação clara e nenhuma promessa que não esteja prevista no plano contratado.',
+      'Regulamento disponível mediante solicitação, comunicação clara e nenhuma promessa que não esteja prevista no plano contratado.',
   },
   {
     icon: Users,
@@ -70,7 +70,7 @@ const valores = [
     icon: Sparkles,
     title: 'Resposta rápida',
     desc:
-      'Pronta resposta 24 h, rede de prestadores acionada e processos pensados para destravar a rotina.',
+      'Pronta resposta 24 horas, rede de prestadores acionada e processos pensados para destravar a rotina.',
   },
 ]
 
@@ -78,7 +78,7 @@ const marcos = [
   ['2019', 'Fundação', 'A Hemissul nasce em Boa Vista com o propósito de oferecer proteção patrimonial mutualista.'],
   ['2021', 'Crescimento da rede', 'Ampliação da rede de prestadores e do atendimento em todo o território nacional.'],
   ['2023', 'Aplicativo do associado', 'Lançamento do app com boletos, benefícios, oficinas, assistência e comunicação de eventos.'],
-  ['2025', 'Mais de 13 mil veículos', 'A comunidade ultrapassa 13 mil veículos protegidos e R$ 15 milhões investidos em reparos e indenizações.'],
+  ['2025', 'Mais de 13 mil veículos', 'A comunidade ultrapassa 13 mil veículos protegidos e R$ 15 milhões pagos em reparos e indenizações.'],
 ]
 
 export default function QuemSomos() {

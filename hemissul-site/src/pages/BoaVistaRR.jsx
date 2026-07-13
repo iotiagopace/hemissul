@@ -86,7 +86,7 @@ export default function BoaVistaRR() {
                   <Phone size={18} aria-hidden="true" />
                 </span>
                 <div>
-                  <span className="contact-row__label">Assistência 24 h</span>
+                  <span className="contact-row__label">Assistência 24h</span>
                   <strong>0800 940 2163</strong>
                 </div>
               </a>
@@ -154,7 +154,7 @@ export default function BoaVistaRR() {
             </h2>
             <p className="home-section__copy">
               O atendimento presencial é dedicado para cotação, adesão,
-              vistorias e suporte. A assistência 24 h funciona todos os dias
+              vistorias e suporte. A assistência 24 horas funciona todos os dias
               pelo telefone.
             </p>
           </FadeIn>

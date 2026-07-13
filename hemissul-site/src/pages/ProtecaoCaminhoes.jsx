@@ -4,7 +4,7 @@ import FadeIn from '../components/FadeIn'
 import caminhaoEstrada from '../assets/fotos-reais/caminhao-por-do-sol.jpg'
 
 const oferta = [
-  ['Assistência emergencial 24 h', 'Conforme limites de quilometragem e serviços contratados.'],
+  ['Assistência emergencial 24h', 'Conforme limites de quilometragem e serviços contratados.'],
   ['Proteção para eventos previstos', 'De acordo com o programa contratado.'],
   ['Rede de atendimento', 'Em território nacional.'],
   ['Acompanhamento Hemissul', 'Pelos canais oficiais de comunicação.'],
@@ -79,7 +79,7 @@ export default function ProtecaoCaminhoes() {
       <section className="page-section">
         <div className="site-container split">
           <FadeIn className="number-statement">
-            <strong>24 h</strong>
+            <strong>24h</strong>
             <span>de assistência, conforme os limites do plano contratado.</span>
           </FadeIn>
 
@@ -89,9 +89,9 @@ export default function ProtecaoCaminhoes() {
             </p>
             <h2 className="home-section__title">Confirme com a equipe.</h2>
             <p className="home-section__copy">
-              Antes da adesão, confirme tipos de veículos aceitos, limites,
-              cargas, reboque e eventos incluídos. Esses dados devem vir do
-              plano comercial e do regulamento.
+              Antes da adesão, confirme com a equipe os tipos de veículos
+              aceitos, limites, cargas, reboque e eventos incluídos no seu
+              plano.
             </p>
             <Link to="/contato" className="type-link">
               Falar com a equipe <ArrowRight size={17} aria-hidden="true" />

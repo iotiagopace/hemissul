@@ -10,7 +10,7 @@ import { SITE } from '../config/site'
 
 const footerLinks = [
   ['Proteção veicular', '/protecao-veicular'],
-  ['Assistência 24 h', '/assistencia-24h'],
+  ['Assistência 24h', '/assistencia-24h'],
   ['Rastreamento', '/rastreamento-veicular'],
   ['Aplicativo', '/aplicativo'],
   ['Clube de Benefícios', '/clube-de-beneficios'],
@@ -44,7 +44,7 @@ export default function Footer() {
 
         <div className="site-footer__contacts">
           <div className="site-footer__contact">
-            <span className="site-footer__label">Assistência 24 h</span>
+            <span className="site-footer__label">Assistência 24h</span>
             <a href={SITE.phone.assistanceHref}>{SITE.phone.assistance}</a>
           </div>
           <div className="site-footer__contact">

@@ -67,7 +67,7 @@ const benefits = [
       'Suporte para danos materiais causados a terceiros, conforme o plano contratado.',
   },
   {
-    title: 'Assistência 24 horas',
+    title: 'Assistência 24h',
     description:
       'Apoio emergencial em todo o território nacional, a qualquer hora.',
   },
@@ -114,7 +114,7 @@ const testimonials = [
   },
   {
     quote:
-      'A assistência 24 h realmente funciona. Precisei de guincho de madrugada e fui atendido rapidamente.',
+      'A assistência 24 horas realmente funciona. Precisei de guincho de madrugada e fui atendido rapidamente.',
     author: 'Maria L.',
     role: 'Associada',
   },
@@ -160,7 +160,7 @@ export default function Home() {
             <span className="home-proof__label">presença e atendimento próximo</span>
           </FadeIn>
           <FadeIn className="home-proof__item" delay={0.15}>
-            <strong className="home-proof__value">24 h</strong>
+            <strong className="home-proof__value">24h</strong>
             <span className="home-proof__label">
               assistência em todo o Brasil
             </span>
@@ -176,7 +176,7 @@ export default function Home() {
             </h2>
             <p className="home-section__copy">
               Colisão, roubo, furto, perda total, danos a terceiros, assistência
-              24h e rastreamento. Tudo conforme as regras do regulamento.
+              24 horas e rastreamento. Tudo conforme as regras do regulamento.
             </p>
           </FadeIn>
 
@@ -302,7 +302,7 @@ export default function Home() {
             <h2>Tudo do seu plano no aplicativo.</h2>
             <p>
               Consulte boletos, benefícios, oficinas credenciadas, assistência
-              24 h e comunicação de eventos pelo aplicativo Hemissul.
+              24 horas e comunicação de eventos pelo aplicativo Hemissul.
             </p>
             <StoreBadges />
             <Link to="/aplicativo" className="type-link">
@@ -476,7 +476,7 @@ export default function Home() {
               {SITE.address}
             </address>
             <p>
-              <PhoneCall size={18} aria-hidden="true" /> Assistência 24 h:{' '}
+              <PhoneCall size={18} aria-hidden="true" /> Assistência 24h:{' '}
               <a href={SITE.phone.assistanceHref}>{SITE.phone.assistance}</a>
             </p>
             <p>

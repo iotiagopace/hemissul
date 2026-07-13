@@ -4,7 +4,7 @@ import { WhatsappIcon, InstagramIcon, FacebookIcon, YoutubeIcon, LinkedInIcon } 
 
 const canais = [
   {
-    title: 'Assistência 24 h',
+    title: 'Assistência 24h',
     desc: 'Pane, reboque, atendimento emergencial.',
     value: '0800 940 2163',
     href: 'tel:08009402163',
@@ -127,8 +127,8 @@ export default function Contato() {
               Boa Vista/RR, CEP 69309-198
             </address>
             <p className="home-section__copy">
-              Segunda a sexta, 8h às 18h. Sábado, 8h às 12h. A assistência 24 h
-              opera todos os dias.
+              Segunda a sexta, 8h às 18h. Sábado, 8h às 12h. A assistência 24
+              horas opera todos os dias.
             </p>
             <a
               className="type-link"

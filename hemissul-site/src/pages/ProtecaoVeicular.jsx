@@ -14,7 +14,7 @@ const etapas = [
 const inclui = [
   'Colisão, perda total, roubo e furto',
   'Danos materiais a terceiros',
-  'Assistência 24 h e reboque',
+  'Assistência 24h e reboque',
   'Carro reserva',
   'Rastreamento veicular',
   'Outros benefícios, quando incluídos no plano',
@@ -124,9 +124,9 @@ export default function ProtecaoVeicular() {
               className="home-section__copy"
               style={{ color: 'var(--color-ink-subtle)' }}
             >
-              A lista final reproduz exatamente os planos comercializados no
-              momento da cotação. A adesão é simplificada, mas depende de
-              elegibilidade, vistoria, documentos e confirmação da Hemissul.
+              Os benefícios disponíveis variam conforme o plano contratado. A
+              adesão é simplificada, mas depende de elegibilidade, vistoria,
+              documentos e confirmação da Hemissul.
             </p>
           </FadeIn>
 

@@ -10,7 +10,7 @@ const coberturas = [
   ['Colisão e perda total', 'Conforme critérios do regulamento.'],
   ['Roubo e furto', 'Com busca e localização quando houver rastreador.'],
   ['Danos a terceiros', 'Conforme limite contratado.'],
-  ['Assistência 24 h', 'Para situações emergenciais previstas no plano.'],
+  ['Assistência 24h', 'Para situações emergenciais previstas no plano.'],
   ['Carro reserva e rastreamento', 'De acordo com o plano contratado.'],
 ]
 
