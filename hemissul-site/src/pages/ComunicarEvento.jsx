@@ -34,14 +34,14 @@ export default function ComunicarEvento() {
               correta para o seu caso.
             </p>
             <div className="home-hero__actions">
-              <a href="tel:08009402163" className="button-primary">
+              <a href="tel:08009402163" className="button-cta">
                 <Phone size={18} aria-hidden="true" /> Assistência 24h
               </a>
               <a
                 href="https://wa.me/5595991574355"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button-secondary"
+                className="button-cta-outline"
               >
                 Pronta resposta (WhatsApp)
               </a>

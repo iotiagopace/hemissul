@@ -81,7 +81,7 @@ export default function BoaVistaRR() {
             </address>
 
             <div className="contact-row-list">
-              <a className="contact-row" href="tel:08009402163">
+              <a className="contact-row contact-row--urgent" href="tel:08009402163">
                 <span className="contact-row__icon">
                   <Phone size={18} aria-hidden="true" />
                 </span>
@@ -105,7 +105,7 @@ export default function BoaVistaRR() {
                 </div>
               </a>
               <a
-                className="contact-row"
+                className="contact-row contact-row--urgent"
                 href="https://wa.me/5595991574355"
                 target="_blank"
                 rel="noopener noreferrer"

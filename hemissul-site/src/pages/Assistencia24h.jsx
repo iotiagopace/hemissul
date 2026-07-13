@@ -32,14 +32,14 @@ export default function Assistencia24h() {
               veículo e o que aconteceu. A equipe orienta cada passo.
             </p>
             <div className="home-hero__actions">
-              <a href="tel:08009402163" className="button-primary">
+              <a href="tel:08009402163" className="button-cta">
                 <Phone size={18} aria-hidden="true" /> Ligar 0800 940 2163
               </a>
               <a
                 href="https://wa.me/5595991574355"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button-secondary"
+                className="button-cta-outline"
               >
                 Pronta resposta no WhatsApp
               </a>
@@ -132,7 +132,7 @@ export default function Assistencia24h() {
         <div className="site-container closing-section__inner">
           <FadeIn as="h2">Salve o número da assistência no celular.</FadeIn>
           <FadeIn delay={0.1}>
-            <a href="tel:08009402163" className="button-primary">
+            <a href="tel:08009402163" className="button-cta">
               <Phone size={18} aria-hidden="true" /> 0800 940 2163
             </a>
           </FadeIn>

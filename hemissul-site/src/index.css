@@ -616,11 +616,18 @@
     color: var(--color-accent-ink);
   }
 
-  /* CTA de conversão em verde semáforo */
+  /* CTA de conversão — laranja quente, complementar ao azul */
   .button-cta {
     border-color: var(--color-cta);
     background: var(--color-cta);
     color: var(--color-cta-ink);
+  }
+
+  /* Contorno laranja — usado ao lado do .button-cta (ex.: Ligar + Pronta resposta) */
+  .button-cta-outline {
+    border-color: var(--color-cta);
+    background: transparent;
+    color: var(--color-cta-dark);
   }
 
   .button-secondary {
@@ -630,7 +637,8 @@
 
   .button-primary:active,
   .button-secondary:active,
-  .button-cta:active {
+  .button-cta:active,
+  .button-cta-outline:active {
     transform: translateY(1px);
   }
 
@@ -1192,6 +1200,11 @@
   .home-banner__secondary:hover {
     background: var(--color-ink);
     color: var(--color-paper);
+  }
+
+  .button-cta-outline:hover {
+    background: var(--color-cta);
+    color: var(--color-cta-ink);
   }
 
   .site-nav__menu-button:hover .site-nav__menu-icon {
@@ -2331,7 +2344,10 @@
     color: var(--color-ink);
   }
 
-  .page-light a {
+  /* :where() zera a especificidade deste seletor genérico, garantindo que
+     qualquer componente com cor própria (botões, pills, cards) sempre vença,
+     independente da ordem no arquivo. */
+  :where(.page-light) a {
     color: var(--color-accent-dark);
   }
 
@@ -4146,14 +4162,14 @@
     text-transform: uppercase;
   }
 
-  /* Contact extras --------------------------------------------------------- */
+  /* Contact extras — canais urgentes (Ligar / Pronta resposta) em laranja - */
   .contact-row--urgent strong {
-    color: var(--color-accent-dark);
+    color: var(--color-cta-dark);
   }
 
   .contact-row--urgent .contact-row__icon {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+    background: var(--color-cta);
+    color: var(--color-cta-ink);
   }
 
   .contact-row__desc {
