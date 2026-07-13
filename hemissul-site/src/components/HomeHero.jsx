@@ -104,6 +104,7 @@ export default function HomeHero({ slides }) {
   return (
     <section
       className="home-banner"
+      role="region"
       aria-roledescription={hasMultipleSlides ? 'carrossel' : undefined}
       aria-label="Destaque Hemissul"
       style={{

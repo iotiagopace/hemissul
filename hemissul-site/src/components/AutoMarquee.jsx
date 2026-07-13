@@ -24,7 +24,14 @@ export default function AutoMarquee({ items = [], seconds = 40, className = '' }
             aria-hidden={index >= items.length ? 'true' : undefined}
           >
             <figure>
-              <img src={item.src} alt={item.alt || ''} loading="lazy" draggable="false" />
+              <img
+                src={item.src}
+                alt={item.alt || ''}
+                loading="lazy"
+                draggable="false"
+                width="225"
+                height="300"
+              />
               {item.label && <figcaption>{item.label}</figcaption>}
             </figure>
           </li>

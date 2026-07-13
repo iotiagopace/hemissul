@@ -29,7 +29,7 @@ export default function VideoTestimonials() {
               onClick={() => setActive(index)}
               aria-label={`Reproduzir depoimento de associado ${index + 1}`}
             >
-              <img src={video.poster} alt="" loading="lazy" />
+              <img src={video.poster} alt="" loading="lazy" width="270" height="480" />
               <span className="video-testimonial__play" aria-hidden="true">
                 <Play size={22} fill="currentColor" />
               </span>

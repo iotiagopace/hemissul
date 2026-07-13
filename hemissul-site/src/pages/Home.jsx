@@ -389,7 +389,7 @@ export default function Home() {
               <FadeIn key={post.slug} delay={index * 0.06}>
                 <Link to={`/blog/${post.slug}`} className="teaser-card">
                   <figure className="teaser-card__media">
-                    <img src={post.image} alt="" loading="lazy" />
+                    <img src={post.image} alt="" loading="lazy" width="400" height="250" />
                   </figure>
                   <div className="teaser-card__body">
                     <p className="teaser-card__meta">
@@ -408,6 +408,8 @@ export default function Home() {
                     src={`https://img.youtube.com/vi/${PODCAST_TEASER_VIDEO}/hqdefault.jpg`}
                     alt=""
                     loading="lazy"
+                    width="400"
+                    height="250"
                   />
                   <span className="teaser-card__play" aria-hidden="true">
                     <Play size={22} fill="currentColor" />
@@ -438,8 +440,8 @@ export default function Home() {
         <img
           src={sedeImg}
           alt="Sede da Hemissul na Avenida Mário Homem de Melo, em Boa Vista"
-          width="1920"
-          height="1280"
+          width="1269"
+          height="869"
           loading="lazy"
         />
         <div className="brand-photo__caption">

@@ -31,6 +31,8 @@ export default function AppMockupStory() {
           src={mockupApp}
           alt="Aplicativo Hemissul exibindo os serviços disponíveis ao associado"
           loading="lazy"
+          width="1080"
+          height="1080"
         />
       </FadeIn>
 

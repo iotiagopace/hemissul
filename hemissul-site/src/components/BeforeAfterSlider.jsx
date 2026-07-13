@@ -59,6 +59,8 @@ export default function BeforeAfterSlider({
         loading="lazy"
         draggable="false"
         className="before-after__image"
+        width="800"
+        height="600"
       />
       <div
         className="before-after__overlay"
@@ -71,6 +73,8 @@ export default function BeforeAfterSlider({
           loading="lazy"
           draggable="false"
           className="before-after__image"
+          width="800"
+          height="600"
         />
       </div>
 

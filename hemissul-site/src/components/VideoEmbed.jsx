@@ -24,6 +24,8 @@ export default function VideoEmbed({
           src={thumb}
           alt=""
           loading="lazy"
+          width="640"
+          height="360"
           className="video-embed__poster"
           onError={(event) => {
             event.currentTarget.onerror = null

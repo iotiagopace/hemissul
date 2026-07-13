@@ -1,0 +1,27 @@
+# Hemissul
+
+> Associação de proteção patrimonial mutualista para veículos (carros, motos, caminhões), com sede em Boa Vista, Roraima, e atendimento em todo o Brasil. Não é uma seguradora — os benefícios seguem o regulamento do programa.
+
+A Hemissul oferece cobertura para colisão, roubo, furto, perda total e danos a terceiros, além de assistência 24 horas e rastreamento veicular. Fundada em 2019.
+
+## Páginas principais
+
+- [Home](https://hemissul.vercel.app/): visão geral da proteção veicular Hemissul
+- [Proteção Veicular](https://hemissul.vercel.app/protecao-veicular): como funciona o programa
+- [Carros](https://hemissul.vercel.app/protecao-veicular/carros): proteção para carros particulares
+- [Motos](https://hemissul.vercel.app/protecao-veicular/motos): proteção para motocicletas
+- [Caminhões](https://hemissul.vercel.app/protecao-veicular/caminhoes): proteção para caminhões e frotistas
+- [Motorista de aplicativo](https://hemissul.vercel.app/protecao-veicular/motorista-aplicativo): proteção para quem dirige por Uber, 99 ou apps de entrega
+- [Assistência 24h](https://hemissul.vercel.app/assistencia-24h): reboque, chaveiro, troca de pneu
+- [Rastreamento veicular](https://hemissul.vercel.app/rastreamento-veicular): localização em tempo real
+- [Clube de Benefícios](https://hemissul.vercel.app/clube-de-beneficios): descontos com parceiros
+- [Quem Somos](https://hemissul.vercel.app/quem-somos): história, liderança e modelo mutualista
+- [Dúvidas Frequentes](https://hemissul.vercel.app/duvidas-frequentes): perguntas sobre o programa
+- [Cotação](https://hemissul.vercel.app/cotacao): como solicitar uma proposta
+- [Contato](https://hemissul.vercel.app/contato): canais de atendimento
+
+## Contato
+
+- Assistência 24h: 0800 940 2163
+- E-mail: contato@hemissul.com.br
+- Endereço: Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR, CEP 69309-198
