@@ -1,3 +1,60 @@
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-light-italic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-regular-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-medium-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-bold-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --color-paper: oklch(97% 0.010 245);
   --color-paper-2: oklch(94% 0.016 245);
@@ -21,8 +78,8 @@
   --color-ink-muted: oklch(68% 0.022 245);
   --color-ink-subtle: oklch(78% 0.018 245);
 
-  --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
-  --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-display: "Neue Montreal", ui-sans-serif, sans-serif;
+  --font-body: "Neue Montreal", ui-sans-serif, sans-serif;
 
   --space-3xs: 0.125rem;
   --space-2xs: 0.25rem;

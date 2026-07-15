@@ -24,28 +24,11 @@
     <meta name="twitter:description" content="Proteção veicular mutualista para carros, motos e caminhões. Assistência 24 horas e atendimento nacional." />
     <meta name="twitter:image" content="https://hemissul.vercel.app/social/hemissul-og.png" />
     <link rel="canonical" href="https://hemissul.vercel.app/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Poster do vídeo do hero: candidato a LCP, carrega com prioridade máxima -->
     <link rel="preload" as="image" href="/video/hero-protecao-poster.jpg" fetchpriority="high" />
-    <!-- Fontes carregadas de forma assíncrona (não bloqueiam a renderização inicial) -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      />
-    </noscript>
+    <!-- Fonte auto-hospedada (Neue Montreal): peso usado no título do hero, evita FOUT no LCP de texto -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/neue-montreal-bold.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/neue-montreal-regular.woff2" crossorigin />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
