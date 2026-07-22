@@ -1,5 +1,5 @@
 /* Hallmark · genre: editorial · macrostructure: Photographic + Split Diptych
- * theme: custom · vibe: "local, assured, useful, human" · paper: oklch(97% 0.010 245) · accent: oklch(56% 0.170 245)
+ * theme: custom · vibe: "local, assured, useful, human" · paper: oklch(97% 0.008 270) · accent: oklch(48% 0.110 268)
  * display: Neue Montreal · body: Neue Montreal · axes: light / geometric-sans / cool
  * design-system: design.md · designed-as-app · critique: P5 H5 E4 S5 R5 V5
  */
@@ -7,31 +7,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: oklch(56% 0.170 245);
-  --color-primary-dark: oklch(43% 0.145 245);
-  --color-primary-light: oklch(68% 0.145 245);
-  --color-accent: oklch(56% 0.170 245);
-  /* CTA de conversão — verde (cotação e ações principais) */
-  --color-cta: oklch(60% 0.16 150);
-  --color-cta-dark: oklch(52% 0.145 150);
+  --color-primary: oklch(48% 0.110 268);
+  --color-primary-dark: oklch(38% 0.095 270);
+  --color-primary-light: oklch(66% 0.090 272);
+  --color-accent: oklch(48% 0.110 268);
+  /* CTA de conversão — verde da paleta oficial (#00A26F) */
+  --color-cta: oklch(63% 0.135 162);
+  --color-cta-dark: oklch(54% 0.120 162);
   --color-cta-ink: oklch(100% 0 0);
   /* WhatsApp — mesmo verde da marca de conversão */
-  --color-whats: oklch(60% 0.16 150);
-  --color-whats-dark: oklch(52% 0.145 150);
+  --color-whats: oklch(63% 0.135 162);
+  --color-whats-dark: oklch(54% 0.120 162);
   /* Emergência / atenção — laranja quente (assistência 24h no hero) */
   --color-warn: oklch(64% 0.175 50);
   --color-warn-dark: oklch(56% 0.16 50);
-  --color-dark: oklch(20% 0.035 245);
-  --color-dark-card: oklch(25% 0.032 245);
-  --color-gray-text: oklch(42% 0.022 245);
-  --color-light-bg: oklch(94% 0.016 245);
-  --color-paper: oklch(97% 0.010 245);
-  --color-paper-2: oklch(94% 0.016 245);
-  --color-paper-3: oklch(90% 0.022 245);
-  --color-ink: oklch(20% 0.035 245);
-  --color-ink-2: oklch(34% 0.030 245);
-  --color-rule: oklch(82% 0.020 245);
-  --color-muted: oklch(42% 0.022 245);
+  --color-dark: oklch(24% 0.058 268);
+  --color-dark-card: oklch(29% 0.062 270);
+  --color-gray-text: oklch(47% 0.028 268);
+  --color-light-bg: oklch(94% 0.015 270);
+  --color-paper: oklch(97% 0.008 270);
+  --color-paper-2: oklch(94% 0.015 270);
+  --color-paper-3: oklch(90% 0.025 272);
+  --color-ink: oklch(24% 0.058 268);
+  --color-ink-2: oklch(35% 0.030 268);
+  --color-rule: oklch(82% 0.016 268);
+  --color-muted: oklch(47% 0.028 268);
 
   --font-heading: "Neue Montreal", ui-sans-serif, sans-serif;
   --font-body: "Neue Montreal", ui-sans-serif, sans-serif;
@@ -405,8 +405,8 @@
   .home-banner__veil {
     z-index: -1;
     background:
-      linear-gradient(90deg, oklch(13% 0.04 245 / 0.86) 0%, oklch(16% 0.04 245 / 0.62) 42%, transparent 76%),
-      linear-gradient(0deg, oklch(10% 0.03 245 / 0.5) 0%, transparent 45%);
+      linear-gradient(90deg, oklch(13% 0.04 268 / 0.86) 0%, oklch(16% 0.04 268 / 0.62) 42%, transparent 76%),
+      linear-gradient(0deg, oklch(10% 0.03 268 / 0.5) 0%, transparent 45%);
   }
 
   .home-banner__inner {
@@ -454,7 +454,7 @@
   .home-banner__description {
     max-width: 34rem;
     margin-block-start: var(--space-lg);
-    color: oklch(91% 0.015 245);
+    color: oklch(91% 0.015 268);
     font-size: clamp(1rem, 1.4vw, 1.25rem);
   }
 
@@ -491,7 +491,7 @@
 
   .home-banner__secondary {
     border-color: oklch(100% 0 0 / 0.42);
-    background: oklch(15% 0.04 245 / 0.3);
+    background: oklch(15% 0.04 268 / 0.3);
     color: var(--color-paper);
     backdrop-filter: blur(10px);
   }
@@ -562,7 +562,7 @@
     padding-inline: var(--space-sm);
     border: var(--rule-hair) solid oklch(100% 0 0 / 0.3);
     border-radius: var(--radius-pill);
-    background: oklch(15% 0.04 245 / 0.36);
+    background: oklch(15% 0.04 268 / 0.36);
     color: var(--color-paper);
     font: 500 var(--text-xs) / 1 var(--font-body);
     cursor: pointer;
@@ -785,7 +785,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    box-shadow: 0 8px 24px oklch(56% 0.170 245 / 0.25);
+    box-shadow: 0 8px 24px oklch(56% 0.170 268 / 0.25);
   }
 
   .home-proof__badge-pill svg {
@@ -1286,7 +1286,7 @@
 
   .home-banner__playback:hover {
     border-color: var(--color-accent-light);
-    background: oklch(15% 0.04 245 / 0.62);
+    background: oklch(15% 0.04 268 / 0.62);
   }
 
   .type-link:hover {
@@ -1475,8 +1475,8 @@
 
   .home-banner__veil {
     background:
-      linear-gradient(0deg, oklch(12% 0.04 245 / 0.88) 0%, oklch(14% 0.04 245 / 0.5) 62%, oklch(12% 0.03 245 / 0.22) 100%),
-      linear-gradient(90deg, oklch(12% 0.04 245 / 0.42), transparent 80%);
+      linear-gradient(0deg, oklch(12% 0.04 268 / 0.88) 0%, oklch(14% 0.04 268 / 0.5) 62%, oklch(12% 0.03 268 / 0.22) 100%),
+      linear-gradient(90deg, oklch(12% 0.04 268 / 0.42), transparent 80%);
   }
 
   .home-banner__inner {
@@ -1756,7 +1756,7 @@
     inset: 0 50% 0 50%;
     width: 2px;
     background: var(--color-paper);
-    box-shadow: 0 0 0 1px oklch(20% 0.035 245 / 0.18);
+    box-shadow: 0 0 0 1px oklch(20% 0.035 268 / 0.18);
   }
 
   .before-after__knob {
@@ -1772,8 +1772,8 @@
     background: var(--color-paper);
     color: var(--color-ink);
     box-shadow:
-      0 12px 32px -16px oklch(20% 0.035 245 / 0.55),
-      0 0 0 1px oklch(20% 0.035 245 / 0.16);
+      0 12px 32px -16px oklch(20% 0.035 268 / 0.55),
+      0 0 0 1px oklch(20% 0.035 268 / 0.16);
   }
 
   /* Video Embed ----------------------------------------------------------- */
@@ -1808,7 +1808,7 @@
     border-radius: 999px;
     background: var(--color-accent);
     color: var(--color-accent-ink);
-    box-shadow: 0 24px 48px -16px oklch(20% 0.035 245 / 0.6);
+    box-shadow: 0 24px 48px -16px oklch(20% 0.035 268 / 0.6);
     transition: transform var(--dur-short) var(--ease-out);
   }
 
@@ -2095,24 +2095,23 @@
     animation-play-state: paused;
   }
 
+  /* As artes dos parceiros são cartões 16:9 com fundo próprio —
+     a imagem preenche a célula inteira, sem moldura branca. */
   .logo-marquee__item {
     flex: 0 0 auto;
-    display: grid;
-    place-items: center;
-    width: clamp(7.5rem, 14vw, 10rem);
-    height: clamp(4.5rem, 8vw, 5.5rem);
-    padding: var(--space-md);
+    width: clamp(9rem, 16vw, 12.5rem);
+    aspect-ratio: 16 / 9;
     border: var(--rule-hair) solid var(--color-rule);
     border-radius: var(--radius-md);
+    overflow: hidden;
     background: #fff;
   }
 
   .logo-marquee__item img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 
   .logo-marquee--static .logo-marquee__track {
@@ -4420,7 +4419,7 @@
     border-radius: var(--radius-card);
     background: var(--color-paper-bright);
     border: var(--rule-hair) solid var(--color-rule-2);
-    box-shadow: 0 10px 30px oklch(20% 0.035 245 / 0.08);
+    box-shadow: 0 10px 30px oklch(20% 0.035 268 / 0.08);
     overflow: hidden;
   }
 
@@ -4428,8 +4427,8 @@
   .coverage-card__head {
     padding: var(--space-lg) var(--space-xl);
     background:
-      radial-gradient(120% 160% at 85% 0%, oklch(45% 0.09 165 / 0.55), transparent 55%),
-      linear-gradient(135deg, oklch(24% 0.05 235), oklch(18% 0.04 245));
+      radial-gradient(120% 160% at 85% 0%, oklch(45% 0.10 162 / 0.55), transparent 55%),
+      linear-gradient(135deg, oklch(24% 0.05 270), oklch(18% 0.04 268));
   }
 
   .coverage-card__number {

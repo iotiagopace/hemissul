@@ -55,28 +55,31 @@
   font-display: swap;
 }
 
+/* Paleta oficial Hemissul (swatch do cliente):
+ * navy #212B5B · navy profundo #131C36 · royal #3A5397 · periwinkle #6D83C1
+ * lavanda #D5DEF0 · verde #00A26F · slate #333A4A · cinza #6B7385 · claro #BEC4D1 */
 :root {
-  --color-paper: oklch(97% 0.010 245);
-  --color-paper-2: oklch(94% 0.016 245);
-  --color-paper-3: oklch(90% 0.022 245);
-  --color-ink: oklch(20% 0.035 245);
-  --color-ink-2: oklch(34% 0.030 245);
-  --color-rule: oklch(82% 0.020 245);
-  --color-rule-2: oklch(88% 0.016 245);
-  --color-muted: oklch(42% 0.022 245);
-  --color-accent: oklch(56% 0.170 245);
-  --color-accent-dark: oklch(43% 0.145 245);
-  --color-accent-light: oklch(78% 0.145 245);
-  --color-accent-wash: oklch(93% 0.035 245);
-  --color-accent-glow: oklch(56% 0.170 245 / 0.18);
-  --color-accent-ink: oklch(18% 0.030 245);
-  --color-focus: oklch(24% 0.180 245);
-  --color-paper-bright: oklch(99% 0.006 245);
-  --color-nav-surface: oklch(97% 0.010 245 / 0.94);
-  --color-overlay: oklch(20% 0.035 245 / 0.9);
-  --color-ink-rule: oklch(38% 0.030 245);
-  --color-ink-muted: oklch(68% 0.022 245);
-  --color-ink-subtle: oklch(78% 0.018 245);
+  --color-paper: oklch(97% 0.008 270);
+  --color-paper-2: oklch(94% 0.015 270);
+  --color-paper-3: oklch(90% 0.025 272);
+  --color-ink: oklch(24% 0.058 268);
+  --color-ink-2: oklch(35% 0.030 268);
+  --color-rule: oklch(82% 0.016 268);
+  --color-rule-2: oklch(88% 0.012 268);
+  --color-muted: oklch(47% 0.028 268);
+  --color-accent: oklch(48% 0.110 268);
+  --color-accent-dark: oklch(38% 0.095 270);
+  --color-accent-light: oklch(66% 0.090 272);
+  --color-accent-wash: oklch(93% 0.022 272);
+  --color-accent-glow: oklch(48% 0.110 268 / 0.18);
+  --color-accent-ink: oklch(20% 0.050 268);
+  --color-focus: oklch(31% 0.100 270);
+  --color-paper-bright: oklch(99% 0.004 270);
+  --color-nav-surface: oklch(97% 0.008 270 / 0.94);
+  --color-overlay: oklch(24% 0.058 268 / 0.9);
+  --color-ink-rule: oklch(38% 0.050 268);
+  --color-ink-muted: oklch(68% 0.030 270);
+  --color-ink-subtle: oklch(78% 0.026 270);
 
   --font-display: "Neue Montreal", ui-sans-serif, sans-serif;
   --font-body: "Neue Montreal", ui-sans-serif, sans-serif;
