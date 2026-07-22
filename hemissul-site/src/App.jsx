@@ -15,6 +15,7 @@ const ProtecaoCarros = lazy(() => import('./pages/ProtecaoCarros'))
 const ProtecaoMotos = lazy(() => import('./pages/ProtecaoMotos'))
 const ProtecaoCaminhoes = lazy(() => import('./pages/ProtecaoCaminhoes'))
 const ProtecaoMotoristaApp = lazy(() => import('./pages/ProtecaoMotoristaApp'))
+const ProtecaoFrotas = lazy(() => import('./pages/ProtecaoFrotas'))
 const Assistencia24h = lazy(() => import('./pages/Assistencia24h'))
 const Rastreamento = lazy(() => import('./pages/Rastreamento'))
 const Aplicativo = lazy(() => import('./pages/Aplicativo'))
@@ -52,6 +53,7 @@ export default function App() {
             <Route path="/protecao-veicular/motos" element={<ProtecaoMotos />} />
             <Route path="/protecao-veicular/caminhoes" element={<ProtecaoCaminhoes />} />
             <Route path="/protecao-veicular/motorista-aplicativo" element={<ProtecaoMotoristaApp />} />
+            <Route path="/protecao-veicular/frotas-empresas" element={<ProtecaoFrotas />} />
             <Route path="/assistencia-24h" element={<Assistencia24h />} />
             <Route path="/rastreamento-veicular" element={<Rastreamento />} />
             <Route path="/aplicativo" element={<Aplicativo />} />

@@ -6,6 +6,22 @@ export const SITE = {
   email: 'contato@hemissul.com.br',
   address: 'Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR, CEP 69309-198',
   hours: 'Seg a Sex, 8h às 18h · Sáb, 8h às 12h',
+  units: [
+    {
+      name: 'Boa Vista · Sede',
+      city: 'Boa Vista/RR',
+      address: 'Av. Mário Homem de Melo, 3999, Buritis',
+      cep: '69309-198',
+      mapsQuery: 'Av.+Mário+Homem+de+Melo,+3999,+Boa+Vista,+RR',
+    },
+    {
+      name: 'Manaus',
+      city: 'Manaus/AM',
+      address: 'Av. Tefé, 466, Cachoeirinha',
+      cep: '',
+      mapsQuery: 'Av.+Tef%C3%A9,+466,+Cachoeirinha,+Manaus,+AM',
+    },
+  ],
   phone: {
     assistance: '0800 940 2163',
     assistanceHref: 'tel:08009402163',

@@ -343,6 +343,22 @@ const routeMeta = {
       ]),
     ],
   },
+  '/protecao-veicular/frotas-empresas': {
+    title: 'Proteção para Frotas e Empresas | Hemissul',
+    description:
+      'Proteção veicular para frotas, locadoras, transportadoras e empresas com múltiplos veículos. Rastreamento, assistência 24h e atendimento dedicado.',
+    schemas: [
+      serviceBase(
+        'Proteção Veicular para Frotas e Empresas',
+        'Proteção para operações com múltiplos veículos: locadoras, transportadoras, empresas com frota própria e grupos de proprietários. Rastreamento, assistência 24 horas e atendimento comercial dedicado.',
+        '/protecao-veicular/frotas-empresas',
+      ),
+      breadcrumb([
+        ['Proteção Veicular', '/protecao-veicular'],
+        ['Frotas e empresas', '/protecao-veicular/frotas-empresas'],
+      ]),
+    ],
+  },
   '/assistencia-24h': {
     title: 'Assistência Veicular 24 Horas | Hemissul',
     description:

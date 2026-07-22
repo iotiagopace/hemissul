@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Pause, Play } from 'lucide-react'
+import { AlertTriangle, ArrowRight, Pause, Play } from 'lucide-react'
 import RotatingWords from './RotatingWords'
 import HeroHeadline from './HeroHeadline'
 
@@ -177,6 +177,15 @@ export default function HomeHero({ slides }) {
                 className="home-banner__secondary"
               />
             </div>
+            {activeSlide.emergencyAction ? (
+              <Link
+                to={activeSlide.emergencyAction.to}
+                className="home-banner__emergency"
+              >
+                <AlertTriangle size={16} aria-hidden="true" />
+                <span>{activeSlide.emergencyAction.label}</span>
+              </Link>
+            ) : null}
           </motion.div>
         </AnimatePresence>
       </div>

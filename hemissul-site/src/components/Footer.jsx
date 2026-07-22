@@ -10,6 +10,7 @@ import { SITE } from '../config/site'
 
 const footerLinks = [
   ['Proteção veicular', '/protecao-veicular'],
+  ['Frotas e empresas', '/protecao-veicular/frotas-empresas'],
   ['Assistência 24h', '/assistencia-24h'],
   ['Rastreamento', '/rastreamento-veicular'],
   ['Aplicativo', '/aplicativo'],
@@ -75,12 +76,17 @@ export default function Footer() {
             <span className="site-footer__label">E-mail</span>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </div>
-          <div className="site-footer__contact">
-            <span className="site-footer__label">Sede</span>
-            <address>
-              {SITE.address}
-            </address>
-          </div>
+          {SITE.units.map((unit) => (
+            <div className="site-footer__contact" key={unit.name}>
+              <span className="site-footer__label">{unit.name}</span>
+              <address>
+                {unit.address}
+                <br />
+                {unit.city}
+                {unit.cep ? ` · CEP ${unit.cep}` : ''}
+              </address>
+            </div>
+          ))}
         </div>
 
         <div className="site-footer__social" aria-label="Redes sociais">

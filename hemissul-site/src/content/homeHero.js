@@ -45,6 +45,10 @@ export const HOME_HERO_SLIDES = [
       'Proteção para carros, motos e caminhões, assistência 24 horas e atendimento em todo o Brasil.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a proteção', to: '/protecao-veicular' },
+    emergencyAction: {
+      label: 'Em caso de acidente ou emergência, clique aqui',
+      to: '/assistencia-24h',
+    },
     mediaPosition: 'center center',
     mediaPositionMobile: '56% center',
   },

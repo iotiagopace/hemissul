@@ -12,6 +12,7 @@ A Hemissul oferece cobertura para colisão, roubo, furto, perda total e danos a 
 - [Motos](https://hemissul.vercel.app/protecao-veicular/motos): proteção para motocicletas
 - [Caminhões](https://hemissul.vercel.app/protecao-veicular/caminhoes): proteção para caminhões e frotistas
 - [Motorista de aplicativo](https://hemissul.vercel.app/protecao-veicular/motorista-aplicativo): proteção para quem dirige por Uber, 99 ou apps de entrega
+- [Frotas e empresas](https://hemissul.vercel.app/protecao-veicular/frotas-empresas): proteção para operações com múltiplos veículos
 - [Assistência 24h](https://hemissul.vercel.app/assistencia-24h): reboque, chaveiro, troca de pneu
 - [Rastreamento veicular](https://hemissul.vercel.app/rastreamento-veicular): localização em tempo real
 - [Clube de Benefícios](https://hemissul.vercel.app/clube-de-beneficios): descontos com parceiros
@@ -24,4 +25,8 @@ A Hemissul oferece cobertura para colisão, roubo, furto, perda total e danos a 
 
 - Assistência 24h: 0800 940 2163
 - E-mail: contato@hemissul.com.br
-- Endereço: Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR, CEP 69309-198
+
+## Unidades
+
+- Boa Vista/RR (sede): Av. Mário Homem de Melo, 3999, Buritis, CEP 69309-198
+- Manaus/AM: Av. Tefé, 466, Cachoeirinha

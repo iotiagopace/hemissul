@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom'
 import {
+  AlertTriangle,
   ArrowRight,
   ArrowUpRight,
+  BadgePercent,
+  CheckCircle2,
   Clock3,
   MapPin,
   PhoneCall,
   Play,
-  Smartphone,
+  Radar,
+  ShieldCheck,
   Star,
 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
@@ -17,17 +21,20 @@ import AutoMarquee from '../components/AutoMarquee'
 import VideoTestimonials from '../components/VideoTestimonials'
 import AppMockupStory from '../components/AppMockupStory'
 import HomeHero from '../components/HomeHero'
+import PartnerLogos from '../components/PartnerLogos'
 import { WhatsappIcon } from '../components/SocialIcons'
 import { SITE } from '../config/site'
 import { HOME_HERO_SLIDES } from '../content/homeHero'
 import { posts } from '../content/posts'
 
 const PODCAST_TEASER_VIDEO = '8VSYQa0wgHI'
+const RASTREAMENTO_VIDEO_APP = 'qC25dUJfqyQ' // placeholder — trocar quando cliente enviar
 const latestPosts = posts.slice(0, 3)
 
-import iconCarros from '../assets/icon-carros.png'
-import iconMotos from '../assets/icon-motos.png'
-import iconCaminhoes from '../assets/icon-caminhoes.png'
+import onixParticular from '../assets/fotos-reais/onix-particular.jpg'
+import motoristaApp from '../assets/fotos-reais/motorista-app-real.jpg'
+import motoPorDoSol from '../assets/fotos-reais/moto-por-do-sol.jpg'
+import caminhaoPorDoSol from '../assets/fotos-reais/caminhao-por-do-sol.jpg'
 
 import antesGol from '../assets/antes-depois/antes-gol.jpeg'
 import depoisGol from '../assets/antes-depois/depois-gol.jpeg'
@@ -43,65 +50,76 @@ import indenizacao4 from '../assets/indenizacoes/indenizacao-4.jpeg'
 import indenizacao5 from '../assets/indenizacoes/indenizacao-5.jpeg'
 import indenizacao6 from '../assets/indenizacoes/indenizacao-6.jpeg'
 
-import sedeImg from '../assets/fotos-reais/fachada-hemissul.webp'
+import logoObjetiva from '../assets/clube/parceiros/objetiva-estetica-automotiva.webp'
+import logoSantoRemedio from '../assets/clube/parceiros/santoremedio.webp'
+import logoJetfast from '../assets/clube/parceiros/jetfast.webp'
+import logoGaspartinho from '../assets/clube/parceiros/gaspartinho-sound-car.webp'
+import logoHapvida from '../assets/clube/parceiros/hapvida.webp'
+import logoEstacio from '../assets/clube/parceiros/estacio.webp'
+import logoBvLocadora from '../assets/clube/parceiros/bv-locadora.webp'
+import logoAmazonPneus from '../assets/clube/parceiros/amazon-pneus-manaus.webp'
 
-const benefits = [
+const coberturas = [
   {
+    number: '01',
     title: 'Colisão',
-    description:
-      'Apoio para reparos decorrentes de colisões previstas no regulamento.',
+    bullets: [
+      'Reboque para local seguro ou oficina credenciada',
+      'Reparo do veículo conforme regulamento',
+      'Acompanhamento do processo na oficina',
+      'E muito mais',
+    ],
   },
   {
-    title: 'Roubo e furto',
-    description:
-      'Busca, localização e ressarcimento conforme a Tabela FIPE e o regulamento.',
-  },
-  {
+    number: '02',
     title: 'Perda total',
-    description:
-      'Análise e ressarcimento nos casos e limites previstos no programa.',
+    bullets: [
+      'Reboque para retirada do local do acidente',
+      'Análise pericial e indenização integral pela Tabela FIPE',
+      'Acompanhamento em cada etapa do processo',
+      'E muito mais',
+    ],
   },
   {
-    title: 'Proteção para terceiros',
-    description:
-      'Suporte para danos materiais causados a terceiros, conforme o plano contratado.',
-  },
-  {
-    title: 'Assistência 24h',
-    description:
-      'Apoio emergencial em todo o território nacional, a qualquer hora.',
-  },
-  {
-    title: 'Rastreamento',
-    description:
-      'Localização em tempo real, alertas e histórico de trajetos do veículo.',
+    number: '03',
+    title: 'Roubo e furto',
+    bullets: [
+      'Busca e localização com apoio do rastreamento',
+      'Indenização integral do valor do veículo',
+      'Acompanhamento em cada etapa do processo',
+      'E muito mais',
+    ],
   },
 ]
 
 const vehicles = [
   {
-    title: 'Carros',
-    description: 'Uso particular e famílias, com cobertura contra colisão, roubo e furto.',
-    image: iconCarros,
+    title: 'Carros particulares',
+    description:
+      'Proteção para o veículo que transporta sua família no dia a dia.',
+    image: onixParticular,
     to: '/protecao-veicular/carros',
   },
   {
+    title: 'Motorista de aplicativo',
+    description:
+      'Para quem roda de app e depende do veículo para gerar renda todo dia.',
+    image: motoristaApp,
+    to: '/protecao-veicular/motorista-aplicativo',
+  },
+  {
     title: 'Motos',
-    description: 'Para quem usa a moto no trabalho ou para se locomover.',
-    image: iconMotos,
+    description:
+      'Proteção para motociclistas que dependem da moto todos os dias.',
+    image: motoPorDoSol,
     to: '/protecao-veicular/motos',
   },
   {
-    title: 'Caminhões',
-    description: 'Cobertura e assistência na estrada para quem vive de rodar.',
-    image: iconCaminhoes,
-    to: '/protecao-veicular/caminhoes',
-  },
-  {
-    title: 'Motorista de aplicativo',
-    description: 'Uber, 99 e entregas: proteção para quem trabalha o dia todo no trânsito.',
-    Icon: Smartphone,
-    to: '/protecao-veicular/motorista-aplicativo',
+    title: 'Frotas e empresas',
+    description:
+      'Proteção para operações com múltiplos veículos e necessidade de controle.',
+    image: caminhaoPorDoSol,
+    to: '/protecao-veicular/frotas-empresas',
   },
 ]
 
@@ -126,9 +144,9 @@ const testimonials = [
 ]
 
 const beforeAfterCases = [
-  { label: 'Gol', before: antesGol, after: depoisGol },
-  { label: 'Ranger', before: antesRanger, after: depoisRanger },
-  { label: 'Onix', before: antesOnix, after: depoisOnix },
+  { key: 'gol', before: antesGol, after: depoisGol },
+  { key: 'ranger', before: antesRanger, after: depoisRanger },
+  { key: 'onix', before: antesOnix, after: depoisOnix },
 ]
 
 const indenizacoesRow = [
@@ -140,9 +158,44 @@ const indenizacoesRow = [
   { src: indenizacao6, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
 ]
 
+const clubeParceirosTeaser = [
+  { src: logoObjetiva, name: 'Objetiva Estética Automotiva' },
+  { src: logoSantoRemedio, name: 'Santo Remédio' },
+  { src: logoJetfast, name: 'JetFast Lavagem' },
+  { src: logoGaspartinho, name: 'Gaspartinho Sound Car' },
+  { src: logoHapvida, name: 'Hapvida' },
+  { src: logoEstacio, name: 'Estácio' },
+  { src: logoBvLocadora, name: 'BV Locadora' },
+  { src: logoAmazonPneus, name: 'Amazon Pneus Manaus' },
+]
+
+const faqPreview = [
+  {
+    q: 'A Hemissul atende somente em Roraima?',
+    a: 'Não. Atendemos em todo o Brasil, com sede em Boa Vista/RR e unidade em Manaus/AM.',
+  },
+  {
+    q: 'A Hemissul faz análise de perfil do condutor?',
+    a: 'Não trabalhamos com análise de perfil do condutor. A adesão segue as regras do regulamento.',
+  },
+  {
+    q: 'Tem assistência 24h?',
+    a: 'Sim. Reboque, chaveiro e socorro em qualquer lugar do país, todos os dias.',
+  },
+]
+
+function CtaLink({ children, to = '/cotacao' }) {
+  return (
+    <Link to={to} className="button-cta home-section__cta">
+      {children ?? 'Fazer cotação'} <ArrowRight size={17} aria-hidden="true" />
+    </Link>
+  )
+}
+
 export default function Home() {
   return (
     <div className="home-page">
+      {/* 01 · Hero + stats + selo SUSEP */}
       <HomeHero slides={HOME_HERO_SLIDES} />
 
       <section className="home-proof" aria-label="Números da Hemissul">
@@ -156,8 +209,8 @@ export default function Home() {
             <span className="home-proof__label">em reparos e indenizações</span>
           </FadeIn>
           <FadeIn className="home-proof__item" delay={0.1}>
-            <strong className="home-proof__value">Desde 2019</strong>
-            <span className="home-proof__label">presença e atendimento próximo</span>
+            <strong className="home-proof__value">Sem análise</strong>
+            <span className="home-proof__label">de perfil do condutor</span>
           </FadeIn>
           <FadeIn className="home-proof__item" delay={0.15}>
             <strong className="home-proof__value">24h</strong>
@@ -166,130 +219,224 @@ export default function Home() {
             </span>
           </FadeIn>
         </div>
+        <FadeIn className="home-proof__badge" delay={0.2}>
+          <span className="home-proof__badge-pill">
+            <ShieldCheck size={16} aria-hidden="true" />
+            Cadastrada na SUSEP
+          </span>
+        </FadeIn>
       </section>
 
-      <section className="home-section">
+      {/* 02 · Apresentação das coberturas — cards estilo LP */}
+      <section className="home-section coverage-section">
         <div className="site-container">
           <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">O que a nossa proteção cobre</p>
             <h2 className="home-section__title">
-              O que a proteção cobre.
+              Tudo o que você precisa para proteger o seu veículo.
             </h2>
             <p className="home-section__copy">
-              Colisão, roubo, furto, perda total, danos a terceiros, assistência
-              24 horas e rastreamento. Tudo conforme as regras do regulamento.
+              Escolha o plano que faz sentido para a sua necessidade e conte com
+              uma proteção pensada para dar mais tranquilidade no dia a dia.
             </p>
           </FadeIn>
 
-          <div className="benefit-list">
-            {benefits.map((benefit, index) => (
+          <div className="coverage-grid">
+            {coberturas.map((item, index) => (
               <FadeIn
                 as="article"
-                className="benefit-list__item"
-                key={benefit.title}
-                delay={index * 0.05}
+                className="coverage-card"
+                key={item.title}
+                delay={index * 0.06}
               >
-                <span className="benefit-list__number">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className="benefit-list__content">
-                  <h3>{benefit.title}</h3>
-                  <p>{benefit.description}</p>
-                </div>
+                <span className="coverage-card__number">{item.number}</span>
+                <h3 className="coverage-card__title">{item.title}</h3>
+                <ul className="coverage-card__list">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <CheckCircle2 size={18} aria-hidden="true" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
               </FadeIn>
             ))}
           </div>
 
-          <Link
-            to="/protecao-veicular"
-            className="type-link home-section__link"
-          >
-            Entender o programa <ArrowRight size={17} aria-hidden="true" />
-          </Link>
+          <CtaLink>Fazer cotação</CtaLink>
         </div>
       </section>
 
-      <section className="vehicle-section">
-        <div className="site-container">
-          <FadeIn className="vehicle-section__head">
-            <h2>Escolha pelo seu tipo de veículo.</h2>
-          </FadeIn>
-
-          <div>
-            {vehicles.map((vehicle, index) => (
-              <FadeIn key={vehicle.title} delay={index * 0.06}>
-                <Link className="vehicle-row" to={vehicle.to}>
-                  <span className="vehicle-row__number">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  {vehicle.image ? (
-                    <img
-                      className="vehicle-row__icon"
-                      src={vehicle.image}
-                      alt=""
-                      width="64"
-                      height="64"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span className="vehicle-row__icon vehicle-row__icon--glyph">
-                      <vehicle.Icon size={32} aria-hidden="true" />
-                    </span>
-                  )}
-                  <div className="vehicle-row__content">
-                    <h3>{vehicle.title}</h3>
-                    <p>{vehicle.description}</p>
-                  </div>
-                  <ArrowUpRight size={24} aria-hidden="true" />
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      {/* 03 · Antes e depois — copy nova + sem legenda de modelo */}
       <section className="home-section results-section">
         <div className="site-container">
           <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">Reparos feitos com compromisso</p>
             <h2 className="home-section__title">
               Antes e depois dos reparos.
             </h2>
             <p className="home-section__copy">
-              Arraste a imagem para ver o antes e o depois. Cada caso segue os
-              limites e condições do plano contratado.
+              Quando um imprevisto acontece, nossa missão é recuperar o seu
+              patrimônio e ajudar você a voltar à sua rotina com segurança.
             </p>
           </FadeIn>
 
           <div className="results-grid">
             {beforeAfterCases.map((item) => (
-              <FadeIn key={item.label}>
+              <FadeIn key={item.key}>
                 <BeforeAfterSlider
                   beforeSrc={item.before}
                   afterSrc={item.after}
-                  alt={item.label}
+                  alt="Antes e depois de um reparo Hemissul"
                 />
-                <p className="results-grid__caption">{item.label}</p>
               </FadeIn>
             ))}
           </div>
+
+          <CtaLink>Fazer cotação</CtaLink>
         </div>
       </section>
 
+      {/* 04 · Indenizações — foto (marquee) + vídeos (histórias reais) */}
       <section className="home-section indemnity-section">
         <div className="site-container">
           <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">Histórias reais</p>
             <h2 className="home-section__title">
               Indenizações que a gente paga.
             </h2>
             <p className="home-section__copy">
-              Quem teve o veículo roubado ou com perda total e recebeu o valor
-              combinado, dentro das regras do regulamento.
+              Assista aos depoimentos de associados que foram indenizados pela
+              Hemissul e veja como nosso compromisso se transforma em segurança,
+              confiança e tranquilidade.
             </p>
           </FadeIn>
         </div>
 
         <AutoMarquee items={indenizacoesRow} className="indemnity-marquee" seconds={48} />
+
+        <div className="site-container">
+          <FadeIn>
+            <VideoTestimonials />
+          </FadeIn>
+          <div className="home-section__cta-wrap">
+            <CtaLink>Fazer cotação</CtaLink>
+          </div>
+        </div>
       </section>
 
+      {/* 05 · Proteção por tipo de veículo — cards estilo LP */}
+      <section className="home-section vehicle-cards-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">Planos sob medida</p>
+            <h2 className="home-section__title">
+              Proteção para cada maneira de usar o veículo.
+            </h2>
+            <p className="home-section__copy">
+              Carro particular, ferramenta de trabalho, moto ou frota: cada
+              rotina pede uma cotação com coberturas e condições bem explicadas.
+            </p>
+          </FadeIn>
+
+          <div className="vehicle-cards">
+            {vehicles.map((vehicle, index) => (
+              <FadeIn key={vehicle.title} delay={index * 0.05}>
+                <Link className="vehicle-card" to={vehicle.to}>
+                  <figure className="vehicle-card__media">
+                    <img
+                      src={vehicle.image}
+                      alt=""
+                      loading="lazy"
+                      width="480"
+                      height="320"
+                    />
+                  </figure>
+                  <div className="vehicle-card__body">
+                    <h3>{vehicle.title}</h3>
+                    <p>{vehicle.description}</p>
+                    <span className="vehicle-card__cta">
+                      Ver detalhes <ArrowUpRight size={18} aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+
+          <CtaLink>Fazer cotação</CtaLink>
+        </div>
+      </section>
+
+      {/* 06 · Rastreamento */}
+      <section className="home-section tracking-section">
+        <div className="site-container tracking-layout">
+          <FadeIn className="tracking-layout__content">
+            <p className="page-header__eyebrow">Rastreamento Veicular</p>
+            <h2 className="home-section__title">
+              Rastreamento 24 horas em tempo real.
+            </h2>
+            <p className="home-section__copy">
+              Seu carro, moto ou frota sempre sob seu controle, com suporte
+              imediato em qualquer situação. Localização em tempo real, alertas
+              inteligentes, cerca virtual e pronta resposta em caso de roubo.
+            </p>
+            <ul className="tracking-features">
+              <li>
+                <Radar size={18} aria-hidden="true" />
+                Localização em tempo real
+              </li>
+              <li>
+                <AlertTriangle size={18} aria-hidden="true" />
+                Alertas de ignição e movimentação
+              </li>
+              <li>
+                <ShieldCheck size={18} aria-hidden="true" />
+                Cerca virtual e pronta resposta
+              </li>
+            </ul>
+            <div className="tracking-actions">
+              <CtaLink>Fazer cotação</CtaLink>
+              <Link to="/rastreamento-veicular" className="type-link">
+                Conhecer o rastreamento{' '}
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+          </FadeIn>
+
+          <FadeIn className="tracking-layout__video" delay={0.1}>
+            <VideoEmbed
+              videoId={RASTREAMENTO_VIDEO_APP}
+              title="Como funciona o rastreamento Hemissul"
+            />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* 07 · Clube de Benefícios */}
+      <section className="home-section clube-section">
+        <div className="site-container clube-layout">
+          <FadeIn className="clube-layout__content">
+            <p className="page-header__eyebrow">Clube de Benefícios Hemissul</p>
+            <h2 className="home-section__title">
+              Vantagens exclusivas para associados Hemissul.
+            </h2>
+            <p className="home-section__copy">
+              Economia de até 40% de desconto no seu dia a dia em farmácias,
+              oficinas, autopeças, salões de beleza e muito mais em Boa Vista e
+              região. Você garante proteção para o veículo e economia no bolso.
+            </p>
+            <Link to="/clube-de-beneficios" className="button-cta">
+              <BadgePercent size={18} aria-hidden="true" /> Quero economizar com
+              o Clube
+            </Link>
+          </FadeIn>
+        </div>
+
+        <PartnerLogos logos={clubeParceirosTeaser} />
+      </section>
+
+      {/* 08 · App do associado */}
       <section className="home-section app-section">
         <div className="site-container app-layout">
           <FadeIn className="app-layout__visual">
@@ -299,15 +446,20 @@ export default function Home() {
             />
           </FadeIn>
           <FadeIn className="app-layout__content" delay={0.1}>
+            <p className="page-header__eyebrow">Sua proteção na palma da mão</p>
             <h2>Tudo do seu plano no aplicativo.</h2>
             <p>
               Consulte boletos, benefícios, oficinas credenciadas, assistência
               24 horas e comunicação de eventos pelo aplicativo Hemissul.
             </p>
             <StoreBadges />
-            <Link to="/aplicativo" className="type-link">
-              Conhecer o aplicativo <ArrowRight size={17} aria-hidden="true" />
-            </Link>
+            <div className="app-layout__actions">
+              <CtaLink>Fazer cotação</CtaLink>
+              <Link to="/aplicativo" className="type-link">
+                Conhecer o aplicativo{' '}
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
           </FadeIn>
         </div>
 
@@ -316,15 +468,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 09 · O que falam nossos associados */}
       <section className="testimonials-section">
         <div className="site-container">
           <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">
+              Comentários de quem já é associado
+            </p>
             <h2 className="home-section__title">
               O que os associados falam.
             </h2>
-            <p className="home-section__copy">
-              Comentários de quem já é associado e usou a proteção.
-            </p>
           </FadeIn>
 
           <div className="testimonial-grid">
@@ -351,25 +504,79 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section video-testimonials-section">
-        <div className="site-container">
-          <FadeIn className="home-section__intro">
+      {/* 10 · Onde estamos + Dúvidas frequentes */}
+      <section className="home-section presence-section">
+        <div className="site-container presence-grid">
+          <FadeIn className="presence-locations">
+            <p className="page-header__eyebrow">Onde estamos</p>
             <h2 className="home-section__title">
-              Depoimentos de quem é associado.
+              Perto de você em Roraima e Amazonas.
             </h2>
-            <p className="home-section__copy">
-              Associados falando do atendimento que receberam. Toque para
-              assistir.
-            </p>
+            <div className="presence-cards">
+              {SITE.units.map((unit) => (
+                <article className="presence-card" key={unit.name}>
+                  <h3>{unit.name}</h3>
+                  <address>
+                    {unit.address}
+                    <br />
+                    {unit.city}
+                    {unit.cep ? ` · CEP ${unit.cep}` : ''}
+                  </address>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${unit.mapsQuery}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="type-link"
+                  >
+                    <MapPin size={16} aria-hidden="true" /> Abrir no mapa
+                  </a>
+                </article>
+              ))}
+            </div>
+            <div className="presence-contacts">
+              <p>
+                <PhoneCall size={18} aria-hidden="true" /> Assistência 24h:{' '}
+                <a href={SITE.phone.assistanceHref}>{SITE.phone.assistance}</a>
+              </p>
+              <p>
+                <WhatsappIcon style={{ width: 18, height: 18 }} /> Atendimento e
+                cotação:{' '}
+                <a
+                  href={SITE.phone.quoteHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {SITE.phone.quote}
+                </a>
+              </p>
+              <p>
+                <Clock3 size={18} aria-hidden="true" /> {SITE.hours}
+              </p>
+            </div>
           </FadeIn>
-        </div>
-        <div className="site-container">
-          <FadeIn>
-            <VideoTestimonials />
+
+          <FadeIn className="presence-faq" delay={0.1}>
+            <p className="page-header__eyebrow">Dúvidas frequentes</p>
+            <h3 className="home-section__title">
+              Respostas para decidir com segurança.
+            </h3>
+            <ul className="faq-preview-list">
+              {faqPreview.map((item) => (
+                <li key={item.q}>
+                  <strong>{item.q}</strong>
+                  <span>{item.a}</span>
+                </li>
+              ))}
+            </ul>
+            <Link to="/duvidas-frequentes" className="type-link">
+              Ver todas as dúvidas{' '}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
           </FadeIn>
         </div>
       </section>
 
+      {/* 11 · Redes sociais e blog */}
       <section className="home-section home-teasers">
         <div className="site-container">
           <FadeIn className="home-teasers__head">
@@ -431,99 +638,6 @@ export default function Home() {
             </a>
             <Link to="/podcast">
               Ver o podcast <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </FadeIn>
-        </div>
-      </section>
-
-      <section className="brand-photo">
-        <img
-          src={sedeImg}
-          alt="Sede da Hemissul na Avenida Mário Homem de Melo, em Boa Vista"
-          width="1269"
-          height="869"
-          loading="lazy"
-        />
-        <div className="brand-photo__caption">
-          <strong>Uma associação feita em Boa Vista.</strong>
-          <span>
-            Atendimento local, rede de prestadores e assistência em todo o
-            Brasil.
-          </span>
-        </div>
-      </section>
-
-      <section className="home-section home-section--compact">
-        <div className="site-container home-section__intro">
-          <FadeIn as="h2" className="home-section__title">
-            Atendimento perto. Assistência em todo o Brasil.
-          </FadeIn>
-          <FadeIn delay={0.08}>
-            <p className="home-section__copy">
-              A Hemissul protege veículos desde 2019, com sede em Boa Vista e
-              rede de prestadores em todo o país. Regras claras, sem letra miúda.
-            </p>
-            <Link to="/quem-somos" className="type-link home-section__link">
-              Conhecer a Hemissul <ArrowRight size={17} aria-hidden="true" />
-            </Link>
-          </FadeIn>
-        </div>
-      </section>
-
-      <section className="location-section">
-        <div className="site-container location-layout">
-          <FadeIn className="location-layout__content">
-            <h2>Boa Vista é a nossa casa.</h2>
-            <address>
-              {SITE.address}
-            </address>
-            <p>
-              <PhoneCall size={18} aria-hidden="true" /> Assistência 24h:{' '}
-              <a href={SITE.phone.assistanceHref}>{SITE.phone.assistance}</a>
-            </p>
-            <p>
-              <WhatsappIcon style={{ width: 18, height: 18 }} /> Atendimento e
-              cotação:{' '}
-              <a
-                href={SITE.phone.quoteHref}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {SITE.phone.quote}
-              </a>
-            </p>
-            <p>
-              <Clock3 size={18} aria-hidden="true" /> {SITE.hours}
-            </p>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Av.+Mário+Homem+de+Melo,+3999,+Boa+Vista,+RR"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="type-link"
-            >
-              <MapPin size={17} aria-hidden="true" /> Abrir no mapa
-            </a>
-          </FadeIn>
-
-          <FadeIn className="location-layout__map" delay={0.1}>
-            <iframe
-              src="https://www.google.com/maps?q=Av.+Mario+Homem+de+Melo,+3999,+Boa+Vista,+RR&output=embed"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Localização da sede Hemissul"
-            />
-          </FadeIn>
-        </div>
-      </section>
-
-      <section className="closing-section">
-        <div className="site-container closing-section__inner">
-          <FadeIn as="h2">
-            Faça a cotação e proteja seu veículo hoje.
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <Link to="/cotacao" className="button-cta">
-              Solicitar cotação <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </FadeIn>
         </div>
