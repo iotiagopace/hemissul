@@ -3,7 +3,9 @@ import {
   AlertTriangle,
   ArrowRight,
   ArrowUpRight,
+  BadgeCheck,
   BadgePercent,
+  Car,
   CheckCircle2,
   Clock3,
   MapPin,
@@ -12,6 +14,7 @@ import {
   Radar,
   ShieldCheck,
   Star,
+  Users,
 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
@@ -54,15 +57,12 @@ import logoObjetiva from '../assets/clube/parceiros/objetiva-estetica-automotiva
 import logoSantoRemedio from '../assets/clube/parceiros/santoremedio.webp'
 import logoJetfast from '../assets/clube/parceiros/jetfast.webp'
 import logoGaspartinho from '../assets/clube/parceiros/gaspartinho-sound-car.webp'
-import logoHapvida from '../assets/clube/parceiros/hapvida.webp'
-import logoEstacio from '../assets/clube/parceiros/estacio.webp'
-import logoBvLocadora from '../assets/clube/parceiros/bv-locadora.webp'
-import logoAmazonPneus from '../assets/clube/parceiros/amazon-pneus-manaus.webp'
 
 const coberturas = [
   {
     number: '01',
     title: 'Colisão',
+    Icon: ShieldCheck,
     bullets: [
       'Reboque para local seguro ou oficina credenciada',
       'Reparo do veículo conforme regulamento',
@@ -72,6 +72,7 @@ const coberturas = [
   {
     number: '02',
     title: 'Perda total',
+    Icon: Car,
     bullets: [
       'Reboque para retirada do local do acidente',
       'Indenização integral pela Tabela FIPE',
@@ -81,6 +82,7 @@ const coberturas = [
   {
     number: '03',
     title: 'Roubo e furto',
+    Icon: BadgeCheck,
     bullets: [
       'Busca e localização com apoio do rastreamento',
       'Indenização integral do valor do veículo',
@@ -90,6 +92,7 @@ const coberturas = [
   {
     number: '04',
     title: 'Terceiros',
+    Icon: Users,
     bullets: [
       'Suporte para danos materiais causados a terceiros',
       'Acionamento simples pela nossa central',
@@ -99,6 +102,7 @@ const coberturas = [
   {
     number: '05',
     title: 'Assistência 24h',
+    Icon: PhoneCall,
     bullets: [
       'Reboque, chaveiro, socorro elétrico e mecânico',
       'Atendimento em todo o território nacional',
@@ -108,6 +112,7 @@ const coberturas = [
   {
     number: '06',
     title: 'Rastreamento',
+    Icon: Radar,
     bullets: [
       'Localização em tempo real do veículo',
       'Alertas de ignição, movimentação e cerca virtual',
@@ -182,15 +187,13 @@ const indenizacoesRow = [
   { src: indenizacao6, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
 ]
 
+// PDF do cliente: "3 a 4 parceiros do clube, gerando curiosidade para a
+// pessoa clicar e entender mais" — os mesmos 4 do material de referência.
 const clubeParceirosTeaser = [
   { src: logoObjetiva, name: 'Objetiva Estética Automotiva' },
   { src: logoSantoRemedio, name: 'Santo Remédio' },
-  { src: logoJetfast, name: 'JetFast Lavagem' },
   { src: logoGaspartinho, name: 'Gaspartinho Sound Car' },
-  { src: logoHapvida, name: 'Hapvida' },
-  { src: logoEstacio, name: 'Estácio' },
-  { src: logoBvLocadora, name: 'BV Locadora' },
-  { src: logoAmazonPneus, name: 'Amazon Pneus Manaus' },
+  { src: logoJetfast, name: 'JetFast Lavagem' },
 ]
 
 const faqPreview = [
@@ -273,17 +276,29 @@ export default function Home() {
                 key={item.title}
                 delay={index * 0.06}
               >
-                <span className="coverage-card__number">{item.number}</span>
-                <h3 className="coverage-card__title">{item.title}</h3>
-                <ul className="coverage-card__list">
-                  {item.bullets.map((bullet) => (
-                    <li key={bullet}>
-                      <CheckCircle2 size={18} aria-hidden="true" />
-                      <span>{bullet}</span>
+                <div className="coverage-card__head" aria-hidden="true">
+                  <span className="coverage-card__number">{item.number}</span>
+                </div>
+                <div className="coverage-card__body">
+                  <item.Icon
+                    className="coverage-card__icon"
+                    size={26}
+                    aria-hidden="true"
+                  />
+                  <h3 className="coverage-card__title">{item.title}</h3>
+                  <ul className="coverage-card__list">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>
+                        <CheckCircle2 size={17} aria-hidden="true" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                    <li className="coverage-card__more">
+                      <CheckCircle2 size={17} aria-hidden="true" />
+                      <span>E muito mais</span>
                     </li>
-                  ))}
-                </ul>
-                <span className="coverage-card__more">E muito mais</span>
+                  </ul>
+                </div>
               </FadeIn>
             ))}
           </div>

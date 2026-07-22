@@ -292,8 +292,8 @@
     font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 700;
-    letter-spacing: -0.045em;
-    line-height: 0.98;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .site-nav__panel-grid {
@@ -748,7 +748,7 @@
     font-size: var(--text-xl);
     font-variant-numeric: tabular-nums;
     font-weight: 700;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.015em;
   }
 
   .home-proof__value {
@@ -815,13 +815,20 @@
     align-items: start;
   }
 
+  /* O eyebrow ocupa a linha inteira do grid do intro — sem ele o grid de
+     2 colunas (título | copy) empurraria o título para a coluna da direita. */
+  .home-section__intro .page-header__eyebrow {
+    grid-column: 1 / -1;
+    margin-block-end: calc(var(--space-md) * -1);
+  }
+
   .home-section__title {
-    max-width: 14ch;
+    max-width: 16ch;
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.75rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.98;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
   }
 
   .home-section__copy {
@@ -904,8 +911,8 @@
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.75rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.98;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .vehicle-row {
@@ -953,7 +960,7 @@
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 3vw, 3rem);
     font-weight: 700;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.015em;
     line-height: 1;
   }
 
@@ -1033,8 +1040,8 @@
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.75rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.98;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .app-layout__content p {
@@ -1100,8 +1107,8 @@
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.75rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.98;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .location-layout__content p,
@@ -1154,8 +1161,8 @@
     font-family: var(--font-display);
     font-size: clamp(3rem, 7vw, 6.5rem);
     font-weight: 700;
-    letter-spacing: -0.055em;
-    line-height: 0.94;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .site-footer {
@@ -1174,8 +1181,8 @@
     font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4.75rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.98;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .site-footer__contacts {
@@ -2186,8 +2193,8 @@
     margin-block: var(--space-sm);
     font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.05em;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
   }
 
   .app-showcase .page-header__eyebrow {
@@ -2433,8 +2440,8 @@
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 6vw, 5.5rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.96;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
 
   .page-header__lede {
@@ -2953,7 +2960,7 @@
     font-family: var(--font-display);
     font-size: clamp(4rem, 10vw, 8rem);
     line-height: 0.9;
-    letter-spacing: -0.07em;
+    letter-spacing: -0.02em;
   }
 
   .number-statement span {
@@ -3135,7 +3142,7 @@
     font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.015em;
   }
 
   .quote-panel p,
@@ -3300,8 +3307,8 @@
     margin-block-start: var(--space-sm);
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 5rem);
-    line-height: 0.95;
-    letter-spacing: -0.05em;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
   }
 
   .social-presence__links {
@@ -3471,7 +3478,7 @@
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     line-height: 1.1;
     color: var(--color-ink);
   }
@@ -3583,8 +3590,8 @@
     margin-block: var(--space-lg);
     font-family: var(--font-display);
     font-size: var(--text-display);
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
   }
 
   .article-hero p {
@@ -3917,7 +3924,7 @@
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     color: var(--color-accent-dark);
   }
 
@@ -4019,7 +4026,7 @@
     font-size: var(--text-lg);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
 
   .timeline__title {
@@ -4317,7 +4324,7 @@
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 3vw, 2.5rem);
     font-weight: 700;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.015em;
     line-height: 1.05;
   }
 
@@ -4401,32 +4408,51 @@
   }
 
   .coverage-card {
-    padding: var(--space-xl);
-    border-radius: var(--radius-card);
-    background: var(--color-ink);
-    color: var(--color-paper);
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    min-height: 22rem;
+    border-radius: var(--radius-card);
+    background: var(--color-paper-bright);
+    border: var(--rule-hair) solid var(--color-rule-2);
+    box-shadow: 0 10px 30px oklch(20% 0.035 245 / 0.08);
+    overflow: hidden;
+  }
+
+  /* Faixa superior escura com brilho esverdeado, no modelo da LP */
+  .coverage-card__head {
+    padding: var(--space-lg) var(--space-xl);
+    background:
+      radial-gradient(120% 160% at 85% 0%, oklch(45% 0.09 165 / 0.55), transparent 55%),
+      linear-gradient(135deg, oklch(24% 0.05 235), oklch(18% 0.04 245));
   }
 
   .coverage-card__number {
     font-family: var(--font-display);
-    font-size: 3.5rem;
+    font-size: 3.25rem;
     font-weight: 700;
     line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--color-accent-light);
-    opacity: 0.6;
+    letter-spacing: -0.01em;
+    color: oklch(100% 0 0 / 0.28);
+  }
+
+  .coverage-card__body {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    flex: 1;
+  }
+
+  .coverage-card__icon {
+    color: var(--color-cta);
   }
 
   .coverage-card__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 500;
+    font-size: var(--text-md);
+    font-weight: 700;
     letter-spacing: -0.01em;
+    color: var(--color-ink);
   }
 
   .coverage-card__list {
@@ -4436,7 +4462,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-    color: var(--color-paper);
+    color: var(--color-ink-2);
   }
 
   .coverage-card__list li {
@@ -4449,22 +4475,13 @@
 
   .coverage-card__list svg {
     flex-shrink: 0;
-    color: var(--color-accent-light);
+    color: var(--color-cta);
     margin-top: 0.15rem;
   }
 
-  .coverage-card__more {
-    margin-top: auto;
-    align-self: flex-start;
-    padding: 0.375rem 0.875rem;
-    border-radius: var(--radius-pill);
-    background: var(--color-accent);
-    color: var(--color-paper);
-    font-family: var(--font-display);
-    font-size: var(--text-xs);
+  .coverage-card__more span {
+    color: var(--color-cta-dark);
     font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 
   /* 05 · Vehicle cards */
