@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Painel — Hemissul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sw:240px;--th:60px;
+  --bg:#f0f4f8;--panel:#fff;--ink:#0f1923;--muted:#6b7a87;--line:#e2e8f0;
+  --accent:#1267a8;--accent-bg:#e8f2fb;--accent-light:#5dc0ff;
+  --danger:#dc2626;--danger-bg:#fef2f2;
+  --success:#16a34a;--success-bg:#f0fdf4;
+  --warn:#d97706;--warn-bg:#fffbeb;
+  --sb:#0a1628;--sb-muted:#8fa3b8;--sb-hover:#1a2d44;
+  --r:12px;--font:"DM Sans",sans-serif
+}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh}
+button,input,select,textarea{font:inherit}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ── AUTH ── */
+#auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--sb)}
+.auth-card{width:min(400px,100%);background:var(--panel);border-radius:20px;padding:40px;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.auth-logo{width:48px;height:48px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.auth-logo svg{color:#fff}
+.auth-card h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.auth-sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+
+/* ── FORM PRIMITIVES ── */
+.label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin:14px 0 5px}
+.input{width:100%;border:1.5px solid var(--line);background:#fafcff;border-radius:10px;padding:10px 13px;color:var(--ink);outline:none;transition:border-color .15s}
+.input:focus{border-color:var(--accent);background:#fff}
+.input.err{border-color:var(--danger)}
+textarea.input{resize:vertical;min-height:90px}
+select.input{cursor:pointer}
+.btn{border:0;border-radius:10px;background:var(--accent);color:#fff;padding:10px 18px;font-weight:600;cursor:pointer;transition:opacity .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.secondary{background:var(--panel);color:var(--ink);border:1.5px solid var(--line)}
+.btn.secondary:hover{background:var(--bg)}
+.btn.danger{background:var(--danger-bg);color:var(--danger);border:1px solid #fca5a5}
+.btn.success{background:var(--success-bg);color:var(--success);border:1px solid #86efac}
+.btn.sm{padding:7px 12px;font-size:13px}
+.btn.icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:8px}
+.auth-card .btn{width:100%;margin-top:20px;justify-content:center}
+.err-msg{display:none;color:var(--danger);font-size:13px;margin-top:8px}
+.err-msg.on{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f-sec{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line);padding-bottom:6px;margin:20px 0 12px}
+.f-sec:first-child{margin-top:0}
+
+/* ── SHELL ── */
+#app{display:none;min-height:100vh}
+.page{display:none}.page.active{display:block}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:25}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:0;left:0;width:var(--sw);height:100vh;background:var(--sb);display:flex;flex-direction:column;z-index:30;transition:transform .22s}
+.sb-brand{height:var(--th);display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.sb-logo{width:34px;height:34px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-logo svg{color:#fff}
+.sb-name{font-size:14px;font-weight:700;color:#fff}
+.sb-scroll{flex:1;overflow-y:auto;padding:12px 0;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.06) transparent}
+.nav-group{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.22);padding:10px 16px 3px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 16px;color:var(--sb-muted);cursor:pointer;font-size:13.5px;font-weight:500;border:none;background:none;width:100%;text-align:left;transition:background .12s,color .12s}
+.nav-item:hover{background:var(--sb-hover);color:#fff}
+.nav-item.active{background:var(--accent);color:#fff}
+.nav-item svg{flex-shrink:0;width:16px;height:16px;opacity:.75}
+.nav-item:hover svg,.nav-item.active svg{opacity:1}
+.sb-foot{padding:10px 0;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:var(--sw);right:0;height:var(--th);background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 22px;z-index:20}
+.tb-title{font-size:15px;font-weight:700}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tb-user{display:flex;align-items:center;gap:9px;padding:5px 11px;border-radius:10px;background:var(--bg)}
+.tb-avatar{width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.tb-info{line-height:1.2}
+.tb-name{font-size:13px;font-weight:600}
+.tb-role{font-size:11px;color:var(--muted)}
+.mobile-btn{display:none;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;color:var(--ink)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sw);margin-top:var(--th);padding:26px 22px;min-height:calc(100vh - var(--th))}
+.page-header{margin-bottom:20px}
+.page-title{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.page-desc{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:12px}
+.stat-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-val{font-size:21px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
+.c-blue{background:var(--accent-bg)}.c-blue svg{color:var(--accent)}
+.c-green{background:var(--success-bg)}.c-green svg{color:var(--success)}
+.c-orange{background:var(--warn-bg)}.c-orange svg{color:var(--warn)}
+.c-sky{background:#f0f9ff}.c-sky svg{color:#0ea5e9}
+.c-purple{background:#faf5ff}.c-purple svg{color:#a855f7}
+.c-pink{background:#fdf2f8}.c-pink svg{color:#ec4899}
+
+/* ── OVERVIEW ── */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.ov-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;cursor:pointer;transition:box-shadow .15s;display:flex;flex-direction:column;gap:12px}
+.ov-card:hover{box-shadow:0 4px 20px rgba(18,103,168,.1);border-color:#a5c8ea}
+.ov-head{display:flex;align-items:center;gap:10px}
+.ov-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ov-title{font-weight:700;font-size:13.5px}
+.ov-sub{font-size:12px;color:var(--muted)}
+.ov-nums{display:flex;gap:12px}
+.ov-num{font-size:12px;color:var(--muted)}.ov-num b{color:var(--ink);font-weight:700}
+.ov-link{font-size:12px;color:var(--accent);font-weight:600;margin-top:auto}
+
+/* ── SEC BAR ── */
+.sec-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.sec-bar h2{font-size:15px;font-weight:700}
+.spacer{flex:1}
+.search-wrap{position:relative}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:15px;height:15px}
+.search-wrap .input{padding-left:32px;width:200px;padding-top:8px;padding-bottom:8px;font-size:13px}
+
+/* ── GRID / CARDS ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:box-shadow .15s}
+.card:hover{box-shadow:0 4px 18px rgba(18,103,168,.08)}
+.cover{height:170px;background:var(--line);position:relative;overflow:hidden;cursor:pointer}
+.cover img{width:100%;height:100%;object-fit:cover;transition:transform .22s}
+.cover:hover img{transform:scale(1.04)}
+.cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-direction:column;gap:6px;background:#f4f7fb}
+.cover-ph svg{opacity:.3;width:40px;height:40px}
+.cover-ph span{font-size:12px}
+.badge{position:absolute;border-radius:999px;padding:3px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.badge.cat{left:8px;bottom:8px;background:rgba(10,22,40,.65);color:#fff;backdrop-filter:blur(4px)}
+.badge.pub{right:8px;top:8px;background:var(--success-bg);color:var(--success);border:1px solid #86efac}
+.badge.dft{right:8px;top:8px;background:#fff;color:var(--muted);border:1px solid var(--line)}
+.card-body{padding:14px}
+.card-title{font-weight:700;font-size:13.5px;margin-bottom:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.meta{display:flex;flex-direction:column;gap:2px;color:var(--muted);font-size:12px}
+.card-actions{display:flex;gap:7px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+.card-actions button{flex:1;font-size:12px;padding:7px}
+
+/* ── TABLE ── */
+.tbl-wrap{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tbl-wrap table{width:100%;border-collapse:collapse}
+.tbl-wrap th{padding:11px 15px;text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line);background:#fafcff}
+.tbl-wrap td{padding:12px 15px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+.tbl-wrap tr:last-child td{border-bottom:0}
+.tbl-wrap tr:hover td{background:#fafcff}
+.td-actions{display:flex;gap:6px;justify-content:flex-end}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.pill.on{background:var(--success-bg);color:var(--success);border:1px solid #86efac}
+.pill.off{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+
+/* ── EMPTY ── */
+.empty{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:28vh;color:var(--muted);text-align:center;gap:10px;padding:40px}
+.empty svg{opacity:.2;width:48px;height:48px}
+.empty h3{font-size:16px;font-weight:600}
+.empty p{font-size:13px}
+
+/* ── SETTINGS ── */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.settings-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.settings-card.full{grid-column:1/-1}
+.settings-card h3{font-size:13.5px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.settings-card h3 svg{color:var(--accent);width:16px;height:16px}
+.settings-foot{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,.6);z-index:60;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.overlay.on{display:flex}
+.modal{width:min(720px,100%);background:#fff;border-radius:18px;margin:auto;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.2)}
+.modal.sm{width:min(460px,100%)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 0}
+.modal-head h2{font-size:17px;font-weight:700}
+.modal-close{border:0;background:transparent;color:var(--muted);font-size:24px;cursor:pointer;padding:4px;line-height:1}
+.modal-close:hover{color:var(--ink)}
+.modal-body{padding:18px 24px;max-height:70vh;overflow-y:auto}
+.modal-foot{display:flex;gap:9px;justify-content:flex-end;padding:14px 24px 20px;border-top:1px solid var(--line)}
+
+/* ── UPLOAD ── */
+.dropzone{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:border-color .15s;color:var(--muted);font-size:13px}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.dropzone svg{width:32px;height:32px;margin:0 auto 8px;opacity:.4}
+.img-preview{width:100%;max-height:200px;object-fit:cover;border-radius:10px;border:1px solid var(--line);margin-top:10px}
+.thumb-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.thumb{position:relative;width:80px;height:68px;border-radius:8px;border:1.5px solid var(--line);overflow:hidden;flex-shrink:0}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .rm{position:absolute;top:3px;right:3px;width:18px;height:18px;border:0;border-radius:999px;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;right:24px;z-index:99;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.18);animation:slideUp .25s ease;display:flex;align-items:center;gap:8px}
+.toast.ok{background:var(--success)}.toast.err{background:var(--danger)}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TOGGLE ── */
+.toggle{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{position:absolute;opacity:0;width:0;height:0}
+.toggle-track{width:38px;height:22px;background:var(--line);border-radius:999px;transition:background .15s;flex-shrink:0}
+.toggle input:checked+.toggle-track{background:var(--accent)}
+.toggle-thumb{position:absolute;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .15s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked~.toggle-thumb{transform:translateX(16px)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .topbar{left:0}.main{margin-left:0}
+  .mobile-btn{display:flex!important}.sb-overlay{display:block!important}
+  .settings-grid{grid-template-columns:1fr}.settings-card.full{grid-column:auto}
+  .two{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){.stats{grid-template-columns:1fr}.main{padding:14px 12px}}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <h1>Hemissul CMS</h1>
+    <p class="auth-sub">Entre com sua conta administrativa.</p>
+    <label class="label" for="loginEmail">E-mail</label>
+    <input class="input" id="loginEmail" type="email" autocomplete="email" placeholder="admin@hemissul.com.br"/>
+    <label class="label" for="loginPwd">Senha</label>
+    <input class="input" id="loginPwd" type="password" autocomplete="current-password" placeholder="••••••••"/>
+    <p class="err-msg" id="loginErr">E-mail ou senha incorretos.</p>
+    <button class="btn" id="loginBtn" onclick="doLogin()">Entrar</button>
+  </div>
+</div>
+
+<div id="app">
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <span class="sb-name">Hemissul</span>
+    </div>
+    <div class="sb-scroll">
+      <div class="nav-group">Principal</div>
+      <button class="nav-item active" data-page="dashboard" onclick="goto('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-page="settings" onclick="goto('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Configurações
+      </button>
+      <div class="nav-group">Conteúdo</div>
+      <button class="nav-item" data-page="banners" onclick="goto('banners')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+        Banners
+      </button>
+      <button class="nav-item" data-page="posts" onclick="goto('posts')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Blog
+      </button>
+      <button class="nav-item" data-page="faqs" onclick="goto('faqs')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQs
+      </button>
+      <button class="nav-item" data-page="podcast" onclick="goto('podcast')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Podcast
+      </button>
+      <div class="nav-group">Mídia</div>
+      <button class="nav-item" data-page="before-after" onclick="goto('before-after')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+        Antes / Depois
+      </button>
+      <button class="nav-item" data-page="testimonials" onclick="goto('testimonials')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Depoimentos
+      </button>
+      <div class="nav-group">Institucional</div>
+      <button class="nav-item" data-page="team" onclick="goto('team')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Equipe
+      </button>
+      <button class="nav-item" data-page="partners" onclick="goto('partners')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 11H3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5l2 2 2-2H17a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/><path d="M21 7H7a2 2 0 0 0-2 2v1"/></svg>
+        Parceiros
+      </button>
+    </div>
+    <div class="sb-foot">
+      <button class="nav-item" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sair
+      </button>
+    </div>
+  </nav>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="mobile-btn" onclick="toggleSidebar()" aria-label="Menu" style="display:none">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="tb-title" id="tbTitle">Dashboard</span>
+    <div class="tb-right">
+      <a href="https://hemissul.vercel.app" target="_blank" class="btn secondary sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Ver site
+      </a>
+      <div class="tb-user">
+        <div class="tb-avatar" id="tbAvatar">A</div>
+        <div class="tb-info">
+          <div class="tb-name" id="tbName">Admin</div>
+          <div class="tb-role" id="tbRole">editor</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-desc">Visão geral do conteúdo publicado.</p>
+      </div>
+      <div class="stats" id="dashStats"></div>
+      <div class="ov-grid" id="dashOv"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <h1 class="page-title">Configurações do site</h1>
+        <p class="page-desc">Edite contatos, horários e redes sociais exibidos no site.</p>
+      </div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.57a16 16 0 0 0 6.29 6.29l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Canais de contato</h3>
+          <label class="label">0800 (Assistência 24h)</label><input class="input" id="s_phone_0800" placeholder="0800 940 2163"/>
+          <label class="label">WhatsApp (Cotação)</label><input class="input" id="s_phone_whatsapp" placeholder="(95) 99138-1037"/>
+          <label class="label">Pronta resposta</label><input class="input" id="s_phone_pronta" placeholder="(95) 99157-4355"/>
+          <label class="label">E-mail</label><input class="input" id="s_email" type="email"/>
+          <div class="settings-foot"><button class="btn" onclick="saveSettings(['phone_0800','phone_whatsapp','phone_pronta','email'])">Salvar</button></div>
+        </div>
+        <div class="settings-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Endereço e horários</h3>
+          <label class="label">Rua / Bairro</label><input class="input" id="s_address_street"/>
+          <label class="label">Cidade — UF</label><input class="input" id="s_address_city"/>
+          <label class="label">CEP</label><input class="input" id="s_address_cep"/>
+          <div class="two">
+            <div><label class="label">Seg–Sex</label><input class="input" id="s_hours_weekday"/></div>
+            <div><label class="label">Sábado</label><input class="input" id="s_hours_saturday"/></div>
+          </div>
+          <label class="label">Domingo</label><input class="input" id="s_hours_sunday"/>
+          <div class="settings-foot"><button class="btn" onclick="saveSettings(['address_street','address_city','address_cep','hours_weekday','hours_saturday','hours_sunday'])">Salvar</button></div>
+        </div>
+        <div class="settings-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Redes sociais</h3>
+          <label class="label">Instagram (URL)</label><input class="input" id="s_instagram"/>
+          <label class="label">Facebook (URL)</label><input class="input" id="s_facebook"/>
+          <label class="label">YouTube (URL)</label><input class="input" id="s_youtube"/>
+          <label class="label">LinkedIn (URL)</label><input class="input" id="s_linkedin"/>
+          <label class="label">WhatsApp (link wa.me)</label><input class="input" id="s_whatsapp_link"/>
+          <div class="settings-foot"><button class="btn" onclick="saveSettings(['instagram','facebook','youtube','linkedin','whatsapp_link'])">Salvar</button></div>
+        </div>
+        <div class="settings-card">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Métricas institucionais</h3>
+          <label class="label">Veículos protegidos</label><input class="input" id="s_metric_vehicles" placeholder="13.000+"/>
+          <label class="label">Investido em reparos</label><input class="input" id="s_metric_repairs" placeholder="R$ 12 mi+"/>
+          <div class="settings-foot"><button class="btn" onclick="saveSettings(['metric_vehicles','metric_repairs'])">Salvar</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNERS -->
+    <div class="page" id="page-banners">
+      <div class="sec-bar">
+        <div><h2>Banners promocionais</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openBannerModal()">+ Novo banner</button>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Título</th><th>Posição</th><th>Expira em</th><th>Ativo</th><th></th></tr></thead>
+        <tbody id="bannersBody"></tbody>
+      </table></div>
+      <div class="empty" id="bannersEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="10" rx="2"/></svg><h3>Nenhum banner</h3><p>Crie o primeiro banner promocional.</p></div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="page" id="page-posts">
+      <div class="sec-bar">
+        <div><h2>Blog</h2></div>
+        <div class="spacer"></div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="input" id="postsSearch" placeholder="Buscar..." oninput="filterPosts(this.value)"/>
+        </div>
+        <button class="btn" onclick="openPostModal()">+ Novo post</button>
+      </div>
+      <div class="grid" id="postsGrid"></div>
+      <div class="empty" id="postsEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><h3>Nenhum post</h3><p>Crie o primeiro artigo do blog.</p></div>
+    </div>
+
+    <!-- FAQS -->
+    <div class="page" id="page-faqs">
+      <div class="sec-bar">
+        <div><h2>Dúvidas frequentes</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openFaqModal()">+ Nova pergunta</button>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Grupo</th><th>Pergunta</th><th>Ativo</th><th></th></tr></thead>
+        <tbody id="faqsBody"></tbody>
+      </table></div>
+      <div class="empty" id="faqsEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/></svg><h3>Nenhuma pergunta</h3><p>Adicione as perguntas frequentes.</p></div>
+    </div>
+
+    <!-- PODCAST -->
+    <div class="page" id="page-podcast">
+      <div class="sec-bar">
+        <div><h2>Podcast</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openPodcastModal()">+ Novo episódio</button>
+      </div>
+      <div class="grid" id="podcastGrid"></div>
+      <div class="empty" id="podcastEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><h3>Nenhum episódio</h3><p>Adicione os episódios do podcast.</p></div>
+    </div>
+
+    <!-- BEFORE/AFTER -->
+    <div class="page" id="page-before-after">
+      <div class="sec-bar">
+        <div><h2>Antes / Depois</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openBAModal()">+ Novo par</button>
+      </div>
+      <div class="grid" id="baGrid"></div>
+      <div class="empty" id="baEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg><h3>Nenhum par</h3><p>Adicione pares de fotos antes e depois.</p></div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="page" id="page-testimonials">
+      <div class="sec-bar">
+        <div><h2>Depoimentos</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openTestimonialModal()">+ Novo depoimento</button>
+      </div>
+      <div class="grid" id="testimonialsGrid"></div>
+      <div class="empty" id="testimonialsEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h3>Nenhum depoimento</h3><p>Adicione depoimentos dos associados.</p></div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="page" id="page-team">
+      <div class="sec-bar">
+        <div><h2>Equipe</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openTeamModal()">+ Novo membro</button>
+      </div>
+      <div class="grid" id="teamGrid"></div>
+      <div class="empty" id="teamEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><h3>Nenhum membro</h3></div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="page" id="page-partners">
+      <div class="sec-bar">
+        <div><h2>Parceiros — Clube de Benefícios</h2></div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="openPartnerModal()">+ Novo parceiro</button>
+      </div>
+      <div class="grid" id="partnersGrid"></div>
+      <div class="empty" id="partnersEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 11H3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5l2 2 2-2H17a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg><h3>Nenhum parceiro</h3></div>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /app -->
+
+<!-- MODALS -->
+<div class="overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Modal</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const API = window.CMS_API_URL || '/api'
+let TOKEN = localStorage.getItem('hcms_token') || ''
+let USER  = null
+let _allPosts = []
+
+// ── UTILS ─────────────────────────────────────────────────────
+const $ = id => document.getElementById(id)
+const toast = (msg, type='ok') => {
+  const t = document.createElement('div')
+  t.className = `toast ${type}`
+  t.textContent = msg
+  $('toast').appendChild(t)
+  setTimeout(() => t.remove(), 3200)
+}
+const fmt = d => d ? new Date(d).toLocaleDateString('pt-BR') : '—'
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+const ph = (label='') => `<div class="cover-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>${label}</span></div>`
+
+async function api(path, opts={}) {
+  const res = await fetch(API + path, {
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${TOKEN}`, ...opts.headers },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  })
+  if (res.status === 401) { logout(); return null }
+  return res.ok ? res.json() : Promise.reject(await res.json())
+}
+
+async function upload(file) {
+  const fd = new FormData(); fd.append('file', file)
+  const res = await fetch(API + '/upload', { method:'POST', headers:{ Authorization:`Bearer ${TOKEN}` }, body: fd })
+  if (!res.ok) throw new Error('Upload falhou')
+  return (await res.json()).url
+}
+
+// ── AUTH ──────────────────────────────────────────────────────
+async function doLogin() {
+  const email = $('loginEmail').value.trim()
+  const pwd   = $('loginPwd').value
+  $('loginErr').classList.remove('on')
+  $('loginBtn').disabled = true
+  try {
+    const data = await api('/auth/login', { method:'POST', body:{ email, password:pwd } })
+    if (!data) return
+    TOKEN = data.token
+    USER  = data.user
+    localStorage.setItem('hcms_token', TOKEN)
+    initApp()
+  } catch {
+    $('loginErr').classList.add('on')
+  } finally {
+    $('loginBtn').disabled = false
+  }
+}
+$('loginPwd').addEventListener('keydown', e => { if(e.key==='Enter') doLogin() })
+
+function logout() {
+  TOKEN = ''; USER = null
+  localStorage.removeItem('hcms_token')
+  $('auth').style.display = 'flex'
+  $('app').style.display  = 'none'
+}
+
+async function initApp() {
+  $('auth').style.display = 'none'
+  $('app').style.display  = 'block'
+  if (!USER) {
+    try { USER = await api('/auth/me') } catch { return logout() }
+  }
+  $('tbName').textContent  = USER.name || USER.email
+  $('tbRole').textContent  = USER.role
+  $('tbAvatar').textContent = (USER.name || 'A')[0].toUpperCase()
+  goto('dashboard')
+}
+
+// ── ROUTING ───────────────────────────────────────────────────
+const PAGE_TITLES = {
+  dashboard:'Dashboard', settings:'Configurações', banners:'Banners',
+  posts:'Blog', faqs:'FAQs', podcast:'Podcast',
+  'before-after':'Antes / Depois', testimonials:'Depoimentos',
+  team:'Equipe', partners:'Parceiros',
+}
+function goto(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'))
+  const p = $(`page-${page}`)
+  if (p) p.classList.add('active')
+  document.querySelector(`[data-page="${page}"]`)?.classList.add('active')
+  $('tbTitle').textContent = PAGE_TITLES[page] || page
+  closeSidebar()
+  loadPage(page)
+}
+
+function loadPage(page) {
+  const loaders = {
+    dashboard:     loadDashboard,
+    settings:      loadSettings,
+    banners:       loadBanners,
+    posts:         loadPosts,
+    faqs:          loadFaqs,
+    podcast:       loadPodcast,
+    'before-after':loadBA,
+    testimonials:  loadTestimonials,
+    team:          loadTeam,
+    partners:      loadPartners,
+  }
+  loaders[page]?.()
+}
+
+// ── SIDEBAR MOBILE ────────────────────────────────────────────
+function toggleSidebar() { $('sidebar').classList.toggle('open') }
+function closeSidebar()  { $('sidebar').classList.remove('open') }
+
+// ── MODAL ─────────────────────────────────────────────────────
+function openModal(title, body, foot) {
+  $('modalTitle').textContent = title
+  $('modalBody').innerHTML    = body
+  $('modalFoot').innerHTML    = foot
+  $('modalOverlay').classList.add('on')
+}
+function closeModal()  { $('modalOverlay').classList.remove('on') }
+function closeModalOutside(e) { if(e.target===$('modalOverlay')) closeModal() }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal() })
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+async function loadDashboard() {
+  const [posts, banners, faqs, podcast, testimonials] = await Promise.all([
+    api('/posts'),
+    api('/banners?all=1'),
+    api('/faqs/flat'),
+    api('/podcast'),
+    api('/testimonials?all=1'),
+  ])
+  const stats = [
+    { label:'Posts publicados', val: posts?.filter(p=>p.status==='published').length||0, color:'c-blue' },
+    { label:'Banners ativos',   val: banners?.filter(b=>b.active).length||0, color:'c-orange' },
+    { label:'Perguntas FAQ',    val: faqs?.length||0, color:'c-sky' },
+    { label:'Episódios',        val: podcast?.length||0, color:'c-purple' },
+    { label:'Depoimentos',      val: testimonials?.length||0, color:'c-green' },
+  ]
+  $('dashStats').innerHTML = stats.map(s => `
+    <div class="stat">
+      <div class="stat-ico ${s.color}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>
+      <div><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.label}</div></div>
+    </div>`).join('')
+
+  const ovItems = [
+    { icon:'📝', title:'Blog', sub:'Artigos e notícias', page:'posts', pub:posts?.filter(p=>p.status==='published').length||0, total:posts?.length||0 },
+    { icon:'📣', title:'Banners', sub:'Promoções', page:'banners', pub:banners?.filter(b=>b.active).length||0, total:banners?.length||0 },
+    { icon:'❓', title:'FAQs', sub:'Dúvidas frequentes', page:'faqs', pub:faqs?.filter(f=>f.active).length||0, total:faqs?.length||0 },
+    { icon:'🎙', title:'Podcast', sub:'Episódios', page:'podcast', pub:podcast?.filter(p=>p.active).length||0, total:podcast?.length||0 },
+    { icon:'💬', title:'Depoimentos', sub:'Associados', page:'testimonials', pub:testimonials?.filter(t=>t.active).length||0, total:testimonials?.length||0 },
+  ]
+  $('dashOv').innerHTML = ovItems.map(o => `
+    <div class="ov-card" onclick="goto('${o.page}')">
+      <div class="ov-head"><div class="ov-icon" style="background:var(--accent-bg);font-size:20px">${o.icon}</div>
+        <div><div class="ov-title">${o.title}</div><div class="ov-sub">${o.sub}</div></div>
+      </div>
+      <div class="ov-nums"><span class="ov-num"><b>${o.pub}</b> ativos</span><span class="ov-num"><b>${o.total}</b> total</span></div>
+      <span class="ov-link">Gerenciar →</span>
+    </div>`).join('')
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+async function loadSettings() {
+  const data = await api('/settings')
+  if (!data) return
+  Object.entries(data).forEach(([k,v]) => {
+    const el = $(`s_${k}`)
+    if (el) el.value = v
+  })
+}
+async function saveSettings(keys) {
+  const body = {}
+  keys.forEach(k => { const el = $(`s_${k}`); if(el) body[k] = el.value })
+  try {
+    await api('/settings', { method:'PUT', body })
+    toast('Configurações salvas!')
+  } catch(e) { toast(e.error||'Erro ao salvar', 'err') }
+}
+
+// ── BANNERS ───────────────────────────────────────────────────
+async function loadBanners() {
+  const rows = await api('/banners?all=1')
+  if (!rows) return
+  const tbody = $('bannersBody')
+  const empty = $('bannersEmpty')
+  if (!rows.length) { tbody.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display = 'none'
+  tbody.innerHTML = rows.map(b => `
+    <tr>
+      <td><strong>${esc(b.title)}</strong>${b.text?`<div class="meta"><span>${esc(b.text.slice(0,60))}…</span></div>`:''}
+      </td>
+      <td>${b.position}</td>
+      <td>${fmt(b.expires_at)}</td>
+      <td><label class="toggle"><input type="checkbox" ${b.active?'checked':''} onchange="toggleBanner(${b.id},this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></td>
+      <td><div class="td-actions">
+        <button class="btn sm secondary" onclick="openBannerModal(${b.id})">Editar</button>
+        <button class="btn sm danger" onclick="deleteBanner(${b.id})">Excluir</button>
+      </div></td>
+    </tr>`).join('')
+}
+async function toggleBanner(id, active) {
+  await api(`/banners/${id}`, { method:'PUT', body:{ active: active?1:0 } })
+  toast(active ? 'Banner ativado' : 'Banner desativado')
+}
+async function deleteBanner(id) {
+  if (!confirm('Excluir este banner?')) return
+  await api(`/banners/${id}`, { method:'DELETE' })
+  toast('Banner excluído'); loadBanners()
+}
+async function openBannerModal(id) {
+  let b = {}
+  if (id) { const rows = await api('/banners?all=1'); b = rows?.find(x=>x.id===id)||{} }
+  openModal(id ? 'Editar banner' : 'Novo banner', `
+    <div class="f-sec">Conteúdo</div>
+    <label class="label">Título *</label><input class="input" id="b_title" value="${esc(b.title||'')}"/>
+    <label class="label">Texto</label><textarea class="input" id="b_text">${esc(b.text||'')}</textarea>
+    <div class="two">
+      <div><label class="label">Texto do botão</label><input class="input" id="b_cta_label" value="${esc(b.cta_label||'')}"/></div>
+      <div><label class="label">URL do botão</label><input class="input" id="b_cta_url" value="${esc(b.cta_url||'')}"/></div>
+    </div>
+    <div class="f-sec">Aparência</div>
+    <div class="two">
+      <div><label class="label">Cor de fundo</label><input class="input" type="color" id="b_bg_color" value="${b.bg_color||'#1267a8'}"/></div>
+      <div><label class="label">Cor do texto</label><input class="input" type="color" id="b_text_color" value="${b.text_color||'#ffffff'}"/></div>
+    </div>
+    <label class="label">Posição</label>
+    <select class="input" id="b_position">
+      <option value="all" ${b.position==='all'?'selected':''}>Todas as páginas</option>
+      <option value="home" ${b.position==='home'?'selected':''}>Somente Home</option>
+    </select>
+    <div class="two">
+      <div><label class="label">Expira em</label><input class="input" type="datetime-local" id="b_expires" value="${b.expires_at?b.expires_at.slice(0,16):''}"/></div>
+      <div><label class="label">Ativo</label><br><label class="toggle" style="margin-top:10px"><input type="checkbox" id="b_active" ${b.active||!id?'checked':''}><span class="toggle-track"></span><span class="toggle-thumb"></span><span>Ativo</span></label></div>
+    </div>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="saveBanner(${id||'null'})">Salvar</button>`)
+}
+async function saveBanner(id) {
+  const body = {
+    title:      $('b_title').value.trim(),
+    text:       $('b_text').value,
+    cta_label:  $('b_cta_label').value,
+    cta_url:    $('b_cta_url').value,
+    bg_color:   $('b_bg_color').value,
+    text_color: $('b_text_color').value,
+    position:   $('b_position').value,
+    expires_at: $('b_expires').value || null,
+    active:     $('b_active').checked ? 1 : 0,
+  }
+  if (!body.title) { toast('Título obrigatório','err'); return }
+  try {
+    if (id) await api(`/banners/${id}`, { method:'PUT', body })
+    else    await api('/banners',        { method:'POST', body })
+    closeModal(); toast('Banner salvo!'); loadBanners()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── POSTS ─────────────────────────────────────────────────────
+async function loadPosts() {
+  const rows = await api('/posts')
+  if (!rows) return
+  _allPosts = rows
+  renderPosts(rows)
+}
+function filterPosts(q) {
+  const f = _allPosts.filter(p => p.title.toLowerCase().includes(q.toLowerCase()))
+  renderPosts(f)
+}
+function renderPosts(rows) {
+  const grid  = $('postsGrid')
+  const empty = $('postsEmpty')
+  if (!rows.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display = 'none'
+  grid.innerHTML = rows.map(p => `
+    <div class="card">
+      <div class="cover" onclick="openPostModal(${p.id})">
+        ${p.cover_url ? `<img src="${esc(p.cover_url)}" alt="" loading="lazy"/>` : ph('Sem capa')}
+        ${p.category ? `<span class="badge cat">${esc(p.category)}</span>` : ''}
+        <span class="badge ${p.status==='published'?'pub':'dft'}">${p.status==='published'?'Publicado':'Rascunho'}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(p.title)}</div>
+        <div class="meta"><span>${fmt(p.published_at||p.created_at)}</span></div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openPostModal(${p.id})">Editar</button>
+          <button class="btn sm danger" onclick="deletePost(${p.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`).join('')
+}
+async function deletePost(id) {
+  if (!confirm('Excluir este post?')) return
+  await api(`/posts/${id}`, { method:'DELETE' })
+  toast('Post excluído'); loadPosts()
+}
+async function openPostModal(id) {
+  let p = {}
+  if (id) { p = await api(`/posts/${id}`) || {} }
+  openModal(id ? 'Editar post' : 'Novo post', `
+    <div class="f-sec">Conteúdo</div>
+    <label class="label">Título *</label><input class="input" id="p_title" value="${esc(p.title||'')}"/>
+    <label class="label">Resumo</label><textarea class="input" id="p_excerpt">${esc(p.excerpt||'')}</textarea>
+    <label class="label">Conteúdo completo</label><textarea class="input" id="p_content" style="min-height:160px">${esc(p.content||'')}</textarea>
+    <div class="two">
+      <div><label class="label">Categoria</label><input class="input" id="p_category" value="${esc(p.category||'')}" placeholder="Ex: Atendimento"/></div>
+      <div><label class="label">Status</label>
+        <select class="input" id="p_status">
+          <option value="draft" ${p.status!=='published'?'selected':''}>Rascunho</option>
+          <option value="published" ${p.status==='published'?'selected':''}>Publicado</option>
+        </select>
+      </div>
+    </div>
+    <label class="label">URL da imagem de capa</label>
+    <input class="input" id="p_cover" value="${esc(p.cover_url||'')}" placeholder="https://... ou use o upload"/>
+    <div style="margin-top:8px">
+      <input type="file" id="p_cover_file" accept="image/*" style="display:none" onchange="uploadCover(this)"/>
+      <button class="btn sm secondary" onclick="$('p_cover_file').click()">📎 Upload imagem</button>
+    </div>
+    ${p.cover_url?`<img class="img-preview" src="${esc(p.cover_url)}" alt="" id="p_cover_preview"/>`:'<div id="p_cover_preview"></div>'}`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="savePost(${id||'null'})">Salvar</button>`)
+  $('p_cover').addEventListener('input', e => {
+    const pv = $('p_cover_preview')
+    pv.tagName==='IMG' ? pv.src=e.target.value : (pv.innerHTML=e.target.value?`<img class="img-preview" src="${e.target.value}" alt=""/>`:'')
+  })
+}
+async function uploadCover(input) {
+  if (!input.files[0]) return
+  try {
+    const url = await upload(input.files[0])
+    $('p_cover').value = url
+    const pv = $('p_cover_preview')
+    pv.innerHTML = `<img class="img-preview" src="${url}" alt=""/>`
+    toast('Imagem enviada!')
+  } catch { toast('Erro no upload','err') }
+}
+async function savePost(id) {
+  const body = {
+    title:   $('p_title').value.trim(),
+    excerpt: $('p_excerpt').value,
+    content: $('p_content').value,
+    category: $('p_category').value,
+    cover_url: $('p_cover').value,
+    status:  $('p_status').value,
+    published_at: $('p_status').value==='published' ? new Date().toISOString() : null,
+  }
+  if (!body.title) { toast('Título obrigatório','err'); return }
+  try {
+    if (id) await api(`/posts/${id}`, { method:'PUT', body })
+    else    await api('/posts',        { method:'POST', body })
+    closeModal(); toast('Post salvo!'); loadPosts()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── FAQS ──────────────────────────────────────────────────────
+async function loadFaqs() {
+  const rows = await api('/faqs/flat')
+  const tbody = $('faqsBody'); const empty = $('faqsEmpty')
+  if (!rows?.length) { tbody.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  tbody.innerHTML = rows.map(f => `
+    <tr>
+      <td><span class="pill ${f.active?'on':'off'}">${esc(f.group_name)}</span></td>
+      <td>${esc(f.question)}</td>
+      <td><label class="toggle"><input type="checkbox" ${f.active?'checked':''} onchange="toggleFaq(${f.id},this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></td>
+      <td><div class="td-actions">
+        <button class="btn sm secondary" onclick="openFaqModal(${f.id})">Editar</button>
+        <button class="btn sm danger" onclick="deleteFaq(${f.id})">Excluir</button>
+      </div></td>
+    </tr>`).join('')
+}
+async function toggleFaq(id, active) {
+  await api(`/faqs/${id}`, { method:'PUT', body:{ active:active?1:0 } })
+}
+async function deleteFaq(id) {
+  if (!confirm('Excluir esta pergunta?')) return
+  await api(`/faqs/${id}`, { method:'DELETE' })
+  toast('Pergunta excluída'); loadFaqs()
+}
+async function openFaqModal(id) {
+  let f = {}
+  if (id) { const rows = await api('/faqs/flat'); f = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar pergunta':'Nova pergunta', `
+    <label class="label">Grupo / Tema</label>
+    <select class="input" id="f_group">
+      ${['Sobre a Hemissul','Sobre o programa','Adesão e cobranças','No uso do dia a dia'].map(g=>
+        `<option ${f.group_name===g?'selected':''}>${g}</option>`).join('')}
+    </select>
+    <label class="label">Pergunta *</label><input class="input" id="f_q" value="${esc(f.question||'')}"/>
+    <label class="label">Resposta *</label><textarea class="input" id="f_a" style="min-height:120px">${esc(f.answer||'')}</textarea>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="saveFaq(${id||'null'})">Salvar</button>`)
+}
+async function saveFaq(id) {
+  const body = { group_name:$('f_group').value, question:$('f_q').value.trim(), answer:$('f_a').value.trim() }
+  if (!body.question||!body.answer) { toast('Pergunta e resposta obrigatórias','err'); return }
+  try {
+    if (id) await api(`/faqs/${id}`, { method:'PUT', body })
+    else    await api('/faqs',        { method:'POST', body })
+    closeModal(); toast('FAQ salvo!'); loadFaqs()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── PODCAST ───────────────────────────────────────────────────
+async function loadPodcast() {
+  const rows = await api('/podcast?all=1')
+  const grid = $('podcastGrid'); const empty = $('podcastEmpty')
+  if (!rows?.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  grid.innerHTML = rows.map(ep => {
+    const thumb = ep.video_id ? `https://i.ytimg.com/vi/${ep.video_id}/mqdefault.jpg` : null
+    return `<div class="card">
+      <div class="cover">
+        ${thumb ? `<img src="${thumb}" alt="" loading="lazy"/>` : ph('YouTube')}
+        <span class="badge cat">Ep. ${esc(ep.number)}</span>
+        <span class="badge ${ep.active?'pub':'dft'}">${ep.active?'Ativo':'Inativo'}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(ep.title)}</div>
+        <div class="meta"><span>${fmt(ep.aired_at)} · ${esc(ep.video_id)}</span></div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openPodcastModal(${ep.id})">Editar</button>
+          <button class="btn sm danger" onclick="deletePodcast(${ep.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`}).join('')
+}
+async function deletePodcast(id) {
+  if (!confirm('Excluir episódio?')) return
+  await api(`/podcast/${id}`, { method:'DELETE' })
+  toast('Episódio excluído'); loadPodcast()
+}
+async function openPodcastModal(id) {
+  let ep = {}
+  if (id) { const rows = await api('/podcast?all=1'); ep = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar episódio':'Novo episódio', `
+    <div class="two">
+      <div><label class="label">Número</label><input class="input" id="ep_num" value="${esc(ep.number||'')}"/></div>
+      <div><label class="label">YouTube Video ID *</label><input class="input" id="ep_vid" value="${esc(ep.video_id||'')}" placeholder="Ex: 8VSYQa0wgHI"/></div>
+    </div>
+    <label class="label">Título *</label><input class="input" id="ep_title" value="${esc(ep.title||'')}"/>
+    <label class="label">Descrição</label><textarea class="input" id="ep_desc">${esc(ep.description||'')}</textarea>
+    <label class="label">Data de publicação</label><input class="input" type="date" id="ep_date" value="${ep.aired_at?ep.aired_at.slice(0,10):''}"/>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="savePodcast(${id||'null'})">Salvar</button>`)
+}
+async function savePodcast(id) {
+  const body = { number:$('ep_num').value, video_id:$('ep_vid').value.trim(), title:$('ep_title').value.trim(), description:$('ep_desc').value, aired_at:$('ep_date').value||null }
+  if (!body.video_id||!body.title) { toast('Video ID e título obrigatórios','err'); return }
+  try {
+    if (id) await api(`/podcast/${id}`, { method:'PUT', body })
+    else    await api('/podcast',        { method:'POST', body })
+    closeModal(); toast('Episódio salvo!'); loadPodcast()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── BEFORE/AFTER ──────────────────────────────────────────────
+async function loadBA() {
+  const rows = await api('/before-after?all=1')
+  const grid = $('baGrid'); const empty = $('baEmpty')
+  if (!rows?.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  grid.innerHTML = rows.map(r => `
+    <div class="card">
+      <div class="cover" style="display:grid;grid-template-columns:1fr 1fr;height:160px;gap:2px">
+        <div style="overflow:hidden"><img src="${esc(r.before_url)}" alt="Antes" style="width:100%;height:100%;object-fit:cover" loading="lazy"/></div>
+        <div style="overflow:hidden"><img src="${esc(r.after_url)}" alt="Depois" style="width:100%;height:100%;object-fit:cover" loading="lazy"/></div>
+        <span class="badge cat" style="bottom:auto;top:8px">Antes</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(r.label||r.vehicle||'Par '+r.id)}</div>
+        <div class="meta"><span>${esc(r.vehicle||'')}</span></div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openBAModal(${r.id})">Editar</button>
+          <button class="btn sm danger" onclick="deleteBA(${r.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`).join('')
+}
+async function deleteBA(id) {
+  if (!confirm('Excluir par?')) return
+  await api(`/before-after/${id}`, { method:'DELETE' })
+  toast('Par excluído'); loadBA()
+}
+async function openBAModal(id) {
+  let r = {}
+  if (id) { const rows = await api('/before-after?all=1'); r = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar par Antes/Depois':'Novo par', `
+    <label class="label">Rótulo (ex: Gol 2019)</label><input class="input" id="ba_label" value="${esc(r.label||'')}"/>
+    <label class="label">Veículo</label><input class="input" id="ba_vehicle" value="${esc(r.vehicle||'')}"/>
+    <label class="label">Foto ANTES (URL)</label><input class="input" id="ba_before" value="${esc(r.before_url||'')}"/>
+    <div style="margin-top:6px"><input type="file" id="ba_before_file" accept="image/*" style="display:none" onchange="uploadBA(this,'ba_before')"/>
+      <button class="btn sm secondary" onclick="$('ba_before_file').click()">📎 Upload Antes</button></div>
+    <label class="label">Foto DEPOIS (URL)</label><input class="input" id="ba_after" value="${esc(r.after_url||'')}"/>
+    <div style="margin-top:6px"><input type="file" id="ba_after_file" accept="image/*" style="display:none" onchange="uploadBA(this,'ba_after')"/>
+      <button class="btn sm secondary" onclick="$('ba_after_file').click()">📎 Upload Depois</button></div>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="saveBA(${id||'null'})">Salvar</button>`)
+}
+async function uploadBA(input, fieldId) {
+  if (!input.files[0]) return
+  try { const url = await upload(input.files[0]); $(fieldId).value = url; toast('Upload ok!') }
+  catch { toast('Erro no upload','err') }
+}
+async function saveBA(id) {
+  const body = { label:$('ba_label').value, vehicle:$('ba_vehicle').value, before_url:$('ba_before').value.trim(), after_url:$('ba_after').value.trim() }
+  if (!body.before_url||!body.after_url) { toast('URLs obrigatórias','err'); return }
+  try {
+    if (id) await api(`/before-after/${id}`, { method:'PUT', body })
+    else    await api('/before-after',        { method:'POST', body })
+    closeModal(); toast('Par salvo!'); loadBA()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── TESTIMONIALS ──────────────────────────────────────────────
+async function loadTestimonials() {
+  const rows = await api('/testimonials?all=1')
+  const grid = $('testimonialsGrid'); const empty = $('testimonialsEmpty')
+  if (!rows?.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  grid.innerHTML = rows.map(t => `
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">${esc(t.author_name)}</div>
+        <div class="meta"><span>${esc(t.author_role||'')} ${t.city?'· '+esc(t.city):''}</span><span style="margin-top:6px;color:var(--ink)">"${esc((t.text||'').slice(0,80))}…"</span></div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openTestimonialModal(${t.id})">Editar</button>
+          <button class="btn sm danger" onclick="deleteTestimonial(${t.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`).join('')
+}
+async function deleteTestimonial(id) {
+  if (!confirm('Excluir depoimento?')) return
+  await api(`/testimonials/${id}`, { method:'DELETE' })
+  toast('Excluído'); loadTestimonials()
+}
+async function openTestimonialModal(id) {
+  let t = {}
+  if (id) { const rows = await api('/testimonials?all=1'); t = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar depoimento':'Novo depoimento', `
+    <div class="two">
+      <div><label class="label">Nome *</label><input class="input" id="t_name" value="${esc(t.author_name||'')}"/></div>
+      <div><label class="label">Cargo / Empresa</label><input class="input" id="t_role" value="${esc(t.author_role||'')}"/></div>
+    </div>
+    <label class="label">Cidade</label><input class="input" id="t_city" value="${esc(t.city||'')}"/>
+    <label class="label">Depoimento *</label><textarea class="input" id="t_text" style="min-height:100px">${esc(t.text||'')}</textarea>
+    <div class="two">
+      <div><label class="label">Avaliação</label>
+        <select class="input" id="t_rating">${[5,4,3,2,1].map(n=>`<option ${t.rating==n?'selected':''}>${n}</option>`).join('')}</select>
+      </div>
+      <div><label class="label">Origem</label>
+        <select class="input" id="t_source">${['Google','WhatsApp','Site','Indicação'].map(s=>`<option ${t.source===s?'selected':''}>${s}</option>`).join('')}</select>
+      </div>
+    </div>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="saveTestimonial(${id||'null'})">Salvar</button>`)
+}
+async function saveTestimonial(id) {
+  const body = { author_name:$('t_name').value.trim(), author_role:$('t_role').value, city:$('t_city').value, text:$('t_text').value.trim(), rating:$('t_rating').value, source:$('t_source').value }
+  if (!body.author_name||!body.text) { toast('Nome e depoimento obrigatórios','err'); return }
+  try {
+    if (id) await api(`/testimonials/${id}`, { method:'PUT', body })
+    else    await api('/testimonials',        { method:'POST', body })
+    closeModal(); toast('Depoimento salvo!'); loadTestimonials()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── TEAM ──────────────────────────────────────────────────────
+async function loadTeam() {
+  const rows = await api('/team?all=1')
+  const grid = $('teamGrid'); const empty = $('teamEmpty')
+  if (!rows?.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  grid.innerHTML = rows.map(m => `
+    <div class="card">
+      <div class="cover" onclick="openTeamModal(${m.id})">
+        ${m.photo_url?`<img src="${esc(m.photo_url)}" alt="" loading="lazy"/>`:ph(m.name||'Equipe')}
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(m.name)}</div>
+        <div class="meta"><span>${esc(m.role||'')}</span></div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openTeamModal(${m.id})">Editar</button>
+          <button class="btn sm danger" onclick="deleteTeam(${m.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`).join('')
+}
+async function deleteTeam(id) {
+  if (!confirm('Excluir membro?')) return
+  await api(`/team/${id}`, { method:'DELETE' })
+  toast('Excluído'); loadTeam()
+}
+async function openTeamModal(id) {
+  let m = {}
+  if (id) { const rows = await api('/team?all=1'); m = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar membro':'Novo membro da equipe', `
+    <div class="two">
+      <div><label class="label">Nome *</label><input class="input" id="m_name" value="${esc(m.name||'')}"/></div>
+      <div><label class="label">Cargo</label><input class="input" id="m_role" value="${esc(m.role||'')}"/></div>
+    </div>
+    <label class="label">Bio</label><textarea class="input" id="m_bio">${esc(m.bio||'')}</textarea>
+    <label class="label">Foto (URL ou upload)</label>
+    <input class="input" id="m_photo" value="${esc(m.photo_url||'')}"/>
+    <div style="margin-top:6px"><input type="file" id="m_photo_file" accept="image/*" style="display:none" onchange="uploadTeamPhoto(this)"/>
+      <button class="btn sm secondary" onclick="$('m_photo_file').click()">📎 Upload foto</button></div>
+    <div class="two">
+      <div><label class="label">E-mail</label><input class="input" id="m_email" type="email" value="${esc(m.email||'')}"/></div>
+      <div><label class="label">LinkedIn</label><input class="input" id="m_linkedin" value="${esc(m.linkedin||'')}"/></div>
+    </div>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="saveTeam(${id||'null'})">Salvar</button>`)
+}
+async function uploadTeamPhoto(input) {
+  if (!input.files[0]) return
+  try { const url = await upload(input.files[0]); $('m_photo').value = url; toast('Foto enviada!') }
+  catch { toast('Erro','err') }
+}
+async function saveTeam(id) {
+  const body = { name:$('m_name').value.trim(), role:$('m_role').value, bio:$('m_bio').value, photo_url:$('m_photo').value, email:$('m_email').value, linkedin:$('m_linkedin').value }
+  if (!body.name) { toast('Nome obrigatório','err'); return }
+  try {
+    if (id) await api(`/team/${id}`, { method:'PUT', body })
+    else    await api('/team',        { method:'POST', body })
+    closeModal(); toast('Membro salvo!'); loadTeam()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── PARTNERS ──────────────────────────────────────────────────
+async function loadPartners() {
+  const rows = await api('/partners?all=1')
+  const grid = $('partnersGrid'); const empty = $('partnersEmpty')
+  if (!rows?.length) { grid.innerHTML=''; empty.style.display='flex'; return }
+  empty.style.display='none'
+  grid.innerHTML = rows.map(p => `
+    <div class="card">
+      <div class="cover" onclick="openPartnerModal(${p.id})">
+        ${p.logo_url?`<img src="${esc(p.logo_url)}" alt="" loading="lazy" style="object-fit:contain;padding:16px;background:#fff"/>`:ph(p.name)}
+        ${p.category?`<span class="badge cat">${esc(p.category)}</span>`:''}
+      </div>
+      <div class="card-body">
+        <div class="card-title">${esc(p.name)}</div>
+        <div class="meta">${p.discount?`<span>🏷 ${esc(p.discount)}</span>`:''}</div>
+        <div class="card-actions">
+          <button class="btn sm secondary" onclick="openPartnerModal(${p.id})">Editar</button>
+          <button class="btn sm danger" onclick="deletePartner(${p.id})">Excluir</button>
+        </div>
+      </div>
+    </div>`).join('')
+}
+async function deletePartner(id) {
+  if (!confirm('Excluir parceiro?')) return
+  await api(`/partners/${id}`, { method:'DELETE' })
+  toast('Excluído'); loadPartners()
+}
+async function openPartnerModal(id) {
+  let p = {}
+  if (id) { const rows = await api('/partners?all=1'); p = rows?.find(x=>x.id===id)||{} }
+  openModal(id?'Editar parceiro':'Novo parceiro', `
+    <div class="two">
+      <div><label class="label">Nome *</label><input class="input" id="pt_name" value="${esc(p.name||'')}"/></div>
+      <div><label class="label">Categoria</label><input class="input" id="pt_cat" value="${esc(p.category||'')}" placeholder="Ex: Academia"/></div>
+    </div>
+    <label class="label">Desconto / benefício</label><input class="input" id="pt_disc" value="${esc(p.discount||'')}" placeholder="Ex: 20% de desconto"/>
+    <label class="label">Descrição</label><textarea class="input" id="pt_desc">${esc(p.description||'')}</textarea>
+    <label class="label">Site</label><input class="input" id="pt_web" value="${esc(p.website||'')}" placeholder="https://..."/>
+    <label class="label">Logo (URL ou upload)</label>
+    <input class="input" id="pt_logo" value="${esc(p.logo_url||'')}"/>
+    <div style="margin-top:6px"><input type="file" id="pt_logo_file" accept="image/*" style="display:none" onchange="uploadPartnerLogo(this)"/>
+      <button class="btn sm secondary" onclick="$('pt_logo_file').click()">📎 Upload logo</button></div>`,
+    `<button class="btn secondary" onclick="closeModal()">Cancelar</button>
+     <button class="btn" onclick="savePartner(${id||'null'})">Salvar</button>`)
+}
+async function uploadPartnerLogo(input) {
+  if (!input.files[0]) return
+  try { const url = await upload(input.files[0]); $('pt_logo').value = url; toast('Logo enviado!') }
+  catch { toast('Erro','err') }
+}
+async function savePartner(id) {
+  const body = { name:$('pt_name').value.trim(), category:$('pt_cat').value, discount:$('pt_disc').value, description:$('pt_desc').value, website:$('pt_web').value, logo_url:$('pt_logo').value }
+  if (!body.name) { toast('Nome obrigatório','err'); return }
+  try {
+    if (id) await api(`/partners/${id}`, { method:'PUT', body })
+    else    await api('/partners',        { method:'POST', body })
+    closeModal(); toast('Parceiro salvo!'); loadPartners()
+  } catch(e) { toast(e.error||'Erro','err') }
+}
+
+// ── BOOT ──────────────────────────────────────────────────────
+if (TOKEN) { api('/auth/me').then(u => { if(u){ USER=u; initApp() } }).catch(logout) }
+</script>
+</body>
+</html>

@@ -20,8 +20,8 @@ const navGroups = [
       ['Proteção veicular', '/protecao-veicular'],
       ['Carros', '/protecao-veicular/carros'],
       ['Motos', '/protecao-veicular/motos'],
-      ['Caminhões', '/protecao-veicular/caminhoes'],
       ['Motorista de aplicativo', '/protecao-veicular/motorista-aplicativo'],
+      ['Frotas e empresas', '/protecao-veicular/frotas-empresas'],
     ],
   },
   {
