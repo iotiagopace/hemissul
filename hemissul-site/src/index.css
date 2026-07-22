@@ -793,8 +793,10 @@
     height: 22px;
   }
 
+  /* Ritmo vertical: com 11 blocos em sequência, paddings de 9rem somavam
+     ~18rem entre seções adjacentes — reduzido para manter respiro sem vãos. */
   .home-section {
-    padding-block: clamp(5rem, 10vw, 9rem);
+    padding-block: clamp(3rem, 6vw, 5rem);
   }
 
   .home-section--compact {
@@ -1663,7 +1665,7 @@
 @layer components {
   /* Before/After Slider --------------------------------------------------- */
   .results-grid {
-    margin-block-start: var(--space-3xl);
+    margin-block-start: var(--space-2xl);
     display: grid;
     gap: var(--space-xl);
   }
@@ -2280,13 +2282,13 @@
 
   /* Testimonials ---------------------------------------------------------- */
   .testimonials-section {
-    padding-block: clamp(5rem, 9vw, 8rem);
+    padding-block: clamp(3rem, 6vw, 5rem);
     background: var(--color-paper-bright);
     border-block: var(--rule-hair) solid var(--color-rule);
   }
 
   .testimonial-grid {
-    margin-block-start: var(--space-3xl);
+    margin-block-start: var(--space-2xl);
     display: grid;
     gap: var(--space-lg);
   }
@@ -4383,7 +4385,7 @@
    * ============================================================ */
 
   .home-section__cta {
-    margin-block-start: var(--space-2xl);
+    margin-block-start: var(--space-xl);
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
@@ -4393,6 +4395,11 @@
     margin-block-start: var(--space-xl);
     display: flex;
     justify-content: center;
+  }
+
+  /* Indenizações: espaçamento uniforme entre intro → fotos → vídeos */
+  .indemnity-section .auto-marquee {
+    margin-block: var(--space-xl);
   }
 
   /* 02 · Coberturas */
