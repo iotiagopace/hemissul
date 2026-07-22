@@ -75,7 +75,7 @@ const valores = [
 ]
 
 const marcos = [
-  ['2019', 'Fundação', 'A Hemissul nasce em Boa Vista com o propósito de oferecer proteção patrimonial mutualista.'],
+  ['2019', 'Fundação', 'Nascemos em Boa Vista com o propósito de oferecer proteção patrimonial mutualista.'],
   ['2021', 'Crescimento da rede', 'Ampliação da rede de prestadores e do atendimento em todo o território nacional.'],
   ['2023', 'Aplicativo do associado', 'Lançamento do app com boletos, benefícios, oficinas, assistência e comunicação de eventos.'],
   ['2025', 'Mais de 13 mil veículos', 'A comunidade ultrapassa 13 mil veículos protegidos e R$ 15 milhões pagos em reparos e indenizações.'],
@@ -92,9 +92,9 @@ export default function QuemSomos() {
               Uma associação de Boa Vista para todo o Brasil.
             </h1>
             <p className="page-header__lede">
-              A Hemissul nasceu em Boa Vista, em 2019, para oferecer proteção
-              patrimonial mutualista e suporte próximo aos associados em
-              qualquer canto do país.
+              Nascemos em Boa Vista, em 2019, para oferecer proteção patrimonial
+              mutualista e suporte próximo aos nossos associados em qualquer
+              canto do país.
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
@@ -233,8 +233,8 @@ export default function QuemSomos() {
               Associação privada, com regras transparentes.
             </h2>
             <p className="home-section__copy">
-              A Hemissul não é seguradora. Os participantes aderem ao programa
-              e compartilham custos dos eventos cobertos conforme o contrato,
+              Não somos uma seguradora. Nossos participantes aderem ao programa
+              e compartilham os custos dos eventos cobertos conforme o contrato,
               o regulamento e a legislação aplicável.
             </p>
 
@@ -265,10 +265,10 @@ export default function QuemSomos() {
           <FadeIn className="home-section__intro">
             <p className="pill-tag pill-tag--accent">Liderança</p>
             <h2 className="home-section__title">
-              Quem conduz a Hemissul.
+              Quem conduz nossa associação.
             </h2>
             <p className="home-section__copy">
-              Os sócios que tocam a Hemissul e respondem pelas decisões do dia a
+              Nossa liderança responde pelas decisões e conduz o trabalho do dia a
               dia.
             </p>
           </FadeIn>
@@ -309,7 +309,7 @@ export default function QuemSomos() {
 
       <section className="closing-section">
         <div className="site-container closing-section__inner">
-          <FadeIn as="h2">Não conte com a sorte. Conte com a Hemissul.</FadeIn>
+          <FadeIn as="h2">Não conte com a sorte. Conte com a gente.</FadeIn>
           <FadeIn delay={0.1}>
             <Link to="/cotacao" className="button-cta">
               Fazer cotação <ArrowRight size={18} aria-hidden="true" />

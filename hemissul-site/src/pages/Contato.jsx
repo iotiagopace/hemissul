@@ -155,7 +155,7 @@ export default function Contato() {
         <div className="site-container">
           <FadeIn className="stack--lg">
             <p className="pill-tag pill-tag--accent">Acompanhe nas redes</p>
-            <h2 className="home-section__title">A Hemissul também está por aqui.</h2>
+            <h2 className="home-section__title">Você também nos encontra por aqui.</h2>
           </FadeIn>
 
           <div className="social-row" style={{ marginTop: '2rem' }}>

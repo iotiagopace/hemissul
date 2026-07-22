@@ -110,7 +110,7 @@ export default function Rastreamento() {
               style={{ color: 'var(--color-ink-subtle)' }}
             >
               Em caso de roubo ou furto, acione imediatamente a polícia, a
-              central indicada pela Hemissul e a empresa de rastreamento.{' '}
+              central que indicamos e a empresa de rastreamento.{' '}
               <strong style={{ color: 'var(--color-paper)' }}>
                 Não tente recuperar o veículo por conta própria.
               </strong>

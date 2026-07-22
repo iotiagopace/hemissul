@@ -26,7 +26,7 @@ export default function Documentos() {
               Transparência começa pelo acesso à informação.
             </h1>
             <p className="page-header__lede">
-              Consulte as políticas do site e solicite à equipe a versão
+              Consulte as políticas do site e solicite à nossa equipe a versão
               oficial dos documentos vinculados à sua adesão.
             </p>
           </FadeIn>
@@ -43,7 +43,7 @@ export default function Documentos() {
               Como tratamos privacidade, cookies e uso.
             </h2>
             <p className="home-section__copy">
-              Documentos que regem a relação digital com a Hemissul.
+              Documentos que regem nossa relação digital com você.
             </p>
           </FadeIn>
 
@@ -75,9 +75,9 @@ export default function Documentos() {
               Documentos do programa de proteção.
             </h2>
             <p className="home-section__copy">
-              Regulamento, estatuto e termo de adesão devem ser fornecidos na
-              versão oficial aplicável ao associado. Solicite por e-mail e
-              indique o número da sua adesão.
+              Fornecemos o regulamento, o estatuto e o termo de adesão na versão
+              oficial aplicável ao associado. Solicite por e-mail e indique o
+              número da sua adesão.
             </p>
             <a
               className="button-primary"

@@ -5,15 +5,15 @@ const colisaoPassos = [
   'Pare em local seguro, sinalize a via e verifique se alguém precisa de atendimento.',
   'Acione os serviços de emergência quando necessário.',
   'Registre a ocorrência com informações completas: local, data, condutores, veículos, testemunhas, danos.',
-  'Não faça acordos ou autorize reparos antes de falar com a Hemissul.',
+  'Não faça acordos ou autorize reparos antes de falar com a nossa equipe.',
   'Fotografe o local, veículos, placas e danos com segurança.',
   'Contate o canal de pronta resposta e siga as orientações para envio dos documentos.',
 ]
 
 const rouboPassos = [
   'Comunique imediatamente a polícia e registre o boletim de ocorrência.',
-  'Acione a empresa de rastreamento ou a central indicada pela Hemissul.',
-  'Avise a Hemissul pelo canal de pronta resposta.',
+  'Acione a empresa de rastreamento ou a central que indicamos.',
+  'Avise nossa equipe pelo canal de pronta resposta.',
   'Não tente localizar ou recuperar o veículo por conta própria.',
   'Envie os documentos solicitados e acompanhe pelos canais oficiais.',
 ]

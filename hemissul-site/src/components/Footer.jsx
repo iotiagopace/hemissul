@@ -116,8 +116,8 @@ export default function Footer() {
             © {new Date().getFullYear()} Hemissul · CNPJ {SITE.cnpj}
           </p>
           <p>
-            A Hemissul não é seguradora. É uma associação de proteção patrimonial
-            mutualista. Benefícios e condições seguem o regulamento vigente.
+            Não somos uma seguradora. Somos uma associação de proteção patrimonial
+            mutualista. Nossos benefícios e condições seguem o regulamento vigente.
           </p>
         </div>
 

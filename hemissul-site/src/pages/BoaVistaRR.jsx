@@ -28,9 +28,8 @@ export default function BoaVistaRR() {
               Atendimento próximo em Roraima. Assistência em todo o Brasil.
             </h1>
             <p className="page-header__lede">
-              A sede da Hemissul fica na Avenida Mário Homem de Melo, Buritis,
-              e reúne atendimento comercial, administrativo e suporte aos
-              associados.
+              Nossa sede fica na Avenida Mário Homem de Melo, Buritis, e reúne
+              atendimento comercial, administrativo e suporte aos associados.
             </p>
             <div className="home-hero__actions">
               <a
@@ -72,7 +71,7 @@ export default function BoaVistaRR() {
               <MapPin size={14} aria-hidden="true" /> Visite a sede
             </p>
             <h2 className="home-section__title">
-              Onde a Hemissul fica em Boa Vista.
+              Onde estamos em Boa Vista.
             </h2>
             <address className="page-address">
               Av. Mário Homem de Melo, 3999, Buritis

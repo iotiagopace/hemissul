@@ -21,7 +21,7 @@ export default function ProtecaoFrotas() {
               Múltiplos veículos, um único ponto de controle.
             </h1>
             <p className="page-header__lede">
-              Proteção pensada para operações com mais de um veículo — locadoras,
+              Proteção pensada para operações com mais de um veículo, como locadoras,
               transportadoras, empresas com frota própria e grupos de proprietários.
               Falamos com o gestor, entendemos a rotina e propomos condições
               coerentes com o seu volume.

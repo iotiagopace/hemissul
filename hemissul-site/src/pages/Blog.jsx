@@ -12,7 +12,7 @@ export default function Blog() {
         <div className="site-container">
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Notícias e histórias</p>
-            <h1 className="page-header__title">A Hemissul em movimento.</h1>
+            <h1 className="page-header__title">Nossa história em movimento.</h1>
             <p className="page-header__lede">
               Acompanhe atendimentos, expansão, benefícios e iniciativas na
               comunidade.

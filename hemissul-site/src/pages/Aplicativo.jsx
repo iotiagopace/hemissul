@@ -22,10 +22,10 @@ export default function Aplicativo() {
         <div className="site-container split">
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Aplicativo Hemissul</p>
-            <h1 className="page-header__title">A Hemissul no seu celular.</h1>
+            <h1 className="page-header__title">Nossa proteção no seu celular.</h1>
             <p className="page-header__lede">
               Acesse serviços, informações do plano e canais de atendimento em
-              um só lugar. Entre com seu CPF e a senha fornecida pela Hemissul.
+              um só lugar. Entre com seu CPF e a senha que fornecemos.
             </p>
             <StoreBadges />
           </FadeIn>
@@ -73,7 +73,7 @@ export default function Aplicativo() {
           <FadeIn className="app-access-note">
             <div>
               <strong>Primeiro acesso</strong>
-              <span>Entre com seu CPF e a senha fornecida pela Hemissul.</span>
+              <span>Entre com seu CPF e a senha que fornecemos.</span>
             </div>
             <Link to="/contato" className="type-link">
               Preciso de ajuda para acessar{' '}

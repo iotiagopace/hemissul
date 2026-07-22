@@ -8,9 +8,9 @@ const grupos = [
   {
     tema: 'Sobre a Hemissul',
     items: [
-      ['A Hemissul é uma seguradora?', 'Não. A Hemissul é uma associação de proteção patrimonial mutualista. A relação com o participante segue o termo de adesão, o regulamento e a legislação aplicável.'],
+      ['A Hemissul é uma seguradora?', 'Não. Somos uma associação de proteção patrimonial mutualista. Nossa relação com cada participante segue o termo de adesão, o regulamento e a legislação aplicável.'],
       ['O que é proteção patrimonial mutualista?', 'É um modelo em que participantes vinculados a uma associação compartilham os custos dos eventos previstos, conforme contrato e regulamento.'],
-      ['Onde a Hemissul fica?', 'A sede fica em Boa Vista, Roraima. O atendimento da assistência é nacional, sujeito à rede e às condições do plano.'],
+      ['Onde a Hemissul fica?', 'Nossa sede fica em Boa Vista, Roraima. Oferecemos assistência nacional, sujeita à rede e às condições do plano.'],
     ],
   },
   {
@@ -25,8 +25,8 @@ const grupos = [
   {
     tema: 'Adesão e cobranças',
     items: [
-      ['A adesão exige análise de crédito?', 'A Hemissul divulga adesão sem consulta de crédito. Ainda assim, a participação depende de elegibilidade, documentos, vistoria, aceite das condições e confirmação da associação.'],
-      ['Quando a proteção começa?', 'O início ocorre após o cumprimento das etapas de adesão e a confirmação da Hemissul. Consulte o termo de adesão para o prazo aplicável.'],
+      ['A adesão exige análise de crédito?', 'Oferecemos adesão sem consulta de crédito. Ainda assim, a participação depende de elegibilidade, documentos, vistoria, aceite das condições e nossa confirmação.'],
+      ['Quando a proteção começa?', 'A proteção começa após o cumprimento das etapas de adesão e nossa confirmação. Consulte o termo de adesão para o prazo aplicável.'],
       ['Como funciona o rateio?', 'Os custos dos eventos e as despesas do grupo são compartilhados conforme as regras definidas no contrato e no regulamento.'],
       ['Como acesso meus boletos?', 'Os boletos digitais ficam disponíveis no aplicativo Hemissul. Se precisar, fale com o canal financeiro.'],
     ],
@@ -36,7 +36,7 @@ const grupos = [
     items: [
       ['Como aciono a assistência 24 horas?', 'Ligue para 0800 940 2163 e informe CPF, placa, localização e o problema apresentado pelo veículo.'],
       ['A assistência funciona fora de Roraima?', 'Sim. O atendimento é nacional, sujeito à rede, aos limites e às condições do plano contratado.'],
-      ['O que fazer em caso de roubo ou furto?', 'Registre a ocorrência policial, acione imediatamente o rastreamento e avise a Hemissul. Não tente recuperar o veículo por conta própria.'],
+      ['O que fazer em caso de roubo ou furto?', 'Registre a ocorrência policial, acione imediatamente o rastreamento e avise nossa equipe. Não tente recuperar o veículo por conta própria.'],
     ],
   },
 ]

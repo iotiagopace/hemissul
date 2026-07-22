@@ -346,9 +346,9 @@ export default function Home() {
               Indenizações que a gente paga.
             </h2>
             <p className="home-section__copy">
-              Assista aos depoimentos de associados que foram indenizados pela
-              Hemissul e veja como nosso compromisso se transforma em segurança,
-              confiança e tranquilidade.
+              Assista aos depoimentos de associados que indenizamos e veja como
+              transformamos nosso compromisso em segurança, confiança e
+              tranquilidade.
             </p>
           </FadeIn>
         </div>

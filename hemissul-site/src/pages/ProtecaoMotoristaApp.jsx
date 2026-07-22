@@ -22,8 +22,8 @@ export default function ProtecaoMotoristaApp() {
             </h1>
             <p className="page-header__lede">
               Uber, 99, entregas ou transporte por app: quem passa o dia no
-              trânsito corre mais risco. A Hemissul cobre colisão, roubo e furto
-              com assistência 24 horas em todo o Brasil.
+              trânsito enfrenta mais imprevistos. Oferecemos proteção para colisão,
+              roubo e furto, com assistência 24 horas em todo o Brasil, conforme o plano.
             </p>
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-cta">
@@ -53,7 +53,7 @@ export default function ProtecaoMotoristaApp() {
             </h2>
             <p className="home-section__copy">
               Rodar mais horas significa mais exposição a batidas e imprevistos.
-              O plano acompanha o ritmo de quem dirige por app.
+              Nossa proteção acompanha o ritmo de quem dirige por app.
             </p>
           </FadeIn>
 
@@ -86,8 +86,8 @@ export default function ProtecaoMotoristaApp() {
           </FadeIn>
           <FadeIn className="stack--lg" delay={0.1}>
             <p className="home-section__copy">
-              Informe que o carro roda por aplicativo. Assim a equipe monta uma
-              proposta certa para o seu uso, sem surpresa depois.
+              Informe que o carro roda por aplicativo. Assim montamos uma proposta
+              adequada ao seu uso e explicamos cada condição com clareza.
             </p>
             <Link to="/contato" className="type-link">
               Falar com um consultor <ArrowRight size={17} aria-hidden="true" />
@@ -115,8 +115,8 @@ export default function ProtecaoMotoristaApp() {
               className="home-section__copy"
               style={{ color: 'var(--color-ink-subtle)' }}
             >
-              Modelo, ano, cidade e uso por aplicativo. A equipe responde com as
-              opções e explica cada condição.
+              Informe modelo, ano, cidade e uso por aplicativo. Nossa equipe responde
+              com as opções e explica cada condição.
             </p>
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-cta">

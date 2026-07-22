@@ -31,7 +31,7 @@ export default function ProtecaoVeicular() {
               Proteção patrimonial para o seu veículo.
             </h1>
             <p className="page-header__lede">
-              A Hemissul reúne associados em um programa de proteção patrimonial
+              Reunimos associados em um programa de proteção patrimonial
               mutualista, com benefícios para situações como colisão, roubo,
               furto e outros imprevistos previstos no regulamento.
             </p>
@@ -54,7 +54,7 @@ export default function ProtecaoVeicular() {
               Como funciona a proteção patrimonial mutualista.
             </h2>
             <p className="home-section__copy">
-              Os participantes integram uma associação e compartilham os custos
+              Em nossa associação, os participantes compartilham os custos
               dos eventos cobertos de acordo com as regras do grupo. A adesão, o
               rateio, os benefícios, os limites e as participações são definidos
               no contrato e no regulamento do programa.
@@ -123,7 +123,7 @@ export default function ProtecaoVeicular() {
             >
               Os benefícios disponíveis variam conforme o plano contratado. A
               adesão é simplificada, mas depende de elegibilidade, vistoria,
-              documentos e confirmação da Hemissul.
+              documentos e nossa confirmação.
             </p>
           </FadeIn>
 

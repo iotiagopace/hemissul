@@ -4,7 +4,7 @@ import { SITE } from '../config/site'
 
 const etapas = [
   ['Você preenche', 'Nome, telefone, e-mail e placa do veículo.'],
-  ['A equipe retorna', 'Apresenta as condições do plano e tira dúvidas.'],
+  ['Nossa equipe retorna', 'Apresentamos as condições do plano e tiramos suas dúvidas.'],
   ['Documentos e vistoria', 'Envio dos arquivos solicitados e vistoria do veículo.'],
   ['Início da proteção', 'Após confirmação, a proteção começa conforme o regulamento.'],
 ]
@@ -24,11 +24,11 @@ export default function Cotacao() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Cotação</p>
             <h1 className="page-header__title">
-              Comece sua cotação pelo canal oficial da Hemissul.
+              Comece sua cotação pelo nosso canal oficial.
             </h1>
             <p className="page-header__lede">
-              Seus dados seguem diretamente para o sistema comercial usado pela
-              equipe. A cotação não garante adesão nem início de proteção.
+              Seus dados seguem diretamente para o sistema usado pela nossa equipe
+              comercial. A cotação não garante adesão nem início de proteção.
             </p>
             <ul className="check-list" aria-label="Como funciona">
               <li>
@@ -49,7 +49,7 @@ export default function Cotacao() {
             <h2>Leva menos de dois minutos para começar.</h2>
             <p>
               Informe nome, telefone, e-mail e placa. O formulário será aberto
-              em uma nova guia no ambiente integrado ao CRM da Hemissul.
+              em uma nova guia no ambiente integrado ao nosso CRM.
             </p>
             <a
               href={SITE.links.quote}

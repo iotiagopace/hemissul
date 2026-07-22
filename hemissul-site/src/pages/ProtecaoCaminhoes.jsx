@@ -18,12 +18,11 @@ export default function ProtecaoCaminhoes() {
           <FadeIn className="page-header__inner">
             <p className="page-header__eyebrow">Para caminhões</p>
             <h1 className="page-header__title">
-              Seu caminhão precisa seguir. A Hemissul ajuda a proteger o caminho.
+              Seu caminhão precisa seguir. Nós ajudamos a proteger o caminho.
             </h1>
             <p className="page-header__lede">
-              Consulte opções de proteção e assistência para caminhões, com
-              atendimento para os imprevistos previstos no plano e no
-              regulamento.
+              Oferecemos opções de proteção e assistência para caminhões, com
+              atendimento aos imprevistos previstos no plano e no regulamento.
             </p>
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-cta">
@@ -87,9 +86,9 @@ export default function ProtecaoCaminhoes() {
             <p className="pill-tag pill-tag--accent">
               <Info size={14} aria-hidden="true" /> Validação obrigatória
             </p>
-            <h2 className="home-section__title">Confirme com a equipe.</h2>
+            <h2 className="home-section__title">Confirme com a nossa equipe.</h2>
             <p className="home-section__copy">
-              Antes da adesão, confirme com a equipe os tipos de veículos
+              Antes da adesão, confirme conosco os tipos de veículos
               aceitos, limites, cargas, reboque e eventos incluídos no seu
               plano.
             </p>
