@@ -11,13 +11,16 @@
   --color-primary-dark: oklch(43% 0.145 245);
   --color-primary-light: oklch(68% 0.145 245);
   --color-accent: oklch(56% 0.170 245);
-  /* CTA de conversão — laranja quente, complementar ao azul (cotação) */
-  --color-cta: oklch(64% 0.175 50);
-  --color-cta-dark: oklch(56% 0.16 50);
+  /* CTA de conversão — verde (cotação e ações principais) */
+  --color-cta: oklch(60% 0.16 150);
+  --color-cta-dark: oklch(52% 0.145 150);
   --color-cta-ink: oklch(100% 0 0);
-  /* WhatsApp — verde da marca */
+  /* WhatsApp — mesmo verde da marca de conversão */
   --color-whats: oklch(60% 0.16 150);
   --color-whats-dark: oklch(52% 0.145 150);
+  /* Emergência / atenção — laranja quente (assistência 24h no hero) */
+  --color-warn: oklch(64% 0.175 50);
+  --color-warn-dark: oklch(56% 0.16 50);
   --color-dark: oklch(20% 0.035 245);
   --color-dark-card: oklch(25% 0.032 245);
   --color-gray-text: oklch(42% 0.022 245);
@@ -500,22 +503,21 @@
     gap: var(--space-xs);
     padding: 0.5rem 0.875rem;
     border-radius: var(--radius-sm);
-    background: oklch(20% 0.08 45 / 0.72);
-    border: var(--rule-hair) solid var(--color-cta);
-    color: var(--color-paper);
+    background: var(--color-warn);
+    border: var(--rule-hair) solid var(--color-warn);
+    color: oklch(100% 0 0);
     font-family: var(--font-display);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-decoration: none;
-    backdrop-filter: blur(10px);
     transition: background var(--dur-short) var(--ease-out);
   }
 
   .home-banner__emergency:hover {
-    background: var(--color-cta);
-    color: var(--color-cta-ink);
+    background: var(--color-warn-dark);
+    border-color: var(--color-warn-dark);
   }
 
   .home-banner__controls {
