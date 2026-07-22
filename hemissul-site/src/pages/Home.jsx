@@ -67,7 +67,6 @@ const coberturas = [
       'Reboque para local seguro ou oficina credenciada',
       'Reparo do veículo conforme regulamento',
       'Acompanhamento do processo na oficina',
-      'E muito mais',
     ],
   },
   {
@@ -75,9 +74,8 @@ const coberturas = [
     title: 'Perda total',
     bullets: [
       'Reboque para retirada do local do acidente',
-      'Análise pericial e indenização integral pela Tabela FIPE',
+      'Indenização integral pela Tabela FIPE',
       'Acompanhamento em cada etapa do processo',
-      'E muito mais',
     ],
   },
   {
@@ -87,7 +85,33 @@ const coberturas = [
       'Busca e localização com apoio do rastreamento',
       'Indenização integral do valor do veículo',
       'Acompanhamento em cada etapa do processo',
-      'E muito mais',
+    ],
+  },
+  {
+    number: '04',
+    title: 'Terceiros',
+    bullets: [
+      'Suporte para danos materiais causados a terceiros',
+      'Acionamento simples pela nossa central',
+      'Cobertura conforme o plano contratado',
+    ],
+  },
+  {
+    number: '05',
+    title: 'Assistência 24h',
+    bullets: [
+      'Reboque, chaveiro, socorro elétrico e mecânico',
+      'Atendimento em todo o território nacional',
+      'Acionamento por 0800 940 2163, a qualquer hora',
+    ],
+  },
+  {
+    number: '06',
+    title: 'Rastreamento',
+    bullets: [
+      'Localização em tempo real do veículo',
+      'Alertas de ignição, movimentação e cerca virtual',
+      'Pronta resposta em caso de roubo ou furto',
     ],
   },
 ]
@@ -221,7 +245,7 @@ export default function Home() {
         </div>
         <FadeIn className="home-proof__badge" delay={0.2}>
           <span className="home-proof__badge-pill">
-            <ShieldCheck size={16} aria-hidden="true" />
+            <ShieldCheck size={22} aria-hidden="true" />
             Cadastrada na SUSEP
           </span>
         </FadeIn>
@@ -259,6 +283,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
+                <span className="coverage-card__more">E muito mais</span>
               </FadeIn>
             ))}
           </div>
