@@ -372,9 +372,13 @@
     color: var(--color-ink);
   }
 
+  /* Altura fixa (não min-height): garante que os 3 slides do carrossel
+     tenham exatamente a mesma altura, independente do slide ter ou não
+     o botão de emergência / manchete mais longa. Ver .home-banner__inner
+     para a folga de padding que absorve essa diferença de conteúdo. */
   .home-banner {
     position: relative;
-    min-height: calc(100svh - 5rem);
+    height: calc(100svh - 5rem);
     display: grid;
     align-items: end;
     overflow: hidden;
@@ -411,7 +415,7 @@
 
   .home-banner__inner {
     width: min(100% - clamp(2rem, 8vw, 8rem), 84rem);
-    padding-block: clamp(7rem, 18vh, 11rem) clamp(7rem, 14vh, 9rem);
+    padding-block: clamp(7rem, 18vh, 11rem) clamp(5.5rem, 11vh, 7.5rem);
   }
 
   .home-banner__content {
@@ -440,11 +444,15 @@
     white-space: nowrap;
   }
 
+  /* Fonte dimensionada para o copy atual (mais longo): em corpo maior o
+     slide 1 transbordava a viewport e o carrossel mudava de altura ao
+     trocar de slide. Com o conteúdo cabendo, todos os slides ficam com
+     a mesma altura (100svh - navbar). */
   .home-banner__content h1 {
-    max-width: 12ch;
+    max-width: 18ch;
     margin-block-start: var(--space-lg);
     font-family: var(--font-display);
-    font-size: clamp(3.5rem, 6vw, 6.6rem);
+    font-size: clamp(3rem, 4.6vw, 4.75rem);
     font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.06;
@@ -1465,7 +1473,7 @@
   }
 
   .home-banner {
-    min-height: calc(100svh - 5rem);
+    height: calc(100svh - 5rem);
   }
 
   .home-banner__media img,
@@ -1481,14 +1489,17 @@
 
   .home-banner__inner {
     width: calc(100% - 2rem);
-    padding-block: 6rem 7.5rem;
+    padding-block: 5rem 5.5rem;
   }
 
+  /* max-width em 11ch forçava até 8 linhas na manchete mais longa (slide 1,
+     com o botão de emergência) — o texto sozinho estourava a altura fixa
+     do banner em ~100px no mobile. 18ch quebra em menos linhas. */
   .home-banner__content h1 {
-    max-width: 11ch;
+    max-width: 18ch;
     margin-block-start: var(--space-md);
-    font-size: clamp(2.75rem, 13.5vw, 3.7rem);
-    line-height: 1.06;
+    font-size: clamp(2.25rem, 9vw, 3.3rem);
+    line-height: 1.08;
   }
 
   .home-banner__description {
