@@ -39,7 +39,6 @@ const navGroups = [
     links: [
       ['Central do associado', '/central-do-associado'],
       ['Dúvidas frequentes', '/duvidas-frequentes'],
-      ['Documentos', '/documentos'],
       ['Cotação', '/cotacao'],
     ],
   },

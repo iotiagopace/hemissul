@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Shield, ScrollText, ListChecks, Search } from 'lucide-react'
+import { ArrowRight, Shield, ListChecks, Search } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import equipeImg from '../assets/fotos-reais/equipe-2.jpg'
 
@@ -38,9 +38,6 @@ export default function ProtecaoVeicular() {
             <div className="home-hero__actions">
               <Link to="/cotacao" className="button-cta">
                 Fazer cotação <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link to="/documentos" className="button-secondary">
-                Consultar regulamento
               </Link>
             </div>
           </FadeIn>
@@ -163,15 +160,12 @@ export default function ProtecaoVeicular() {
 
           <FadeIn className="stack--lg" delay={0.1}>
             <p className="home-section__copy">
-              Leia o regulamento e confirme limites, participação do associado,
-              carências, exigência de rastreador, documentos, hipóteses de
-              exclusão e regras de acionamento.
+              Antes de aderir, confirme com a nossa equipe os limites, a
+              participação do associado, as carências, a exigência de
+              rastreador, as hipóteses de exclusão e as regras de acionamento.
             </p>
             <div className="home-hero__actions">
-              <Link to="/documentos" className="button-primary">
-                <ScrollText size={18} aria-hidden="true" /> Acessar documentos
-              </Link>
-              <Link to="/contato" className="button-secondary">
+              <Link to="/contato" className="button-cta">
                 Falar com um consultor
               </Link>
             </div>
