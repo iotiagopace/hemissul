@@ -415,7 +415,34 @@
 
   .home-banner__inner {
     width: min(100% - clamp(2rem, 8vw, 8rem), 84rem);
-    padding-block: clamp(7rem, 18vh, 11rem) clamp(5.5rem, 11vh, 7.5rem);
+    /* padding-block-start era clamp(7rem,18vh,11rem): em telas baixas (laptop
+       ~850-950px de altura útil), o slide com botão de emergência (conteúdo
+       mais alto) não cabia no container de altura fixa. Como align-items:end
+       só reposiciona conteúdo que sobra espaço — não ajuda quando o conteúdo
+       é maior que a área — o excedente empurrava o rodapé do texto por cima
+       dos controles (bolinhas/pausar). Padding-top reduzido libera essa folga. */
+    padding-block: clamp(1.5rem, 4vh, 3.5rem) clamp(6rem, 11vh, 7.5rem);
+  }
+
+  /* Telas baixas (laptop com barra de endereço, monitor ~900px de altura):
+     aperta os respiros internos do conteúdo do hero para o slide mais alto
+     (com botão de emergência) caber sem encostar nos controles do carrossel. */
+  @media (max-height: 52rem) {
+    .home-banner__inner {
+      padding-block: clamp(1rem, 3vh, 2rem) clamp(5rem, 9vh, 6rem);
+    }
+
+    .home-banner__description {
+      margin-block-start: var(--space-sm);
+    }
+
+    .home-banner__actions {
+      margin-block-start: var(--space-md);
+    }
+
+    .home-banner__emergency {
+      margin-block-start: var(--space-xs);
+    }
   }
 
   .home-banner__content {
