@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, MapPin } from 'lucide-react'
+import { ArrowRight, MapPin, Users, ShieldAlert, Clock3 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
+import BeforeAfterSlider from '../components/BeforeAfterSlider'
+import antesGol from '../assets/antes-depois/antes-gol.jpeg'
 import depoisGol from '../assets/antes-depois/depois-gol.jpeg'
-import depoisHb20 from '../assets/antes-depois/depois-hb20.jpeg'
-import depoisS10 from '../assets/antes-depois/depois-s10.jpeg'
+import antesOnix from '../assets/antes-depois/antes-onix.jpeg'
+import depoisOnix from '../assets/antes-depois/depois-onix.jpeg'
 import onixHeader from '../assets/fotos-reais/onix-particular.jpg'
 
 const coberturas = [
@@ -14,25 +16,28 @@ const coberturas = [
   ['Carro reserva e rastreamento', 'De acordo com o plano contratado.'],
 ]
 
-const publicos = [
+// Dores de quem usa o carro no dia a dia da família — apelo emocional, não técnico.
+const dores = [
   {
-    title: 'Carros particulares',
-    desc: 'Para uso pessoal e familiar com regras claras.',
-    image: depoisGol,
-    alt: 'Gol após reparo registrado no acervo real da Hemissul',
+    Icon: Users,
+    title: 'É a sua família dentro do carro',
+    desc: 'A maior parte dos nossos associados leva filhos para a escola, faz o mercado e viaja no fim de semana com o mesmo veículo. Proteger o carro é proteger a rotina de quem você ama.',
   },
   {
-    title: 'Motoristas de aplicativo',
-    desc: 'Condições específicas para transporte por aplicativo.',
-    image: depoisHb20,
-    alt: 'HB20 após reparo registrado no acervo real da Hemissul',
+    Icon: ShieldAlert,
+    title: 'O medo de roubo não deveria dominar o trajeto',
+    desc: 'Com rastreamento e pronta resposta, você acompanha o veículo em tempo real e conta com apoio imediato se algo acontecer no caminho.',
   },
   {
-    title: 'Frotistas',
-    desc: 'Atendimento dedicado para frota corporativa.',
-    image: depoisS10,
-    alt: 'S10 após reparo registrado no acervo real da Hemissul',
+    Icon: Clock3,
+    title: 'Um imprevisto não pode parar a sua semana',
+    desc: 'Reboque, chaveiro e socorro a qualquer hora, com carro reserva conforme o plano, para você não ficar a pé enquanto o seu carro é reparado.',
   },
+]
+
+const reparosParticulares = [
+  { key: 'gol', before: antesGol, after: depoisGol },
+  { key: 'onix', before: antesOnix, after: depoisOnix },
 ]
 
 export default function ProtecaoCarros() {
@@ -104,29 +109,50 @@ export default function ProtecaoCarros() {
       <section className="page-section">
         <div className="site-container">
           <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">Por que proteger</p>
             <h2 className="home-section__title">
-              Proteção para diferentes usos do veículo.
+              O carro da família merece esse cuidado.
+            </h2>
+          </FadeIn>
+
+          <div className="pain-grid">
+            {dores.map(({ Icon, title, desc }, index) => (
+              <FadeIn
+                as="article"
+                className="pain-card"
+                key={title}
+                delay={index * 0.06}
+              >
+                <Icon className="pain-card__icon" size={26} aria-hidden="true" />
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section page-section--paper">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">Reparos feitos com compromisso</p>
+            <h2 className="home-section__title">
+              Carros de associados, antes e depois.
             </h2>
             <p className="home-section__copy">
-              A aceitação e as condições podem variar. Informe o uso correto na
-              cotação para receber a proposta adequada.
+              Arraste a imagem para ver o antes e o depois. Cada caso segue os
+              limites e as condições do plano contratado.
             </p>
           </FadeIn>
 
-          <div className="channel-grid" style={{ marginTop: '3rem' }}>
-            {publicos.map(({ title, desc, image, alt }, index) => (
-              <FadeIn key={title} delay={index * 0.06}>
-                <article className="channel-card" style={{ height: '100%' }}>
-                  <figure
-                    className="figure-frame"
-                    style={{ aspectRatio: '4/3', marginBottom: '0.75rem' }}
-                  >
-                    <img src={image} alt={alt} loading="lazy" />
-                  </figure>
-                  <p className="page-header__eyebrow">Registro real Hemissul</p>
-                  <p className="channel-card__title">{title}</p>
-                  <p className="channel-card__desc">{desc}</p>
-                </article>
+          <div className="results-grid results-grid--pair">
+            {reparosParticulares.map((item) => (
+              <FadeIn key={item.key}>
+                <BeforeAfterSlider
+                  beforeSrc={item.before}
+                  afterSrc={item.after}
+                  alt="Carro particular antes e depois do reparo"
+                />
               </FadeIn>
             ))}
           </div>

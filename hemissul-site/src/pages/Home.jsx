@@ -8,13 +8,17 @@ import {
   Car,
   CheckCircle2,
   Clock3,
+  GraduationCap,
   MapPin,
   PhoneCall,
+  Pill,
   Play,
   Radar,
   ShieldCheck,
+  Sparkles,
   Star,
   Users,
+  Wrench,
 } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
@@ -185,6 +189,13 @@ const indenizacoesRow = [
   { src: indenizacao4, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
   { src: indenizacao5, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
   { src: indenizacao6, alt: 'Associado recebendo indenização da Hemissul', label: 'Indenização paga' },
+]
+
+const clubePerks = [
+  { Icon: Pill, label: 'Farmácias', detail: 'até 25% em medicamentos' },
+  { Icon: Wrench, label: 'Oficinas e autopeças', detail: 'descontos em manutenção' },
+  { Icon: Sparkles, label: 'Salões e estética', detail: 'cuidado com você' },
+  { Icon: GraduationCap, label: 'Ensino', detail: 'escolas e cursos parceiros' },
 ]
 
 // PDF do cliente: "3 a 4 parceiros do clube, gerando curiosidade para a
@@ -453,23 +464,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 07 · Clube de Benefícios */}
+      {/* 07 · Clube de Benefícios — banner de destaque */}
       <section className="home-section clube-section">
-        <div className="site-container clube-layout">
-          <FadeIn className="clube-layout__content">
-            <p className="page-header__eyebrow">Clube de Benefícios Hemissul</p>
-            <h2 className="home-section__title">
-              Vantagens exclusivas para associados Hemissul.
-            </h2>
-            <p className="home-section__copy">
-              Economia de até 40% de desconto no seu dia a dia em farmácias,
-              oficinas, autopeças, salões de beleza e muito mais em Boa Vista e
-              região. Você garante proteção para o veículo e economia no bolso.
-            </p>
-            <Link to="/clube-de-beneficios" className="button-cta">
-              <BadgePercent size={18} aria-hidden="true" /> Quero economizar com
-              o Clube
-            </Link>
+        <div className="site-container">
+          <FadeIn className="clube-banner">
+            <div className="clube-banner__content">
+              <span className="clube-banner__badge">
+                <BadgePercent size={16} aria-hidden="true" /> Até 40% de desconto
+              </span>
+              <h2>Vantagens exclusivas para associados Hemissul.</h2>
+              <p>
+                Economia no seu dia a dia em farmácias, oficinas, autopeças,
+                salões de beleza e muito mais em Boa Vista e região. Você
+                garante proteção para o veículo e economia no bolso.
+              </p>
+              <Link to="/clube-de-beneficios" className="button-cta">
+                Quero economizar com o Clube{' '}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+
+            <ul className="clube-banner__perks">
+              {clubePerks.map(({ Icon, label, detail }) => (
+                <li key={label}>
+                  <Icon size={22} aria-hidden="true" />
+                  <div>
+                    <strong>{label}</strong>
+                    <span>{detail}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </FadeIn>
         </div>
 

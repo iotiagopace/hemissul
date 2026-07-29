@@ -1,19 +1,98 @@
-import { ExternalLink, Check, MessageCircle, FileText, ClipboardList, ShieldCheck } from 'lucide-react'
+import {
+  BadgeCheck,
+  Car,
+  Check,
+  CheckCircle2,
+  ClipboardList,
+  ExternalLink,
+  FileText,
+  MessageCircle,
+  PhoneCall,
+  Radar,
+  ShieldCheck,
+  Users,
+} from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import { SITE } from '../config/site'
 
 const etapas = [
   ['Você preenche', 'Nome, telefone, e-mail e placa do veículo.'],
   ['Nossa equipe retorna', 'Apresentamos as condições do plano e tiramos suas dúvidas.'],
-  ['Documentos e vistoria', 'Envio dos arquivos solicitados e vistoria do veículo.'],
+  ['Envio dos documentos', 'CNH do condutor principal e documento do veículo.'],
   ['Início da proteção', 'Após confirmação, a proteção começa conforme o regulamento.'],
 ]
 
+// Na cotação inicial pedimos apenas CNH e documento do veículo. Comprovante de
+// residência não é exigido, e a vistoria acontece só quando a proteção é
+// fechada — por isso saíram desta lista.
 const documentos = [
   ['CNH do condutor principal', ClipboardList],
-  ['CRLV do veículo', FileText],
-  ['Comprovante de residência', FileText],
-  ['Vistoria do veículo', ShieldCheck],
+  ['Documento do veículo (CRLV)', FileText],
+]
+
+// Mesmos seis blocos de cobertura da Home: quem chega direto na cotação
+// precisa entender o que está contratando antes de falar com o comercial.
+const coberturas = [
+  {
+    number: '01',
+    title: 'Colisão',
+    Icon: ShieldCheck,
+    bullets: [
+      'Reboque para local seguro ou oficina credenciada',
+      'Reparo do veículo conforme regulamento',
+      'Acompanhamento do processo na oficina',
+    ],
+  },
+  {
+    number: '02',
+    title: 'Perda total',
+    Icon: Car,
+    bullets: [
+      'Reboque para retirada do local do acidente',
+      'Indenização integral pela Tabela FIPE',
+      'Acompanhamento em cada etapa do processo',
+    ],
+  },
+  {
+    number: '03',
+    title: 'Roubo e furto',
+    Icon: BadgeCheck,
+    bullets: [
+      'Busca e localização com apoio do rastreamento',
+      'Indenização integral do valor do veículo',
+      'Acompanhamento em cada etapa do processo',
+    ],
+  },
+  {
+    number: '04',
+    title: 'Terceiros',
+    Icon: Users,
+    bullets: [
+      'Suporte para danos materiais causados a terceiros',
+      'Acionamento simples pela nossa central',
+      'Cobertura conforme o plano contratado',
+    ],
+  },
+  {
+    number: '05',
+    title: 'Assistência 24h',
+    Icon: PhoneCall,
+    bullets: [
+      'Reboque, chaveiro, socorro elétrico e mecânico',
+      'Atendimento em todo o território nacional',
+      'Acionamento por 0800 940 2163, a qualquer hora',
+    ],
+  },
+  {
+    number: '06',
+    title: 'Rastreamento',
+    Icon: Radar,
+    bullets: [
+      'Localização em tempo real do veículo',
+      'Alertas de ignição, movimentação e cerca virtual',
+      'Pronta resposta em caso de roubo ou furto',
+    ],
+  },
 ]
 
 export default function Cotacao() {
@@ -76,6 +155,57 @@ export default function Cotacao() {
         </div>
       </header>
 
+      <section className="page-section coverage-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">O que a nossa proteção cobre</p>
+            <h2 className="home-section__title">
+              Tudo o que você precisa para proteger o seu veículo.
+            </h2>
+            <p className="home-section__copy">
+              Antes de falar com a nossa equipe, veja o que está incluído no
+              programa. Coberturas e limites seguem o plano contratado e o
+              regulamento.
+            </p>
+          </FadeIn>
+
+          <div className="coverage-grid">
+            {coberturas.map((item, index) => (
+              <FadeIn
+                as="article"
+                className="coverage-card"
+                key={item.title}
+                delay={index * 0.06}
+              >
+                <div className="coverage-card__head" aria-hidden="true">
+                  <span className="coverage-card__number">{item.number}</span>
+                </div>
+                <div className="coverage-card__body">
+                  <item.Icon
+                    className="coverage-card__icon"
+                    size={26}
+                    aria-hidden="true"
+                  />
+                  <h3 className="coverage-card__title">{item.title}</h3>
+                  <ul className="coverage-card__list">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>
+                        <CheckCircle2 size={17} aria-hidden="true" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                    <li className="coverage-card__more">
+                      <CheckCircle2 size={17} aria-hidden="true" />
+                      <span>E muito mais</span>
+                    </li>
+                  </ul>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="page-section page-section--paper">
         <div className="site-container">
           <FadeIn className="home-section__intro">
@@ -117,10 +247,6 @@ export default function Cotacao() {
             <h2 className="home-section__title">
               Documentos que aceleram a adesão.
             </h2>
-            <p className="home-section__copy">
-              Não é preciso enviar tudo na cotação inicial. Estes são os
-              documentos solicitados ao longo do processo.
-            </p>
           </FadeIn>
 
           <FadeIn className="stack" delay={0.1}>

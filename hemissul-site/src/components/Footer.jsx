@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
   InstagramIcon,
   FacebookIcon,
@@ -7,6 +7,25 @@ import {
   WhatsappIcon,
 } from './SocialIcons'
 import { SITE } from '../config/site'
+
+/**
+ * Frase de fecho do rodapé. Nas páginas de segmento ela reforça o CTA daquela
+ * categoria, em vez de repetir a mesma frase institucional em todo o site.
+ */
+const STATEMENT_DEFAULT = 'Proteção se constrói com presença, clareza e resposta.'
+
+const STATEMENT_BY_PATH = {
+  '/protecao-veicular/carros':
+    'Proteja o carro que leva a sua família todos os dias.',
+  '/protecao-veicular/motos':
+    'Sua moto é liberdade. A proteção não pode ser um peso.',
+  '/protecao-veicular/motorista-aplicativo':
+    'Seu carro é sua ferramenta de trabalho. Ele não pode parar.',
+  '/protecao-veicular/caminhoes':
+    'Na estrada, quem anda protegido chega mais longe.',
+  '/protecao-veicular/frotas-empresas':
+    'Sua operação não para. Sua frota também não pode.',
+}
 
 const footerLinks = [
   ['Proteção veicular', '/protecao-veicular'],
@@ -36,12 +55,13 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const { pathname } = useLocation()
+  const statement = STATEMENT_BY_PATH[pathname] || STATEMENT_DEFAULT
+
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
-        <p className="site-footer__statement">
-          Proteção se constrói com presença, clareza e resposta.
-        </p>
+        <p className="site-footer__statement">{statement}</p>
 
         <div className="site-footer__contacts">
           <div className="site-footer__contact">

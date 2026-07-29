@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Building2, Info } from 'lucide-react'
+import { ArrowRight, Building2, Info, MapPin, Fuel, Route, Gauge } from 'lucide-react'
 import FadeIn from '../components/FadeIn'
 import caminhaoEstrada from '../assets/fotos-reais/caminhao-estrada-unsplash.jpg'
 
@@ -8,6 +8,30 @@ const oferta = [
   ['Rede de assistência 24h', 'Cobertura nacional para reboque, chaveiro, socorro elétrico e mecânico.'],
   ['Rastreamento veicular', 'Monitoramento em tempo real, alertas e histórico de trajetos.'],
   ['Atendimento dedicado', 'Consultor comercial e suporte para gestores de frota.'],
+]
+
+// Dores reais de quem gere frota, levantadas com a equipe comercial.
+const dores = [
+  {
+    Icon: MapPin,
+    title: 'Saber onde cada veículo está',
+    desc: 'Sem rastreamento, o gestor descobre a posição da frota só quando o motorista avisa. Com localização em tempo real, você acompanha todos os veículos na mesma tela.',
+  },
+  {
+    Icon: Fuel,
+    title: 'Combustível que sobe sem explicação',
+    desc: 'Quando não há controle, o consumo cresce sem que ninguém saiba o motivo. O histórico de trajetos mostra exatamente onde o gasto aconteceu.',
+  },
+  {
+    Icon: Route,
+    title: 'Desvio de rota fora do expediente',
+    desc: 'Veículo da empresa usado para assuntos pessoais é prejuízo silencioso. Com a rota monitorada e comunicada à equipe, o percurso passa a ser cumprido.',
+  },
+  {
+    Icon: Gauge,
+    title: 'Excesso de velocidade e risco',
+    desc: 'Alertas de velocidade reduzem multas, desgaste e acidentes. O motorista sabe que há acompanhamento e a condução muda.',
+  },
 ]
 
 export default function ProtecaoFrotas() {
@@ -79,6 +103,32 @@ export default function ProtecaoFrotas() {
       </section>
 
       <section className="page-section">
+        <div className="site-container">
+          <FadeIn className="home-section__intro">
+            <p className="page-header__eyebrow">O que trava uma frota</p>
+            <h2 className="home-section__title">
+              Os problemas que ouvimos de quem gere frota.
+            </h2>
+          </FadeIn>
+
+          <div className="pain-grid pain-grid--four">
+            {dores.map(({ Icon, title, desc }, index) => (
+              <FadeIn
+                as="article"
+                className="pain-card"
+                key={title}
+                delay={index * 0.06}
+              >
+                <Icon className="pain-card__icon" size={26} aria-hidden="true" />
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section page-section--paper">
         <div className="site-container split">
           <FadeIn className="number-statement">
             <strong>24h</strong>
