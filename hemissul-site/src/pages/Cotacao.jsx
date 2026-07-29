@@ -134,7 +134,7 @@ export default function Cotacao() {
               href={SITE.links.quote}
               target="_blank"
               rel="noopener noreferrer"
-              className="button-primary"
+              className="button-cta"
             >
               Iniciar cotação <ExternalLink size={18} aria-hidden="true" />
             </a>
@@ -274,7 +274,7 @@ export default function Cotacao() {
               href={SITE.links.quote}
               target="_blank"
               rel="noopener noreferrer"
-              className="button-primary"
+              className="button-cta"
             >
               Iniciar cotação <ExternalLink size={18} aria-hidden="true" />
             </a>

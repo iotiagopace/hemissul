@@ -680,9 +680,15 @@
       transform var(--dur-micro) var(--ease-out);
   }
 
+  /* Texto branco, não --color-accent-ink: desde que o accent passou a ser o
+     azul institucional (#28325B), tinta escura sobre ele dava 1.40:1. */
   .button-primary {
     background: var(--color-accent);
-    color: var(--color-accent-ink);
+    color: oklch(100% 0 0);
+  }
+
+  .button-primary:hover {
+    background: var(--color-accent-dark);
   }
 
   /* CTA de conversão — laranja quente, complementar ao azul */
