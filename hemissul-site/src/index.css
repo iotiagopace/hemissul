@@ -159,9 +159,12 @@
     min-height: 2.75rem;
   }
 
+  /* O wordmark novo tem duas linhas (Hemissul + Proteção Veicular), então a
+     mesma altura do logo antigo deixava o subtítulo pequeno demais para ler.
+     2.875rem em uma barra de 5rem mantém a folga vertical confortável. */
   .site-nav__logo img {
     width: auto;
-    height: 2.25rem;
+    height: 2.875rem;
   }
 
   .site-nav__actions {
@@ -1469,7 +1472,7 @@
   }
 
   .site-nav__logo img {
-    height: 2rem;
+    height: 2.375rem;
   }
 
   .site-nav__actions {
