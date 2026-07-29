@@ -55,31 +55,41 @@
   font-display: swap;
 }
 
-/* Paleta oficial Hemissul (swatch do cliente):
- * navy #212B5B · navy profundo #131C36 · royal #3A5397 · periwinkle #6D83C1
- * lavanda #D5DEF0 · verde #00A26F · slate #333A4A · cinza #6B7385 · claro #BEC4D1 */
+/* ============================================================================
+ * PALETA OFICIAL — Manual de Identidade Visual Hemissul v1.0
+ * ----------------------------------------------------------------------------
+ * Primárias    #28325B  azul institucional  ·  #FFFFFF  branco
+ * Secundárias  #1C2441  navy escuro  ·  #4F5F9E  royal
+ *              #7D8CC4  periwinkle   ·  #DCE3F3  lavanda
+ * Apoio        #47AB7F  verde (só destaque: ações, indicadores positivos)
+ *
+ * Proporção de uso definida pelo manual:
+ *   azul institucional 50% · branco 25% · azuis secundários 15%
+ *   cinzas 8% · verde 2%
+ * ============================================================================ */
 :root {
-  --color-paper: oklch(97% 0.008 270);
-  --color-paper-2: oklch(94% 0.015 270);
-  --color-paper-3: oklch(90% 0.025 272);
-  --color-ink: oklch(24% 0.058 268);
-  --color-ink-2: oklch(35% 0.030 268);
-  --color-rule: oklch(82% 0.016 268);
-  --color-rule-2: oklch(88% 0.012 268);
-  --color-muted: oklch(47% 0.028 268);
-  --color-accent: oklch(48% 0.110 268);
-  --color-accent-dark: oklch(38% 0.095 270);
-  --color-accent-light: oklch(66% 0.090 272);
-  --color-accent-wash: oklch(93% 0.022 272);
-  --color-accent-glow: oklch(48% 0.110 268 / 0.18);
-  --color-accent-ink: oklch(20% 0.050 268);
-  --color-focus: oklch(31% 0.100 270);
-  --color-paper-bright: oklch(99% 0.004 270);
-  --color-nav-surface: oklch(97% 0.008 270 / 0.94);
-  --color-overlay: oklch(24% 0.058 268 / 0.9);
-  --color-ink-rule: oklch(38% 0.050 268);
-  --color-ink-muted: oklch(68% 0.030 270);
-  --color-ink-subtle: oklch(78% 0.026 270);
+  --color-paper: oklch(97.5% 0.006 267);
+  --color-paper-2: oklch(94.5% 0.014 267);      /* ≈ #DCE3F3 clareado */
+  --color-paper-3: oklch(91.5% 0.023 267);      /* #DCE3F3 lavanda */
+  --color-ink: oklch(26.9% 0.055 271);          /* #1C2441 navy escuro */
+  --color-ink-2: oklch(38% 0.040 271);
+  --color-rule: oklch(84% 0.018 267);
+  --color-rule-2: oklch(89% 0.014 267);
+  --color-muted: oklch(48% 0.035 271);
+  --color-accent: oklch(33% 0.074 271.5);       /* #28325B azul institucional */
+  --color-accent-dark: oklch(26.9% 0.055 271);  /* #1C2441 */
+  --color-accent-light: oklch(65% 0.086 272);   /* #7D8CC4 periwinkle */
+  --color-accent-wash: oklch(91.5% 0.023 267);  /* #DCE3F3 lavanda */
+  --color-accent-glow: oklch(33% 0.074 271.5 / 0.18);
+  --color-accent-ink: oklch(22% 0.050 271);
+  --color-focus: oklch(50.2% 0.102 271.5);      /* #4F5F9E royal */
+  --color-royal: oklch(50.2% 0.102 271.5);      /* #4F5F9E — links sobre claro */
+  --color-paper-bright: oklch(99.2% 0.003 267);
+  --color-nav-surface: oklch(97.5% 0.006 267 / 0.94);
+  --color-overlay: oklch(26.9% 0.055 271 / 0.9);
+  --color-ink-rule: oklch(40% 0.045 271);
+  --color-ink-muted: oklch(68% 0.035 272);
+  --color-ink-subtle: oklch(80% 0.028 270);
 
   --font-display: "Neue Montreal", ui-sans-serif, sans-serif;
   --font-body: "Neue Montreal", ui-sans-serif, sans-serif;

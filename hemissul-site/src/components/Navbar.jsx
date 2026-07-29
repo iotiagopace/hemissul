@@ -85,7 +85,7 @@ export default function Navbar() {
     <header className={`site-nav${open ? ' site-nav--open' : ''}`}>
       <div className="site-nav__bar">
         <Link className="site-nav__logo" to="/" aria-label="Hemissul, página inicial">
-          <img src={logo} alt="Hemissul" width="800" height="300" />
+          <img src={logo} alt="Hemissul" width="800" height="266" />
         </Link>
 
         <div className="site-nav__actions">
