@@ -1,5 +1,3 @@
-import caminhaoEstrada from '../assets/fotos-reais/caminhao-por-do-sol.jpg'
-import sedeFachada from '../assets/fotos-reais/fachada-hemissul.webp'
 import rangerImage from '../assets/antes-depois/depois-ranger.jpeg'
 import { SITE } from '../config/site'
 
@@ -53,34 +51,38 @@ export const HOME_HERO_SLIDES = [
     mediaPositionMobile: '56% center',
   },
 
-  // 2) Prova social — valor devolvido em reparos e indenizações
+  // 2) Nova unidade — Manaus/AM
+  //    Banner da campanha oficial. A arte já traz a curva azul da marca no
+  //    terço esquerdo, que é justamente onde o texto do hero se apoia — por
+  //    isso o enquadramento fica no centro no desktop. No mobile puxamos para
+  //    a esquerda para não perder essa área de apoio do texto.
   {
-    id: 'reparos-indenizacoes',
+    id: 'manaus-nova-unidade',
     type: 'image',
-    src: sedeFachada,
-    eyebrow: 'Resultado que dá pra medir',
-    title: `${SITE.metrics.repairsInvested} pagos em reparos e indenizações.`,
+    src: '/banners/banner_1920x1080_03.jpg',
+    eyebrow: 'Nova unidade · Manaus/AM',
+    title: 'Manaus, a Hemissul chegou.',
     description:
-      'Dinheiro que voltou para quem teve o carro batido, roubado ou com perda total.',
-    primaryAction: { label: 'Quero proteger meu veículo', to: '/cotacao' },
+      'Nossa proteção veicular, assistência 24 horas e rastreamento agora atendem também quem vive e trabalha em Manaus.',
+    primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a Hemissul', to: '/quem-somos' },
     mediaPosition: 'center center',
-    mediaPositionMobile: '50% center',
+    mediaPositionMobile: '32% center',
   },
 
-  // 3) Segmento — estrada / caminhões / frotistas
+  // 3) Institucional — confiança
   {
-    id: 'estrada-caminhoes',
+    id: 'jornada-confianca',
     type: 'image',
-    src: caminhaoEstrada,
-    eyebrow: 'Para quem vive na estrada',
-    title: 'Seu trabalho não pode parar. Sua proteção também não.',
+    src: '/banners/banner_1920x1080_01.jpg',
+    eyebrow: 'Mais do que uma cobertura',
+    title: 'Sua jornada merece mais do que proteção. Merece confiança.',
     description:
-      'Cobertura e assistência 24 horas para caminhoneiros, frotistas e motoristas de aplicativo.',
+      'Somos uma associação com sede própria, equipe local e atendimento que responde na hora em que você mais precisa.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
-    secondaryAction: { label: 'Proteção para caminhões', to: '/protecao-veicular/caminhoes' },
-    mediaPosition: '50% center',
-    mediaPositionMobile: '58% center',
+    secondaryAction: { label: 'Conhecer a proteção', to: '/protecao-veicular' },
+    mediaPosition: 'center center',
+    mediaPositionMobile: '40% center',
   },
 
   // 4) MODELO de banner de campanha (desativado). Ative com enabled: true e
