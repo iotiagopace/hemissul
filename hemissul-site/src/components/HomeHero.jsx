@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { AlertTriangle, ArrowRight, Pause, Play } from 'lucide-react'
 import RotatingWords from './RotatingWords'
 import HeroHeadline from './HeroHeadline'
@@ -113,81 +113,82 @@ export default function HomeHero({ slides }) {
           activeSlide.mediaPositionMobile || activeSlide.mediaPosition,
       }}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          className="home-banner__media"
-          key={activeSlide.id}
-          initial={{ opacity: 0, scale: 1.025 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          aria-hidden="true"
-        >
-          {activeSlide.type === 'video' && !reduceMotion ? (
-            <video
-              ref={videoRef}
-              src={activeSlide.src}
-              poster={activeSlide.poster}
-              autoPlay
-              muted
-              loop={!hasMultipleSlides}
-              playsInline
-              preload="metadata"
-            />
-          ) : (
-            <img
-              src={activeSlide.poster || activeSlide.src}
-              alt=""
-              width="1920"
-              height="1080"
-              fetchPriority="high"
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      {/* Sem AnimatePresence: nesta versão do framer-motion o exit nunca era
+          concluído. Com mode="wait" o carrossel travava no primeiro banner
+          para sempre (o activeIndex mudava e as bolinhas atualizavam, mas o
+          conteúdo não); em modo síncrono os slides antigos nunca saíam do DOM
+          e iam se acumulando. Trocar a `key` faz o React desmontar o slide
+          anterior e montar o novo de imediato, e o framer só precisa animar a
+          entrada — o que é determinístico e não depende de exit nenhum. */}
+      <motion.div
+        className="home-banner__media"
+        key={activeSlide.id}
+        initial={{ opacity: 0, scale: 1.025 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        aria-hidden="true"
+      >
+        {activeSlide.type === 'video' && !reduceMotion ? (
+          <video
+            ref={videoRef}
+            src={activeSlide.src}
+            poster={activeSlide.poster}
+            autoPlay
+            muted
+            loop={!hasMultipleSlides}
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <img
+            src={activeSlide.poster || activeSlide.src}
+            alt=""
+            width="1920"
+            height="1080"
+            fetchPriority="high"
+          />
+        )}
+      </motion.div>
 
       <div className="home-banner__veil" aria-hidden="true" />
 
       <div className="site-container home-banner__inner">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            className="home-banner__content"
-            key={`${activeSlide.id}-content`}
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="home-banner__eyebrow">
-              {activeSlide.rotatingWords ? (
-                <RotatingWords words={activeSlide.rotatingWords} />
-              ) : (
-                activeSlide.eyebrow
-              )}
-            </p>
-            <HeroHeadline key={`${activeSlide.id}-title`} text={activeSlide.title} />
-            <p className="home-banner__description">{activeSlide.description}</p>
-            <div className="home-banner__actions">
-              <HeroAction
-                action={activeSlide.primaryAction}
-                className="home-banner__primary"
-              />
-              <HeroAction
-                action={activeSlide.secondaryAction}
-                className="home-banner__secondary"
-              />
-            </div>
-            {activeSlide.emergencyAction ? (
-              <Link
-                to={activeSlide.emergencyAction.to}
-                className="home-banner__emergency"
-              >
-                <AlertTriangle size={16} aria-hidden="true" />
-                <span>{activeSlide.emergencyAction.label}</span>
-              </Link>
-            ) : null}
-          </motion.div>
-        </AnimatePresence>
+        <motion.div
+          className="home-banner__content"
+          key={`${activeSlide.id}-content`}
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <p className="home-banner__eyebrow">
+            {activeSlide.rotatingWords ? (
+              <RotatingWords words={activeSlide.rotatingWords} />
+            ) : (
+              activeSlide.eyebrow
+            )}
+          </p>
+          <HeroHeadline key={`${activeSlide.id}-title`} text={activeSlide.title} />
+          <p className="home-banner__description">{activeSlide.description}</p>
+          <div className="home-banner__actions">
+            <HeroAction
+              action={activeSlide.primaryAction}
+              className="home-banner__primary"
+            />
+            <HeroAction
+              action={activeSlide.secondaryAction}
+              className="home-banner__secondary"
+            />
+          </div>
+          {activeSlide.emergencyAction ? (
+            <Link
+              to={activeSlide.emergencyAction.to}
+              className="home-banner__emergency"
+            >
+              <AlertTriangle size={16} aria-hidden="true" />
+              <span>{activeSlide.emergencyAction.label}</span>
+            </Link>
+          ) : null}
+        </motion.div>
       </div>
 
       <div className="site-container home-banner__controls">
