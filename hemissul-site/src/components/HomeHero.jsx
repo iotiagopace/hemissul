@@ -33,6 +33,16 @@ export default function HomeHero({ slides }) {
   const videoRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [paused, setPaused] = useState(false)
+  /* O primeiro banner entra já no estado final, sem animação. Se ele animasse,
+     a visibilidade do H1 passaria a depender do requestAnimationFrame rodar —
+     e em aba aberta em segundo plano (cmd+clique, sessão restaurada) o rAF não
+     dispara, então o título ficaria parado em opacity 0. Só as trocas de slide
+     animam, e aí a aba está necessariamente em foco. */
+  const [animateSlides, setAnimateSlides] = useState(false)
+  const goToSlide = (index) => {
+    setAnimateSlides(true)
+    setActiveIndex(index)
+  }
   const [clock, setClock] = useState(() => Date.now())
   const visibleSlides = useMemo(
     () =>
@@ -71,6 +81,7 @@ export default function HomeHero({ slides }) {
     if (!hasMultipleSlides || reduceMotion || paused) return undefined
 
     const interval = window.setInterval(() => {
+      setAnimateSlides(true)
       setActiveIndex((current) => (current + 1) % visibleSlides.length)
     }, 9000)
 
@@ -123,7 +134,7 @@ export default function HomeHero({ slides }) {
       <motion.div
         className="home-banner__media"
         key={activeSlide.id}
-        initial={{ opacity: 0, scale: 1.025 }}
+        initial={animateSlides ? { opacity: 0, scale: 1.025 } : false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden="true"
@@ -156,7 +167,7 @@ export default function HomeHero({ slides }) {
         <motion.div
           className="home-banner__content"
           key={`${activeSlide.id}-content`}
-          initial={{ opacity: 0, y: 28 }}
+          initial={animateSlides ? { opacity: 0, y: 28 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -200,7 +211,7 @@ export default function HomeHero({ slides }) {
                 key={slide.id}
                 aria-label={`Exibir destaque ${index + 1}`}
                 aria-current={index === activeIndex ? 'true' : undefined}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => goToSlide(index)}
               />
             ))}
           </div>

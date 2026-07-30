@@ -20,6 +20,9 @@ import { SITE } from '../config/site'
  *   mediaPosition / mediaPositionMobile → enquadramento da mídia (object-position)
  *   enabled       → false esconde o banner (útil para campanhas agendadas)
  *   expiresAt     → data ISO em que o banner some sozinho (ex.: fim de promoção)
+ *
+ * As artes ficam em public/banners/ e são referenciadas como /banners/arquivo.
+ * Especificação e como converter o PNG do design: docs/banners-hero.md
  * ----------------------------------------------------------------------------
  */
 export const HOME_HERO_SLIDES = [
@@ -52,14 +55,15 @@ export const HOME_HERO_SLIDES = [
   },
 
   // 2) Nova unidade — Manaus/AM
-  //    Banner da campanha oficial. A arte já traz a curva azul da marca no
-  //    terço esquerdo, que é justamente onde o texto do hero se apoia — por
-  //    isso o enquadramento fica no centro no desktop. No mobile puxamos para
-  //    a esquerda para não perder essa área de apoio do texto.
+  //    Banner da campanha oficial, 16:9. No desktop a arte cabe inteira na
+  //    largura, então o enquadramento fica no centro. O título é mais largo
+  //    que a curva azul da marca e avança sobre a foto; quem garante a leitura
+  //    é o véu do .home-banner__veil (medido: pior caso 5,6:1 com texto
+  //    branco). No mobile puxamos para a esquerda, onde a arte é mais limpa.
   {
     id: 'manaus-nova-unidade',
     type: 'image',
-    src: '/banners/banner_1920x1080_03.jpg',
+    src: '/banners/banner_1920x1080_03.webp',
     eyebrow: 'Nova unidade · Manaus/AM',
     title: 'Manaus, a Hemissul chegou.',
     description:
@@ -74,7 +78,7 @@ export const HOME_HERO_SLIDES = [
   {
     id: 'jornada-confianca',
     type: 'image',
-    src: '/banners/banner_1920x1080_01.jpg',
+    src: '/banners/banner_1920x1080_01.webp',
     eyebrow: 'Mais do que uma cobertura',
     title: 'Sua jornada merece mais do que proteção. Merece confiança.',
     description:
