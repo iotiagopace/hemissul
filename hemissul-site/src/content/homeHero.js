@@ -55,11 +55,15 @@ export const HOME_HERO_SLIDES = [
   },
 
   // 2) Nova unidade — Manaus/AM
-  //    Banner da campanha oficial, 16:9. No desktop a arte cabe inteira na
-  //    largura, então o enquadramento fica no centro. O título é mais largo
-  //    que a curva azul da marca e avança sobre a foto; quem garante a leitura
-  //    é o véu do .home-banner__veil (medido: pior caso 5,6:1 com texto
-  //    branco). No mobile puxamos para a esquerda, onde a arte é mais limpa.
+  //    Banner da campanha oficial, 16:9. O hero é mais largo que 16:9, então o
+  //    object-fit: cover corta na vertical. Alinhado pelo topo (não ao centro)
+  //    porque o domo do Teatro Amazonas começa a ~10px da borda superior da
+  //    arte — centralizar cortava o topo dele. Todo o corte sai da base, que é
+  //    só calçada. No mobile o corte é horizontal, daí o valor diferente.
+  //
+  //    O título é mais largo que a curva azul da marca e avança sobre a foto;
+  //    quem garante a leitura é o véu do .home-banner__veil (medido: pior caso
+  //    5,6:1 com texto branco).
   {
     id: 'manaus-nova-unidade',
     type: 'image',
@@ -70,11 +74,14 @@ export const HOME_HERO_SLIDES = [
       'Nossa proteção veicular, assistência 24 horas e rastreamento agora atendem também quem vive e trabalha em Manaus.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a Hemissul', to: '/quem-somos' },
-    mediaPosition: 'center center',
+    mediaPosition: 'center top',
     mediaPositionMobile: '32% center',
   },
 
   // 3) Institucional — confiança
+  //    Mesmo motivo do banner de Manaus: alinhado pelo topo porque a cabeça do
+  //    pai começa a ~8px da borda superior da arte, e centralizar cortava o
+  //    rosto dele. O corte sai todo da base.
   {
     id: 'jornada-confianca',
     type: 'image',
@@ -85,7 +92,7 @@ export const HOME_HERO_SLIDES = [
       'Somos uma associação com sede própria, equipe local e atendimento que responde na hora em que você mais precisa.',
     primaryAction: { label: 'Fazer cotação', to: '/cotacao' },
     secondaryAction: { label: 'Conhecer a proteção', to: '/protecao-veicular' },
-    mediaPosition: 'center center',
+    mediaPosition: 'center top',
     mediaPositionMobile: '40% center',
   },
 
