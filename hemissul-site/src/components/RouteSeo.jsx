@@ -2,7 +2,10 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { findPost } from '../content/posts'
 
-const DOMAIN = 'https://hemissul.vercel.app'
+// Domínio oficial. Este valor manda no canonical e no og:url de TODAS as rotas:
+// o RouteSeo reescreve as duas tags a cada navegação, então corrigir só o
+// index.html não adianta — a tag volta para cá assim que o React monta.
+const DOMAIN = 'https://www.hemissul.com.br'
 const OG_IMAGE = `${DOMAIN}/social/hemissul-og.png`
 const LOGO = `${DOMAIN}/favicon.png`
 

@@ -9,6 +9,7 @@ import WhatsAppFloat from './components/WhatsAppFloat'
 import CampaignBanner from './components/CampaignBanner'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { usePageTracking } from './hooks/usePageTracking'
 const Home = lazy(() => import('./pages/Home'))
 const ProtecaoVeicular = lazy(() => import('./pages/ProtecaoVeicular'))
 const ProtecaoCarros = lazy(() => import('./pages/ProtecaoCarros'))
@@ -36,6 +37,11 @@ const LegalPage = lazy(() => import('./pages/LegalPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
+  // Fica aqui, no App, de propósito: efeito de componente-pai roda depois dos
+  // efeitos dos filhos, então o <RouteSeo /> já atualizou o document.title
+  // quando este hook o lê para montar o page view.
+  usePageTracking()
+
   return (
     <>
       <ScrollToTop />

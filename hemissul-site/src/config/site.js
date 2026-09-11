@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Hemissul',
   legalName: 'Hemissul - Associação de Proteção Patrimonial Mutualista',
   cnpj: '35.224.050/0001-37',
-  siteUrl: 'https://hemissul.vercel.app',
+  siteUrl: 'https://www.hemissul.com.br',
   email: 'contato@hemissul.com.br',
   address: 'Av. Mário Homem de Melo, 3999, Buritis, Boa Vista/RR, CEP 69309-198',
   hours: 'Seg a Sex, 8h às 18h · Sáb, 8h às 12h',
@@ -48,7 +48,9 @@ export const SITE = {
     repairsInvested: 'R$ 15 milhões',
   },
   analytics: {
-    gtmId: 'GTM-5C3GN7RM',
+    // Só registro. O container é carregado pelo snippet no <head> do
+    // index.html, que não lê este arquivo — se trocar o container, troque lá.
+    gtmId: 'GTM-NGFZ298',
   },
   campaign: {
     enabled: true,
