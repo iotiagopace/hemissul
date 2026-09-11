@@ -15,7 +15,17 @@ export default function CookieConsent() {
   const choose = (value) => {
     window.localStorage.setItem(CONSENT_KEY, value)
     setVisible(false)
-    if (value === 'accepted') window.dispatchEvent(new Event('hemissul:consent'))
+    // O Consent Mode entra negado por padrão no index.html. Só o "Aceitar
+    // opcionais" libera a medição; "Somente necessários" não precisa de nada,
+    // o padrão já é o estado negado.
+    if (value === 'accepted') {
+      window.gtag?.('consent', 'update', {
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted',
+      })
+    }
   }
 
   if (!visible) return null

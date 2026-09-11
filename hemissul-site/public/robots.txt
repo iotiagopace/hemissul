@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hemissul.vercel.app/sitemap.xml
+Sitemap: https://www.hemissul.com.br/sitemap.xml
