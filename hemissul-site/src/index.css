@@ -90,6 +90,10 @@
     max-width: 100%;
   }
 
+  .route-loading {
+    min-height: 42rem;
+  }
+
   a,
   button {
     -webkit-tap-highlight-color: transparent;

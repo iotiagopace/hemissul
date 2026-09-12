@@ -2,6 +2,15 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CONSENT_KEY } from '../config/site'
 
+function loadMarketingScripts() {
+  if (document.querySelector('script[data-hemissul-marketing]')) return
+  const script = document.createElement('script')
+  script.async = true
+  script.dataset.hemissulMarketing = 'true'
+  script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-NGFZ298'
+  document.head.appendChild(script)
+}
+
 export default function CookieConsent() {
   const [visible, setVisible] = useState(
     () => window.localStorage.getItem(CONSENT_KEY) === null,
@@ -9,6 +18,9 @@ export default function CookieConsent() {
 
   useEffect(() => {
     document.body.classList.toggle('cookie-open', visible)
+    if (!visible && window.localStorage.getItem(CONSENT_KEY) === 'accepted') {
+      loadMarketingScripts()
+    }
     return () => document.body.classList.remove('cookie-open')
   }, [visible])
 
@@ -25,6 +37,7 @@ export default function CookieConsent() {
         ad_personalization: 'granted',
         analytics_storage: 'granted',
       })
+      loadMarketingScripts()
     }
   }
 

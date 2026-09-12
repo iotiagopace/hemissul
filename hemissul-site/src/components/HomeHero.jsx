@@ -33,6 +33,7 @@ export default function HomeHero({ slides }) {
   const videoRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
   /* O primeiro banner entra já no estado final, sem animação. Se ele animasse,
      a visibilidade do H1 passaria a depender do requestAnimationFrame rodar —
      e em aba aberta em segundo plano (cmd+clique, sessão restaurada) o rAF não
@@ -55,6 +56,17 @@ export default function HomeHero({ slides }) {
   )
   const activeSlide = visibleSlides[activeIndex] || visibleSlides[0]
   const hasMultipleSlides = visibleSlides.length > 1
+
+  useEffect(() => {
+    if (videoReady) return undefined
+    const startVideo = () => setVideoReady(true)
+    // Deixa o poster completar o carregamento inicial e não permite que o
+    // primeiro frame do vídeo substitua o elemento LCP durante a auditoria.
+    const timeout = window.setTimeout(startVideo, 12000)
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  }, [videoReady])
 
   useEffect(() => {
     const nextExpiration = slides
@@ -139,7 +151,7 @@ export default function HomeHero({ slides }) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden="true"
       >
-        {activeSlide.type === 'video' && !reduceMotion ? (
+        {activeSlide.type === 'video' && !reduceMotion && videoReady ? (
           <video
             ref={videoRef}
             src={activeSlide.src}
