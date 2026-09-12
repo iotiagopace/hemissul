@@ -31,7 +31,7 @@ export const HOME_HERO_SLIDES = [
     id: 'protecao-em-movimento',
     type: 'video',
     src: '/video/hero-protecao.mp4',
-    poster: '/video/hero-protecao-poster.jpg',
+    poster: '/video/hero-protecao-poster.webp',
     eyebrow: 'Proteção veicular · assistência 24h',
     // Frases-chave que se alternam (reforço de SEO). Todas ficam no HTML.
     rotatingWords: [
