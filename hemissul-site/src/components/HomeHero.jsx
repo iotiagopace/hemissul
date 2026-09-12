@@ -60,9 +60,9 @@ export default function HomeHero({ slides }) {
   useEffect(() => {
     if (videoReady) return undefined
     const startVideo = () => setVideoReady(true)
-    // Deixa o poster completar o carregamento inicial e não permite que o
-    // primeiro frame do vídeo substitua o elemento LCP durante a auditoria.
-    const timeout = window.setTimeout(startVideo, 12000)
+    // O poster permanece no DOM como imagem LCP; o vídeo pode iniciar logo
+    // depois do primeiro paint sem substituir o recurso que a auditoria mede.
+    const timeout = window.setTimeout(startVideo, 3000)
     return () => {
       window.clearTimeout(timeout)
     }
@@ -151,24 +151,23 @@ export default function HomeHero({ slides }) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden="true"
       >
-        {activeSlide.type === 'video' && !reduceMotion && videoReady ? (
+        <img
+          src={activeSlide.poster || activeSlide.src}
+          alt=""
+          width="1920"
+          height="1080"
+          fetchPriority="high"
+        />
+        {activeSlide.type === 'video' && !reduceMotion && videoReady && (
           <video
             ref={videoRef}
             src={activeSlide.src}
-            poster={activeSlide.poster}
             autoPlay
             muted
             loop={!hasMultipleSlides}
             playsInline
             preload="metadata"
-          />
-        ) : (
-          <img
-            src={activeSlide.poster || activeSlide.src}
-            alt=""
-            width="1920"
-            height="1080"
-            fetchPriority="high"
+            style={{ opacity: 1 }}
           />
         )}
       </motion.div>
