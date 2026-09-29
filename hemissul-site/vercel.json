@@ -94,7 +94,11 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/pitstop/api/:path*",
+      "destination": "/api/pitstop/:path*"
+    },
+    {
+      "source": "/((?!api(?:/|$)).*)",
       "destination": "/index.html"
     }
   ]

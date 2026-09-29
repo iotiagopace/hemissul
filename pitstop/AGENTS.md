@@ -21,7 +21,8 @@ Eventos: `docs/EVENTOS.md`. Backend: `docs/BACKEND.md`.
 
 - React 19 + Vite, JavaScript (ESM), CSS puro com tokens. Sem framework de UI.
 - Vercel: front estático + Vercel Functions em `api/`.
-- Testes: Vitest (`npm test`) sobre os motores em `src/games/*/engine.js`.
+- Testes: Vitest (`npm test`) sobre os motores em `src/games/*/engine.js` e,
+  em `tests/`, sobre as APIs, a fila de envio e a validação.
 
 ## Arquitetura (respeite as fronteiras)
 
@@ -31,7 +32,8 @@ src/
   games/<jogo>/<Jogo>.jsx  interface do jogo: desenha o estado e envia entradas ao motor
   games/registry.js        catálogo (lazy load) e contrato { paused, onScore, onEnd }
   core/lead.js             regras da jornada de captação (etapas, validação, perfis, mensagens)
-  core/api.js              envio de lead e ranking, com fila offline
+  core/validation.js       validação compartilhada entre app e servidor (sem DOM, sem env)
+  core/api.js              envio de lead e ranking, com fila offline até o servidor confirmar
   core/tracking.js         dataLayer (GTM-NGFZ298)
   core/storage.js          localStorage com try/catch
   content/cruzadas.js      grades de palavras cruzadas (conteúdo editável)
@@ -39,7 +41,9 @@ src/
   config/brand.js          paleta oficial em hex para <canvas>
   styles/tokens.css        CÓPIA dos tokens do site oficial. Não editar valores
   styles/app.css           interface do Pitstop
-api/lead.js, api/ranking.js  Vercel Functions
+api/lead.js, api/ranking.js  Vercel Functions (publicadas por hemissul-site/api/pitstop/*)
+tests/                       testes das APIs, da fila e da validação
+supabase/migrations/         SQL do ranking e dos leads
 ```
 
 Regras:
@@ -134,7 +138,10 @@ npm run build
 ```
 
 As funções em `api/` só rodam na Vercel (ou com `vercel dev`). Localmente o
-front trata a ausência delas: o lead vai para uma fila local.
+front trata a ausência delas: cadastro e partidas ficam na fila local até o
+servidor confirmar. Contrato das APIs em `docs/BACKEND.md`.
+
+Não coloque testes dentro de `api/`: a Vercel publicaria o arquivo como rota.
 
 ## Antes de abrir PR
 

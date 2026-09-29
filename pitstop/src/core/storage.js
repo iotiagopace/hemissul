@@ -1,7 +1,11 @@
 /**
- * Persistência local (recorde, lead, partidas, visitas). Serve para o jogador
- * reencontrar seu recorde na próxima recarga. A fonte oficial do lead é o
- * backend (api/lead.js); o localStorage é só conveniência e pode falhar.
+ * Persistência local (recorde, lead, partidas, visitas, filas de envio).
+ * Serve para o jogador reencontrar seu recorde na próxima recarga. A fonte
+ * oficial do lead é o backend (api/lead.js); o localStorage é conveniência e
+ * pode falhar (modo privado, cota cheia, bloqueio do navegador).
+ *
+ * `save` e `remove` devolvem `true` só quando a gravação aconteceu. Quem
+ * depende da gravação (a fila de envio) precisa checar o retorno.
  */
 const PREFIX = 'pitstop-hemissul.'
 
@@ -17,8 +21,18 @@ export function load(key, fallback) {
 export function save(key, value) {
   try {
     localStorage.setItem(PREFIX + key, JSON.stringify(value))
+    return true
   } catch {
-    /* modo privado ou armazenamento bloqueado: segue sem persistir */
+    return false
+  }
+}
+
+export function remove(key) {
+  try {
+    localStorage.removeItem(PREFIX + key)
+    return true
+  } catch {
+    return false
   }
 }
 

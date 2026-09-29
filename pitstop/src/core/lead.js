@@ -12,28 +12,43 @@
  * 6. Cotação: mensagem por perfil + WhatsApp com texto preenchido.
  */
 import { PITSTOP } from '../config/pitstop.js'
+import { cadastroInvalido, PROTECAO_OPCOES, ATIVIDADE_OPCOES } from './validation.js'
 
-export const PROTECAO_OPCOES = ['Sim, cobre', 'Não cobre', 'Não sei']
-export const ATIVIDADE_OPCOES = ['Atividade principal', 'Renda complementar']
+export { PROTECAO_OPCOES, ATIVIDADE_OPCOES }
+export { normalizeTelefone } from './validation.js'
 
 export function emptyLead() {
   return { nome: '', telefone: '', aceite: false, app: null, atividade: null, protecao: null, posto: null, criadoEm: null }
 }
 
-/** Valida o cadastro. Retorna mensagem de erro em português ou null. */
-export function validateCadastro({ nome, telefone, aceite }) {
-  if (!nome || nome.trim().length < 2) return 'Digite seu nome para salvar o recorde.'
-  const digits = (telefone || '').replace(/\D/g, '')
-  if (digits.length < 10 || digits.length > 11) return 'Confira o WhatsApp: use DDD e número.'
-  if (!aceite) return 'Marque o aceite para salvar o recorde.'
-  return null
+/**
+ * Valida o cadastro e diz qual campo corrigir.
+ * @returns {{ campo: 'nome' | 'telefone' | 'aceite', mensagem: string } | null}
+ */
+export const validateCadastroCampo = (dados) => cadastroInvalido(dados)
+
+/** Valida o cadastro. Retorna a mensagem de erro em português ou null. */
+export function validateCadastro(dados) {
+  return cadastroInvalido(dados)?.mensagem ?? null
 }
 
+/**
+ * Máscara do WhatsApp durante a digitação.
+ * Celular (terceiro dígito 9): (95) 9 9138-1037, até 11 dígitos.
+ * Fixo com WhatsApp Business: (95) 3623-1234, até 10 dígitos.
+ * Para enviar, use normalizeTelefone (só dígitos).
+ */
 export function maskTelefone(value) {
-  const d = value.replace(/\D/g, '').slice(0, 11)
-  if (d.length > 6) return `(${d.slice(0, 2)}) ${d.slice(2, 3)} ${d.slice(3, 7)}${d.length > 7 ? '-' + d.slice(7) : ''}`
-  if (d.length > 2) return `(${d.slice(0, 2)}) ${d.slice(2)}`
-  return d
+  const all = String(value ?? '').replace(/\D/g, '')
+  const celular = all.length < 3 || all[2] === '9'
+  const d = all.slice(0, celular ? 11 : 10)
+  if (d.length <= 2) return d
+  const ddd = `(${d.slice(0, 2)}) `
+  if (celular) {
+    if (d.length <= 3) return ddd + d.slice(2)
+    return `${ddd}${d.slice(2, 3)} ${d.slice(3, 7)}${d.length > 7 ? '-' + d.slice(7) : ''}`
+  }
+  return `${ddd}${d.slice(2, 6)}${d.length > 6 ? '-' + d.slice(6) : ''}`
 }
 
 /**
