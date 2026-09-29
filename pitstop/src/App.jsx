@@ -1,9 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { currentPosto } from './config/pitstop.js'
 import { GAMES } from './games/registry.js'
 import { nextStep, shouldOfferQuote, perfil } from './core/lead.js'
 import { load, save, registerVisit } from './core/storage.js'
-import { fetchRanking, flushLeadQueue, sendLead, sendScore } from './core/api.js'
+import {
+  fetchRanking,
+  flushLeadQueue,
+  sendLead,
+  sendScore,
+} from './core/api.js'
 import { track, EVENTS } from './core/tracking.js'
 import { Header, useChargeTimer } from './components/ui.jsx'
 import FlowSheets from './components/FlowSheets.jsx'
@@ -22,24 +27,57 @@ export default function App() {
   const [partidas, setPartidas] = useState(() => load('partidas', 0))
   const [visitas] = useState(() => registerVisit())
   const [ranking, setRanking] = useState(null)
+  const [rankingStatus, setRankingStatus] = useState('loading')
+  const [leadStatus, setLeadStatus] = useState(() =>
+    load('lead-queue', []).length ? 'queued' : 'idle',
+  )
+
+  const pendingLeadRequests = useRef(0)
+  const updateLeadStatus = () =>
+    setLeadStatus(
+      load('lead-queue', []).length
+        ? 'queued'
+        : pendingLeadRequests.current
+          ? 'sending'
+          : 'sent',
+    )
 
   useEffect(() => {
     track(EVENTS.view, { posto: posto.id, visitas, cadastrado: !!lead })
-    flushLeadQueue()
+    flushLeadQueue().then(updateLeadStatus)
   }, [])
 
   useEffect(() => {
     if (screen !== 'home') return
+    let current = true
+    setRankingStatus('loading')
     fetchRanking(posto.id, 'corrida').then((list) => {
+      if (!current) return
+      setRankingStatus(list ? 'ready' : 'unavailable')
       if (list) setRanking(list)
-      else if (lead && records.corrida) setRanking([{ nome: `${lead.nome.split(' ')[0]} (você)`, pontos: records.corrida, me: true }])
+      else if (lead && records.corrida)
+        setRanking([
+          {
+            nome: `${lead.nome.split(' ')[0]} (você)`,
+            pontos: records.corrida,
+            me: true,
+          },
+        ])
     })
+    return () => {
+      current = false
+    }
   }, [screen])
 
   const persistLead = (next, extra) => {
     setLead(next)
     save('lead', next)
-    sendLead(next, { partidas, visitas, ...extra })
+    pendingLeadRequests.current += 1
+    setLeadStatus('sending')
+    sendLead(next, { partidas, visitas, ...extra }).then(() => {
+      pendingLeadRequests.current -= 1
+      updateLeadStatus()
+    })
   }
 
   const play = (id) => {
@@ -64,15 +102,32 @@ export default function App() {
     const total = partidas + 1
     setPartidas(total)
     save('partidas', total)
-    track(EVENTS.gameEnd, { jogo: gameId, pontos: score, recorde: isRecord, posto: posto.id })
-    const result = { score, unit: game.unit, isRecord: !!lead && isRecord, record }
+    track(EVENTS.gameEnd, {
+      jogo: gameId,
+      pontos: score,
+      recorde: isRecord,
+      posto: posto.id,
+    })
+    const result = {
+      score,
+      unit: game.unit,
+      isRecord: !!lead && isRecord,
+      record,
+    }
 
     if (lead && isRecord) {
       const next = { ...records, [gameId]: score }
       setRecords(next)
       save('records', next)
     }
-    if (lead) sendScore({ leadId: lead.id, nome: lead.nome, posto: posto.id, jogo: gameId, pontos: score })
+    if (lead)
+      sendScore({
+        leadId: lead.id,
+        nome: lead.nome,
+        posto: posto.id,
+        jogo: gameId,
+        pontos: score,
+      })
 
     const step = nextStep(lead, total)
     setSheet({ type: step, result })
@@ -80,12 +135,31 @@ export default function App() {
 
   const onCadastro = ({ nome, telefone, aceite }) => {
     const result = sheet.result
-    const novo = { id: crypto.randomUUID(), nome, telefone, aceite, app: null, atividade: null, protecao: null, posto: posto.id, criadoEm: new Date().toISOString() }
-    const nextRecords = { ...records, [gameId]: Math.max(records[gameId] || 0, result.score) }
+    const novo = {
+      id: crypto.randomUUID(),
+      nome,
+      telefone,
+      aceite,
+      app: null,
+      atividade: null,
+      protecao: null,
+      posto: posto.id,
+      criadoEm: new Date().toISOString(),
+    }
+    const nextRecords = {
+      ...records,
+      [gameId]: Math.max(records[gameId] || 0, result.score),
+    }
     setRecords(nextRecords)
     save('records', nextRecords)
     persistLead(novo, { jogos: Object.keys(nextRecords) })
-    sendScore({ leadId: novo.id, nome, posto: posto.id, jogo: gameId, pontos: result.score })
+    sendScore({
+      leadId: novo.id,
+      nome,
+      posto: posto.id,
+      jogo: gameId,
+      pontos: result.score,
+    })
     track(EVENTS.lead, { posto: posto.id, jogo: gameId })
     setSheet({ type: 'app' })
   }
@@ -128,15 +202,38 @@ export default function App() {
 
   return (
     <>
-      <Header onCharge={() => setSheet({ type: 'charge' })} chargeLabel={charge.label} chargePct={charge.pct} />
-      {screen === 'home' ? (
-        <Home posto={posto} records={records} ranking={ranking} lead={lead} onPlay={play} onProtecao={onProtecao} />
-      ) : (
-        <Play key={`${gameId}-${runKey}`} gameId={gameId} runKey={runKey} onExit={home} onEnd={onEnd} />
-      )}
+      <div>
+        <Header
+          onCharge={() => setSheet({ type: 'charge' })}
+          chargeLabel={charge.label}
+          chargePct={charge.pct}
+        />
+        {screen === 'home' ? (
+          <Home
+            posto={posto}
+            records={records}
+            ranking={ranking}
+            rankingStatus={rankingStatus}
+            leadStatus={leadStatus}
+            lead={lead}
+            onPlay={play}
+            onProtecao={onProtecao}
+          />
+        ) : (
+          <Play
+            key={`${gameId}-${runKey}`}
+            gameId={gameId}
+            runKey={runKey}
+            externalPaused={!!sheet}
+            onExit={home}
+            onEnd={onEnd}
+          />
+        )}
+      </div>
       <FlowSheets
         sheet={sheet}
         lead={lead}
+        leadStatus={leadStatus}
         posto={posto}
         onClose={() => setSheet(null)}
         onAgain={() => play(sheet?.type === 'primeiro' ? 'corrida' : gameId)}

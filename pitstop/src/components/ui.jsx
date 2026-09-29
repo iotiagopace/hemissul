@@ -1,12 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { track, EVENTS } from '../core/tracking.js'
 
 export function Header({ onCharge, chargeLabel, chargePct }) {
   return (
     <header className="topbar">
       <div className="topbar__inner">
-        <img className="topbar__logo" src="/brand/logo-azul.png" alt="Hemissul Proteção Veicular" width="108" height="36" />
-        <button type="button" className="charge" onClick={onCharge} aria-label="Definir tempo de carga">
+        <img
+          className="topbar__logo"
+          src="/brand/logo-azul.png"
+          alt="Hemissul Proteção Veicular"
+          width="108"
+          height="36"
+        />
+        <button
+          type="button"
+          className="charge"
+          onClick={onCharge}
+          aria-label="Definir tempo de carga"
+        >
           <span className="charge__bar" aria-hidden="true">
             <i style={{ width: `${chargePct}%` }} />
           </span>
@@ -17,21 +29,60 @@ export function Header({ onCharge, chargeLabel, chargePct }) {
   )
 }
 
-/** Bottom sheet modal. Foca o primeiro controle ao abrir. */
+/** Dialog nativo: contém o foco, torna o fundo inerte e devolve o foco ao fechar. */
 export function Sheet({ children, onClose, label }) {
   const ref = useRef(null)
+  useLayoutEffect(() => {
+    const dialog = ref.current
+    const previous = document.activeElement
+    dialog.showModal()
+    return () => {
+      dialog.close()
+      if (previous?.isConnected) previous.focus({ preventScroll: true })
+    }
+  }, [])
   useEffect(() => {
-    ref.current?.querySelector('input, button')?.focus()
-    const onKey = (e) => e.key === 'Escape' && onClose?.()
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-  return (
-    <div className="scrim" onClick={(e) => e.target === e.currentTarget && onClose?.()}>
-      <div className="sheet" role="dialog" aria-modal="true" aria-label={label} ref={ref}>
-        {children}
+    ref.current?.querySelector('.sheet__content')?.focus()
+    if (ref.current) ref.current.scrollTop = 0
+  }, [label])
+  useEffect(() => {
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [])
+  return createPortal(
+    <dialog
+      className="scrim"
+      ref={ref}
+      aria-label={label}
+      onCancel={(e) => {
+        e.preventDefault()
+        onClose?.()
+      }}
+      onClick={(e) => e.target === e.currentTarget && onClose?.()}
+    >
+      <div className="sheet">
+        <div className="sheet__top">
+          <span className="eyebrow">Pitstop Hemissul</span>
+          {onClose && (
+            <button
+              type="button"
+              className="sheet__close"
+              aria-label="Fechar"
+              onClick={onClose}
+            >
+              ×
+            </button>
+          )}
+        </div>
+        <div className="sheet__content" tabIndex={-1}>
+          {children}
+        </div>
       </div>
-    </div>
+    </dialog>,
+    document.body,
   )
 }
 
@@ -62,7 +113,7 @@ export function useChargeTimer() {
   if (!charge) return { label: 'Tempo de carga', pct: 0, start }
   const left = Math.max(0, charge.end - now)
   const pct = Math.min(100, 100 * (1 - left / charge.total))
-  if (!left) return { label: 'Carga concluída', pct: 100, start }
+  if (!left) return { label: 'Tempo encerrado', pct: 100, start }
   const m = Math.floor(left / 60000)
   const s = Math.floor((left % 60000) / 1000)
   return { label: `Faltam ${m}:${String(s).padStart(2, '0')}`, pct, start }
