@@ -1,0 +1,21 @@
+{
+  "base": "32f6cc4a64ea09657b177bcff71b5b5cb86552f8",
+  "frontend": "0bc8f468b348e8e34a0fe0ad589dd99f242cbff9",
+  "viewport": "360x800; home captured full-page",
+  "screenshotPairs": 33,
+  "capture": "Components rendered with synthetic props for deterministic sheet states; real user path tested separately with local API stubs. No CRM or analytics requests sent. Before loading/error/queued states show existing fallback or absence of state.",
+  "checks": {
+    "unitTests": 15,
+    "build": "passed",
+    "axe": {
+      "widths": [
+        360,
+        430
+      ],
+      "scenarios": 36,
+      "violations": 0
+    },
+    "restrictedFiles": "unchanged"
+  },
+  "runtime": "Chromium headless; not a physical device test"
+}

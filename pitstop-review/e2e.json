@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "viewport": "360x800",
+  "leadPosts": 4,
+  "errors": [],
+  "piiInDataLayer": false,
+  "network": "Only localhost, API mocked; all external requests blocked"
+}

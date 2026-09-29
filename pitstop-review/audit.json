@@ -1,0 +1,254 @@
+[
+  {
+    "width": 360,
+    "screen": "home",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "charge",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "primeiro",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "cadastro",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "app",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "atividade",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "pronto",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "fila",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "protecao",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "combinado",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "resultado",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "cotacao-integral",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "cotacao-complementar",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "cotacao-proprietario",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "play-corrida",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "play-blocos",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "play-sudoku",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 360,
+    "screen": "play-cruzadas",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "home",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "charge",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "primeiro",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "cadastro",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "app",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "atividade",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "pronto",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "fila",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "protecao",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "combinado",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "resultado",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "cotacao-integral",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "cotacao-complementar",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "cotacao-proprietario",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "play-corrida",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "play-blocos",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "play-sudoku",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  },
+  {
+    "width": 430,
+    "screen": "play-cruzadas",
+    "violations": [],
+    "overflow": false,
+    "small": []
+  }
+]

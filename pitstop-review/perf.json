@@ -1,0 +1,50 @@
+{
+  "profile": "360x800, cache off, 1.6 Mbps down, 750 Kbps up, RTT 150 ms, CPU 4x; local production build; external GTM blocked; API mocked",
+  "runs": [
+    {
+      "run": 1,
+      "headingVisible": 1131,
+      "paints": [
+        {
+          "name": "first-paint",
+          "ms": 548
+        },
+        {
+          "name": "first-contentful-paint",
+          "ms": 1112
+        }
+      ],
+      "gameChunksInitiallyLoaded": []
+    },
+    {
+      "run": 2,
+      "headingVisible": 1095,
+      "paints": [
+        {
+          "name": "first-paint",
+          "ms": 532
+        },
+        {
+          "name": "first-contentful-paint",
+          "ms": 1080
+        }
+      ],
+      "gameChunksInitiallyLoaded": []
+    },
+    {
+      "run": 3,
+      "headingVisible": 1112,
+      "paints": [
+        {
+          "name": "first-paint",
+          "ms": 548
+        },
+        {
+          "name": "first-contentful-paint",
+          "ms": 1096
+        }
+      ],
+      "gameChunksInitiallyLoaded": []
+    }
+  ]
+}
