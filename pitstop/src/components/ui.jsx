@@ -8,7 +8,7 @@ export function Header({ onCharge, chargeLabel, chargePct }) {
       <div className="topbar__inner">
         <img
           className="topbar__logo"
-          src="/brand/logo-azul.png"
+          src={`${import.meta.env.BASE_URL}brand/logo-azul.png`}
           alt="Hemissul Proteção Veicular"
           width="108"
           height="36"
@@ -90,7 +90,7 @@ export function Sheet({ children, onClose, label }) {
 export function Bubble({ children }) {
   return (
     <div className="bubble">
-      <img src="/brand/simbolo-azul.png" alt="" width="40" height="40" />
+      <img src={`${import.meta.env.BASE_URL}brand/simbolo-azul.png`} alt="" width="40" height="40" />
       <p>{children}</p>
     </div>
   )

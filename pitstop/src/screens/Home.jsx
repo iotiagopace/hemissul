@@ -136,7 +136,7 @@ export default function Home({
       <footer className="pitstop-footer">
         <div className="shell">
           <img
-            src="/brand/logo-branca.png"
+            src={`${import.meta.env.BASE_URL}brand/logo-branca.png`}
             alt="Hemissul Proteção Veicular"
             width="132"
             height="44"

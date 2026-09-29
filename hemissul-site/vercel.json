@@ -94,8 +94,17 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/pitstop",
+      "destination": "/pitstop/index.html"
+    },
+    {
+      "source": "/pitstop/",
+      "destination": "/pitstop/index.html"
+    },
+    {
+      "source": "/((?!pitstop(?:/|$)|api(?:/|$)).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "node scripts/build-with-pitstop.mjs"
 }
