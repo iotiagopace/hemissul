@@ -1,9 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { GRADES } from '../../content/cruzadas.js'
 import { useClock, clock } from '../useLoop.js'
-import { createCruzadas, currentWord, isWordSolved, moveWord, selectCell, solvedCount, typeKey, cruzadasScore } from './engine.js'
+import {
+  createCruzadas,
+  currentWord,
+  isWordSolved,
+  moveWord,
+  selectCell,
+  solvedCount,
+  typeKey,
+  cruzadasScore,
+} from './engine.js'
 
-const ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 /** Escolhe a grade da semana (gira pelas grades cadastradas). */
 function gradeDaSemana() {
@@ -63,67 +72,119 @@ export default function Cruzadas({ paused, onScore, onEnd }) {
         cells.push(<div key={k} />)
         continue
       }
-      const solved = Object.values(cell.words).some((wi) => isWordSolved(s, puzzle.words[wi]))
-      const cls = [k === s.cursor ? 'is-cursor' : w.cells.includes(k) ? 'is-word' : '', solved ? 'is-solved' : '', wrong.includes(k) ? 'is-wrong' : ''].join(' ')
+      const solved = Object.values(cell.words).some((wi) =>
+        isWordSolved(s, puzzle.words[wi]),
+      )
+      const cls = [
+        k === s.cursor ? 'is-cursor' : w.cells.includes(k) ? 'is-word' : '',
+        solved ? 'is-solved' : '',
+        wrong.includes(k) ? 'is-wrong' : '',
+      ].join(' ')
       cells.push(
-        <button
-          key={k}
-          type="button"
-          className={cls}
-          onClick={() => {
-            if (paused) return
-            selectCell(s, k)
-            force((x) => x + 1)
-          }}
-          aria-label={`Casa ${r + 1}, ${c + 1}${s.entries[k] ? `, letra ${s.entries[k]}` : ''}`}
-        >
+        <span key={k} className={cls}>
           {puzzle.numbers[k] && <sup>{puzzle.numbers[k]}</sup>}
           {s.entries[k] || ''}
-        </button>,
+        </span>,
       )
     }
 
   return (
     <>
       <div className="clue">
-        <button type="button" aria-label="Dica anterior" onClick={() => (moveWord(s, -1), force((x) => x + 1))}>‹</button>
+        <button
+          type="button"
+          aria-label="Dica anterior"
+          disabled={paused}
+          onClick={() => (moveWord(s, -1), force((x) => x + 1))}
+        >
+          ‹
+        </button>
         <p aria-live="polite">
           <b>
             {w.number} {w.dir === 'A' ? 'Horizontal' : 'Vertical'}
           </b>
           {w.clue}
         </p>
-        <button type="button" aria-label="Próxima dica" onClick={() => (moveWord(s, 1), force((x) => x + 1))}>›</button>
+        <button
+          type="button"
+          aria-label="Próxima dica"
+          disabled={paused}
+          onClick={() => (moveWord(s, 1), force((x) => x + 1))}
+        >
+          ›
+        </button>
       </div>
-      <div className={`paused-wrap${paused ? ' is-paused' : ''}`}>
-        <div className="cgrid" style={{ '--size': puzzle.size }}>
-          {cells}
-        </div>
-        {paused && <div className="paused-label">Pausado</div>}
-      </div>
-      <p className="hint">
-        {solvedCount(s)} de {puzzle.words.length} palavras{s.hints ? ` · ${s.hints} dica${s.hints > 1 ? 's' : ''}` : ''}
-      </p>
-      <div className="keyboard">
-        {ROWS.map((row, i) => (
-          <div key={row}>
-            {i === 2 && (
-              <button type="button" className="wide" onPointerDown={(e) => (e.preventDefault(), press('hint'))}>
-                Dica
-              </button>
-            )}
-            {[...row].map((ch) => (
-              <button key={ch} type="button" onPointerDown={(e) => (e.preventDefault(), press(ch))}>
-                {ch}
-              </button>
-            ))}
-            {i === 2 && (
-              <button type="button" className="wide" aria-label="Apagar" onPointerDown={(e) => (e.preventDefault(), press('del'))}>
-                Apagar
-              </button>
-            )}
+      <details className="crossword-map">
+        <summary>Ver grade completa</summary>
+        <div className={`paused-wrap${paused ? ' is-paused' : ''}`}>
+          <div
+            className="cgrid"
+            aria-hidden="true"
+            style={{ '--size': puzzle.size }}
+          >
+            {cells}
           </div>
+          {paused && <div className="paused-label">Pausado</div>}
+        </div>
+      </details>
+      <p className="hint" aria-live="polite">
+        {solvedCount(s)} de {puzzle.words.length} palavras
+        {s.hints ? ` · ${s.hints} dica${s.hints > 1 ? 's' : ''}` : ''}
+      </p>
+      <div
+        className="word-entry"
+        role="group"
+        aria-label="Casas da palavra atual"
+      >
+        {w.cells.map((k, i) => (
+          <button
+            key={k}
+            type="button"
+            disabled={paused}
+            className={k === s.cursor ? 'is-current' : ''}
+            aria-pressed={k === s.cursor}
+            aria-label={`Letra ${i + 1}${s.entries[k] ? `, ${s.entries[k]}` : ', vazia'}`}
+            onClick={() => {
+              if (s.cursor !== k) selectCell(s, k)
+              force((x) => x + 1)
+            }}
+          >
+            {s.entries[k] || <span aria-hidden="true">·</span>}
+          </button>
         ))}
+      </div>
+      <p className="sr-only" role="status">
+        {wrong.length
+          ? 'Confira as letras da palavra. Há uma resposta incorreta.'
+          : ''}
+      </p>
+      <div className="keyboard" role="group" aria-label="Teclado de letras">
+        {[...LETTERS].map((ch) => (
+          <button
+            key={ch}
+            type="button"
+            disabled={paused}
+            onClick={() => press(ch)}
+          >
+            {ch}
+          </button>
+        ))}
+        <button
+          type="button"
+          className="wide"
+          disabled={paused}
+          onClick={() => press('hint')}
+        >
+          Dica
+        </button>
+        <button
+          type="button"
+          className="wide"
+          disabled={paused}
+          onClick={() => press('del')}
+        >
+          Apagar
+        </button>
       </div>
     </>
   )

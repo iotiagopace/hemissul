@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { createRng } from '../../core/rng.js'
-import { BRAND, BLOCK_TONES } from '../../config/brand.js'
+import { BRAND } from '../../config/brand.js'
 import { useLoop } from '../useLoop.js'
-import { BLOCOS, createBlocos, blocosInput, blocosStep, blocosScore } from './engine.js'
+import {
+  BLOCOS,
+  createBlocos,
+  blocosInput,
+  blocosStep,
+  blocosScore,
+} from './engine.js'
 
 const SZ = 28
 const W = BLOCOS.cols * SZ
@@ -28,11 +34,29 @@ export default function Blocos({ paused, onScore, onEnd }) {
       ctx.stroke()
     }
     const cell = (x, y, i) => {
-      ctx.fillStyle = BLOCK_TONES[i - 1]
+      ctx.fillStyle = [
+        BRAND.azul,
+        BRAND.royal,
+        BRAND.periwinkle,
+        BRAND.lavanda,
+        BRAND.royal,
+        BRAND.navy,
+        BRAND.periwinkle,
+      ][i - 1]
       ctx.fillRect(x * SZ + 1, y * SZ + 1, SZ - 2, SZ - 2)
+      ctx.strokeStyle = BRAND.navy
+      ctx.strokeRect(x * SZ + 1, y * SZ + 1, SZ - 2, SZ - 2)
     }
     s.grid.forEach((row, y) => row.forEach((v, x) => v && cell(x, y, v)))
-    if (!s.over) s.piece.m.forEach((row, r) => row.forEach((v, c) => v && s.piece.y + r >= 0 && cell(s.piece.x + c, s.piece.y + r, s.piece.color)))
+    if (!s.over)
+      s.piece.m.forEach((row, r) =>
+        row.forEach(
+          (v, c) =>
+            v &&
+            s.piece.y + r >= 0 &&
+            cell(s.piece.x + c, s.piece.y + r, s.piece.color),
+        ),
+      )
   }
 
   const finish = () => {
@@ -59,7 +83,12 @@ export default function Blocos({ paused, onScore, onEnd }) {
 
   useEffect(() => {
     const onKey = (e) => {
-      const k = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'rotate', ArrowDown: 'down' }[e.key]
+      const k = {
+        ArrowLeft: 'left',
+        ArrowRight: 'right',
+        ArrowUp: 'rotate',
+        ArrowDown: 'down',
+      }[e.key]
       if (k) {
         e.preventDefault()
         press(k)
@@ -70,15 +99,37 @@ export default function Blocos({ paused, onScore, onEnd }) {
   })
 
   const btn = (k, label, text) => (
-    <button type="button" aria-label={label} onPointerDown={(e) => (e.preventDefault(), press(k))}>
-      {text}
+    <button
+      type="button"
+      aria-label={label}
+      disabled={paused}
+      onClick={() => press(k)}
+    >
+      <span aria-hidden="true">{text}</span>
+      <small>
+        {
+          {
+            left: 'Esquerda',
+            rotate: 'Girar',
+            right: 'Direita',
+            down: 'Descer',
+          }[k]
+        }
+      </small>
     </button>
   )
 
   return (
     <>
       <div className={`paused-wrap${paused ? ' is-paused' : ''}`}>
-        <canvas ref={canvas} className="stage" width={W} height={H} aria-label="Tabuleiro do Blocos Hemissul" style={{ border: `2px solid ${BRAND.navy}` }} />
+        <canvas
+          ref={canvas}
+          className="stage"
+          width={W}
+          height={H}
+          aria-label="Tabuleiro do Blocos Hemissul"
+          style={{ border: `2px solid ${BRAND.navy}` }}
+        />
         {paused && <div className="paused-label">Pausado</div>}
       </div>
       <div className="pad" style={{ '--cols': 4 }}>

@@ -98,8 +98,27 @@
       "destination": "/api/pitstop/:path*"
     },
     {
-      "source": "/((?!api(?:/|$)).*)",
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "pitstop.hemissul.com.br"
+        }
+      ],
+      "destination": "/pitstop/index.html"
+    },
+    {
+      "source": "/pitstop",
+      "destination": "/pitstop/index.html"
+    },
+    {
+      "source": "/pitstop/",
+      "destination": "/pitstop/index.html"
+    },
+    {
+      "source": "/((?!pitstop(?:/|$)|api(?:/|$)).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "node scripts/build-with-pitstop.mjs"
 }
