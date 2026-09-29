@@ -94,6 +94,10 @@
   ],
   "rewrites": [
     {
+      "source": "/pitstop/api/:path*",
+      "destination": "/api/pitstop/:path*"
+    },
+    {
       "source": "/",
       "has": [
         {

@@ -1,7 +1,8 @@
 # Plano de eventos (GTM-NGFZ298)
 
 Mesmo contêiner do site oficial. Todo evento do Pitstop leva `pitstop: true`
-para filtrar no GA4. **Nenhum dado pessoal** (nome, telefone) vai ao dataLayer.
+para filtrar no GA4. **Nenhum dado pessoal** (nome, telefone) vai ao dataLayer:
+`track` descarta `nome`, `telefone`, `leadId` e textos com cara de telefone.
 
 | Evento | Quando | Parâmetros |
 | --- | --- | --- |
