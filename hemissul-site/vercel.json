@@ -94,6 +94,16 @@
   ],
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "pitstop.hemissul.com.br"
+        }
+      ],
+      "destination": "/pitstop/index.html"
+    },
+    {
       "source": "/pitstop",
       "destination": "/pitstop/index.html"
     },
