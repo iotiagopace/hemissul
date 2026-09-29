@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { createRng } from '../../core/rng.js'
 import { BRAND, TRAFFIC_TONES } from '../../config/brand.js'
 import { useLoop, roundRect } from '../useLoop.js'
-import { CORRIDA, createCorrida, corridaInput, corridaStep, corridaScore } from './engine.js'
+import {
+  CORRIDA,
+  createCorrida,
+  corridaInput,
+  corridaStep,
+  corridaScore,
+} from './engine.js'
 
 const { width: W, height: H, lanes, car, playerY } = CORRIDA
 
@@ -10,7 +16,7 @@ function drawCar(ctx, x, y, color, player) {
   ctx.fillStyle = color
   roundRect(ctx, x - car.w / 2, y, car.w, car.h, 10)
   ctx.fill()
-  ctx.fillStyle = 'rgba(28,36,65,.55)'
+  ctx.fillStyle = BRAND.navy
   roundRect(ctx, x - car.w / 2 + 7, y + (player ? 18 : 52), car.w - 14, 18, 5)
   ctx.fill()
   roundRect(ctx, x - car.w / 2 + 7, y + (player ? 60 : 14), car.w - 14, 12, 4)
@@ -19,7 +25,7 @@ function drawCar(ctx, x, y, color, player) {
     ctx.fillStyle = BRAND.azul
     ctx.font = '700 17px "Neue Montreal", sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('H', x, y + 53)
+    ctx.fillRect(x - 6, y + 43, 12, 3)
   }
 }
 
@@ -44,7 +50,9 @@ export default function Corrida({ paused, onScore, onEnd }) {
       ctx.fillRect(123, y, 5, 32)
       ctx.fillRect(232, y, 5, 32)
     }
-    s.traffic.forEach((t) => drawCar(ctx, lanes[t.lane], t.y, TRAFFIC_TONES[t.tone], false))
+    s.traffic.forEach((t) =>
+      drawCar(ctx, lanes[t.lane], t.y, TRAFFIC_TONES[t.tone], false),
+    )
     drawCar(ctx, s.x, playerY, BRAND.branco, true)
   }
 
@@ -82,14 +90,37 @@ export default function Corrida({ paused, onScore, onEnd }) {
   return (
     <>
       <div className={`paused-wrap${paused ? ' is-paused' : ''}`}>
-        <canvas ref={canvas} className="stage" width={W} height={H} onPointerDown={tap} aria-label="Pista da Corrida Hemissul" />
+        <canvas
+          ref={canvas}
+          className="stage"
+          width={W}
+          height={H}
+          onPointerDown={tap}
+          aria-label="Pista da Corrida Hemissul"
+        />
         {paused && <div className="paused-label">Pausado</div>}
       </div>
       <div className="pad">
-        <button type="button" aria-label="Faixa da esquerda" onPointerDown={(e) => (e.preventDefault(), press('left'))}>←</button>
-        <button type="button" aria-label="Faixa da direita" onPointerDown={(e) => (e.preventDefault(), press('right'))}>→</button>
+        <button
+          type="button"
+          aria-label="Faixa da esquerda"
+          disabled={paused}
+          onClick={() => press('left')}
+        >
+          <span aria-hidden="true">←</span> <small>Esquerda</small>
+        </button>
+        <button
+          type="button"
+          aria-label="Faixa da direita"
+          disabled={paused}
+          onClick={() => press('right')}
+        >
+          <small>Direita</small> <span aria-hidden="true">→</span>
+        </button>
       </div>
-      <p className="hint">Toque do lado esquerdo ou direito da pista para trocar de faixa.</p>
+      <p className="hint">
+        Toque do lado esquerdo ou direito da pista para trocar de faixa.
+      </p>
     </>
   )
 }
