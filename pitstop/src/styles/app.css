@@ -258,9 +258,9 @@ button:disabled {
 .game-card--featured {
   grid-template-columns: 1fr;
   gap: var(--space-xs);
-  background: var(--color-ink);
-  border-color: var(--color-ink);
-  color: var(--color-paper-bright);
+  background: var(--color-paper-bright);
+  border-color: var(--color-rule);
+  color: var(--color-ink);
 }
 .game-card--featured .game-card__art {
   height: 4rem;
@@ -268,10 +268,10 @@ button:disabled {
 }
 .game-card--featured .game-card__description,
 .game-card--featured .game-card__record {
-  color: var(--color-accent-wash);
+  color: var(--color-muted);
 }
 .game-card--featured:active {
-  background: var(--color-accent);
+  background: var(--color-paper-2);
 }
 .protection-link {
   display: flex;
@@ -500,10 +500,10 @@ button:disabled {
   justify-content: center;
   gap: var(--space-xs);
   padding: var(--space-xs);
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-rule);
   border-radius: var(--radius-sm);
-  background: var(--color-accent);
-  color: var(--color-paper-bright);
+  background: var(--color-paper-bright);
+  color: var(--color-ink);
   font-size: var(--text-lg);
   font-weight: 700;
 }
@@ -516,7 +516,7 @@ button:disabled {
   gap: 0;
 }
 .pad button:active {
-  background: var(--color-accent-dark);
+  background: var(--color-paper-3);
 }
 .hint {
   font-size: var(--text-sm);
@@ -970,4 +970,21 @@ button:disabled {
 }
 .crossword-map .paused-wrap {
   margin-top: var(--space-sm);
+}
+
+.play--sudoku .numpad button {
+  border-color: var(--color-ink);
+}
+.game-intro {
+  display: grid;
+  gap: var(--space-md);
+}
+.game-intro .game-card__art {
+  height: 5rem;
+  width: 100%;
+}
+.game-intro__instruction {
+  border-block: 1px solid var(--color-rule);
+  padding-block: var(--space-md);
+  font-weight: 500;
 }

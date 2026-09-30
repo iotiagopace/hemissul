@@ -1,7 +1,8 @@
 # Produto · Pitstop Online Hemissul
 
 Resumo da proposta aprovada pela Metry. Documento de referência para decisões
-de produto; a regra executável está em `src/core/lead.js`.
+de produto. A apresentação da jornada está em `src/App.jsx`; validação,
+perfis e mensagens aprovadas continuam em `src/core/lead.js`.
 
 ## Objetivo
 
@@ -10,16 +11,29 @@ de produto; a regra executável está em `src/core/lead.js`.
 
 ## Jornada
 
+Refino solicitado: apresentar o contexto de cada jogo e convidar ao cadastro
+antes de começar. O cadastro permanece opcional nesta versão de revisão.
+
 | # | Momento | O que acontece |
 | --- | --- | --- |
-| 1 | QR Code | Abre `/?posto=<id>`. Sem instalar nada |
-| 2 | Primeira partida | Livre, sem cadastro |
-| 3 | Fim da 1ª partida | Nome + WhatsApp + aceite para salvar o recorde e entrar no ranking |
-| 4 | Logo após o cadastro | "Você roda por aplicativo?" (obrigatória) |
-| 5 | Se sim | "Atividade principal ou renda complementar?" (obrigatória) |
-| 6 | A partir da 2ª partida | "Sua proteção atual cobre uso por aplicativo?" (opcional, uma vez) |
-| 7 | Resposta "Não cobre" ou "Não sei" | Tela de cotação com mensagem por perfil |
-| 8 | Sempre | Botão da home "Minha proteção cobre uso por aplicativo?" leva à etapa 6 ou 7 |
+| 1 | QR Code | Abre `/pitstop?posto=<id>`. Sem instalar nada |
+| 2 | Escolha do jogo | Introdução própria, instruções e informação honesta sobre duração |
+| 3 | Antes da partida | Convite para nome + WhatsApp + aceite, com opção "Jogar sem cadastrar" |
+| 4 | Após o cadastro | "Você roda por aplicativo?" e, se sim, atividade principal ou renda complementar |
+| 5 | Partida | Começa após o perfil ou pela opção sem cadastro; quem já tem cadastro completo não repete os campos |
+| 6 | Fim da partida | Resultado, estado dos envios e convite explícito para proposta personalizada ou conhecer a proteção veicular |
+| 7 | Pedido de proposta | Visitante sem cadastro preenche contato e perfil; cadastrado segue para a cotação com a mensagem aprovada |
+| 8 | Sempre | Atalho de proteção na Home e opção de continuar jogando; nenhum envio confirmado é presumido pela fila vazia |
+
+O helper `nextStep` em `core/lead.js` descreve a ordem anterior e não é usado
+por esta apresentação. Foi preservado para a frente de lógica; alterações
+futuras devem considerar a jornada acima, sem reintroduzir cadastro obrigatório
+após a primeira partida.
+
+Duração média ainda não medida com jogadores reais. Corrida e Blocos não têm
+limite de tempo; Cruzadas termina ao completar a grade. O Sudoku 9×9 informa
+estimativas de 5–10 min, 10–15 min e 15 min ou mais conforme o nível. O modo
+Rápido 6×6 continua pendente da frente de inteligência dos jogos.
 
 ## Perfis e mensagens
 
@@ -42,8 +56,7 @@ Mensagens em `core/lead.js#MENSAGENS`. Alterações de texto passam pela Hemissu
 
 ## Métricas (ver docs/EVENTOS.md)
 
-Leads por posto por semana, taxa de cadastro (cadastros / quem jogou a 1ª
-partida), partidas por visita, taxa de retorno, perfil do público, cliques em
+Leads por posto por semana, taxa de cadastro por visitante (o convite agora precede a partida), partidas por visita, taxa de retorno, perfil do público, cliques em
 cotação/WhatsApp, fechamentos (informado pelo comercial no Power CRM).
 
 ## Pendências com a Hemissul

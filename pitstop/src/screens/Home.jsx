@@ -27,8 +27,8 @@ export default function Home({
             Sua próxima partida.
           </h1>
           <p>
-            Escolha um jogo enquanto o carro carrega. A primeira partida é
-            livre, sem cadastro.
+            Seu carro recarrega. Você escolhe o desafio. Conheça o jogo e comece
+            no seu ritmo.
           </p>
           <a className="hero__link" href="#jogos">
             Escolher jogo <span aria-hidden="true">↓</span>
