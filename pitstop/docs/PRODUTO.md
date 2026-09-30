@@ -57,12 +57,12 @@ Mensagens em `core/lead.js#MENSAGENS`. Alterações de texto passam pela Hemissu
 ## Métricas (ver docs/EVENTOS.md)
 
 Leads por posto por semana, taxa de cadastro por visitante (o convite agora precede a partida), partidas por visita, taxa de retorno, perfil do público, cliques em
-cotação/WhatsApp, fechamentos (informado pelo comercial no Power CRM).
+cotação/WhatsApp, fechamentos (informado pelo comercial da Hemissul).
 
 ## Pendências com a Hemissul
 
 - Lista real de postos e ids para os QR Codes.
-- Webhook do Power CRM (ou n8n/Make intermediário) para `LEAD_WEBHOOK_URL`.
+- Leads ficam no banco do Pitstop; a Hemissul consulta/exporta e integra ao sistema dela. Definir quem acessa e o prazo de retenção.
 - Confirmar a oferta de proteção para motorista de aplicativo.
 - Aprovar pistas das palavras cruzadas e falas do personagem.
 - Subdomínio (ex.: `pitstop.hemissul.com.br`) apontado para a Vercel.

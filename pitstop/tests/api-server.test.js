@@ -28,6 +28,7 @@ function mockRes() {
 const req = (method, body, headers = { 'content-type': 'application/json' }, query) => ({ method, body, headers, query })
 
 function response(status, body = '', headers = {}) {
+  if (status === 204) return new Response(null, { status, headers })
   return new Response(typeof body === 'string' ? body : JSON.stringify(body), { status, headers })
 }
 
@@ -40,8 +41,11 @@ async function call(handler, r) {
 }
 
 describe('api/lead', () => {
+  const env = { SUPABASE_URL: 'https://x.supabase.test/', SUPABASE_SERVICE_ROLE_KEY: 'k' }
+  const RPC = 'https://x.supabase.test/rest/v1/rpc/pitstop_upsert_lead'
+
   it('só aceita POST com JSON', async () => {
-    const h = createLeadHandler({ env: {}, log: silent })
+    const h = createLeadHandler({ env, log: silent })
     expect((await call(h, req('GET'))).statusCode).toBe(405)
     const r415 = await call(h, req('POST', LEAD, { 'content-type': 'text/plain' }))
     expect(r415.statusCode).toBe(415)
@@ -49,7 +53,7 @@ describe('api/lead', () => {
   })
 
   it('JSON quebrado vira 400, sem estourar', async () => {
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, log: silent })
+    const h = createLeadHandler({ env, log: silent })
     const broken = { method: 'POST', headers: { 'content-type': 'application/json' }, get body() { throw new SyntaxError('x') } }
     const res = await call(h, broken)
     expect(res.statusCode).toBe(400)
@@ -57,78 +61,83 @@ describe('api/lead', () => {
     expect(res.headers['content-type']).toMatch(/application\/json/)
   })
 
-  it('validação devolve o campo', async () => {
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, log: silent })
+  it('validação devolve o campo sem ecoar dados pessoais', async () => {
+    const h = createLeadHandler({ env, log: silent })
     const res = await call(h, req('POST', { ...LEAD, telefone: '123' }))
     expect(res.statusCode).toBe(400)
     expect(res.body).toMatchObject({ ok: false, error: 'invalido', campo: 'telefone', retryable: false })
+    expect(JSON.stringify(res.body)).not.toMatch(/Ana|123/)
   })
 
-  it('sem destino configurado não confirma o lead', async () => {
-    const h = createLeadHandler({ env: {}, log: silent })
-    const res = await call(h, req('POST', LEAD))
+  it('sem banco configurado não confirma o lead', async () => {
+    const fetchImpl = vi.fn()
+    const res = await call(createLeadHandler({ env: {}, fetchImpl, log: silent }), req('POST', LEAD))
     expect(res.statusCode).toBe(503)
     expect(res.body).toMatchObject({ ok: false, error: 'nao_configurado', retryable: true })
-    expect(res.body.ok).not.toBe(true)
+    expect(fetchImpl).not.toHaveBeenCalled()
   })
 
-  it('confirma só depois do CRM aceitar, com chave de idempotência', async () => {
-    const fetchImpl = vi.fn(async () => response(200, { received: true }))
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook', LEAD_WEBHOOK_TOKEN: 't0k' }, fetchImpl, log: silent })
-    const res = await call(h, req('POST', { ...LEAD, extra: 'ignorado' }))
-    expect(res.statusCode).toBe(200)
-    expect(res.body).toMatchObject({ ok: true, id: ID, revisao: LEAD.revisao, destinos: ['crm'] })
-    const [url, init] = fetchImpl.mock.calls[0]
-    expect(url).toBe('https://crm.test/hook')
-    expect(init.headers['Idempotency-Key']).toBe(`${ID}:${LEAD.revisao}`)
-    expect(init.headers.Authorization).toBe('Bearer t0k')
-    const sent = JSON.parse(init.body)
-    expect(sent.telefone).toBe('95990000001')
-    expect(sent).not.toHaveProperty('extra')
-  })
-
-  it('mesma requisição duas vezes leva a mesma chave ao destino', async () => {
+  it('variáveis antigas de CRM não geram envio externo nem substituem o banco', async () => {
     const fetchImpl = vi.fn(async () => response(204))
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, fetchImpl, log: silent })
+    const old = { LEAD_WEBHOOK_URL: 'https://crm.test/hook', LEAD_WEBHOOK_TOKEN: 't', LEAD_SUPABASE: '1' }
+    const semBanco = await call(createLeadHandler({ env: old, fetchImpl, log: silent }), req('POST', LEAD))
+    expect(semBanco.statusCode).toBe(503)
+    await call(createLeadHandler({ env: { ...old, ...env }, fetchImpl, log: silent }), req('POST', LEAD))
+    expect(fetchImpl.mock.calls.map(([url]) => url)).toEqual([RPC])
+  })
+
+  it('confirma só depois do banco gravar', async () => {
+    const fetchImpl = vi.fn(async () => response(204))
+    const res = await call(createLeadHandler({ env, fetchImpl, log: silent }), req('POST', { ...LEAD, extra: 'ignorado' }))
+    expect(res.statusCode).toBe(200)
+    expect(res.body).toEqual({ ok: true, id: ID, revisao: LEAD.revisao })
+    const [url, init] = fetchImpl.mock.calls[0]
+    expect(url).toBe(RPC)
+    expect(init.headers.Authorization).toBe('Bearer k')
+    const { p } = JSON.parse(init.body)
+    expect(p).toMatchObject({ id: ID, revisao: LEAD.revisao, telefone: '95990000001', origem: 'pitstop', aceite_lgpd: true, proposta_solicitada_em: null })
+    expect(p).not.toHaveProperty('extra')
+  })
+
+  it('interesse em proposta só vai quando a interface envia a ação explícita', async () => {
+    const fetchImpl = vi.fn(async () => response(204))
+    const h = createLeadHandler({ env, fetchImpl, log: silent })
+    await call(h, req('POST', { ...LEAD, app: true, atividade: 'Atividade principal', protecao: 'Não sei' }))
+    await call(h, req('POST', { ...LEAD, propostaSolicitadaEm: '2026-10-01T14:10:00-04:00' }))
+    const [a, b] = fetchImpl.mock.calls.map(([, init]) => JSON.parse(init.body).p.proposta_solicitada_em)
+    expect(a).toBeNull()
+    expect(b).toBe('2026-10-01T18:10:00.000Z')
+  })
+
+  it('repetir a mesma requisição manda o mesmo upsert (mesmo id e revisão)', async () => {
+    const fetchImpl = vi.fn(async () => response(204))
+    const h = createLeadHandler({ env, fetchImpl, log: silent })
     await call(h, req('POST', LEAD))
     await call(h, req('POST', LEAD))
-    const keys = fetchImpl.mock.calls.map(([, init]) => init.headers['Idempotency-Key'])
-    expect(keys[0]).toBe(keys[1])
+    const [a, b] = fetchImpl.mock.calls.map(([, init]) => JSON.parse(init.body).p)
+    expect(a).toEqual(b)
   })
 
   it('timeout, 5xx e rede viram 503 para tentar de novo', async () => {
     const hang = (url, init) =>
       new Promise((_, reject) => init.signal.addEventListener('abort', () => reject(Object.assign(new Error('a'), { name: 'AbortError' }))))
     for (const fetchImpl of [hang, async () => response(500, 'erro'), async () => { throw new TypeError('fetch failed') }]) {
-      const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, fetchImpl, log: silent, timeouts: { crm: 20 } })
-      const res = await call(h, req('POST', LEAD))
+      const res = await call(createLeadHandler({ env, fetchImpl, log: silent, timeout: 20 }), req('POST', LEAD))
       expect(res.statusCode).toBe(503)
       expect(res.body).toMatchObject({ ok: false, error: 'indisponivel', retryable: true })
       expect(res.headers['retry-after']).toBeTruthy()
     }
   })
 
-  it('destino que recusa (4xx) não confirma e continua reenviável', async () => {
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, fetchImpl: async () => response(401, 'no'), log: silent })
-    const res = await call(h, req('POST', LEAD))
+  it('banco que recusa (4xx) não confirma e continua reenviável', async () => {
+    const res = await call(createLeadHandler({ env, fetchImpl: async () => response(401, 'no'), log: silent }), req('POST', LEAD))
     expect(res.statusCode).toBe(502)
     expect(res.body).toMatchObject({ ok: false, error: 'destino_recusou', retryable: true })
   })
 
-  it('com Supabase, grava antes e não chama o CRM se a gravação falhar', async () => {
-    const fetchImpl = vi.fn(async (url) => (url.includes('supabase') ? response(503, 'down') : response(200)))
-    const env = { LEAD_SUPABASE: '1', SUPABASE_URL: 'https://x.supabase.test/', SUPABASE_SERVICE_ROLE_KEY: 'k', LEAD_WEBHOOK_URL: 'https://crm.test/hook' }
-    const res = await call(createLeadHandler({ env, fetchImpl, log: silent }), req('POST', LEAD))
-    expect(res.statusCode).toBe(503)
-    expect(fetchImpl).toHaveBeenCalledTimes(1)
-    expect(fetchImpl.mock.calls[0][0]).toBe('https://x.supabase.test/rest/v1/rpc/pitstop_upsert_lead')
-    expect(JSON.parse(fetchImpl.mock.calls[0][1].body).p.revisao).toBe(LEAD.revisao)
-  })
-
   it('logs não levam nome nem telefone', async () => {
     const log = { warn: vi.fn(), error: vi.fn() }
-    const h = createLeadHandler({ env: { LEAD_WEBHOOK_URL: 'https://crm.test/hook' }, fetchImpl: async () => response(500), log })
-    await call(h, req('POST', LEAD))
+    await call(createLeadHandler({ env, fetchImpl: async () => response(500), log }), req('POST', LEAD))
     const text = JSON.stringify([...log.error.mock.calls, ...log.warn.mock.calls])
     expect(text).not.toMatch(/Ana|9900|99000/)
   })

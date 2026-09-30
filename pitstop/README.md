@@ -22,7 +22,7 @@ npm run build
 
 1. Suba este repositório no GitHub.
 2. Na Vercel: New Project > importar o repositório. Framework: Vite.
-3. Environment Variables: `LEAD_WEBHOOK_URL` (e opcionais em `docs/BACKEND.md`).
+3. Environment Variables: `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` (acesso do time em `docs/BACKEND.md`).
 4. Domains: adicionar `pitstop.hemissul.com.br` e criar o CNAME no DNS da Hemissul.
 5. Gerar um QR Code por posto apontando para `https://pitstop.hemissul.com.br/?posto=<id>`
    e cadastrar o posto em `src/config/pitstop.js`.

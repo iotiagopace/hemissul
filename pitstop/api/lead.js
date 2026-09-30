@@ -1,66 +1,44 @@
 /**
- * Vercel Function: recebe o lead do Pitstop, grava e repassa ao CRM.
+ * Vercel Function: recebe o lead do Pitstop e grava no banco (Supabase).
  * Contrato completo em docs/BACKEND.md.
  *
- * Destinos (pelo menos um é obrigatório):
- * - LEAD_WEBHOOK_URL (+ LEAD_WEBHOOK_TOKEN opcional): webhook do CRM, n8n ou Make.
- * - LEAD_SUPABASE=1 com SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY: grava na
- *   tabela pitstop_leads pela função pitstop_upsert_lead (migração em
- *   supabase/migrations).
+ * O Pitstop não envia leads a CRM nem a outra ferramenta comercial: o time da
+ * Hemissul consulta e exporta pelo acesso restrito (api/admin/leads.js).
+ * Variáveis antigas de webhook (LEAD_WEBHOOK_URL, LEAD_WEBHOOK_TOKEN) são
+ * ignoradas.
  *
- * Só responde { ok: true } depois que TODOS os destinos configurados
- * confirmarem. Sem destino, responde 503 e o app mantém o lead na fila.
- * Nome e telefone nunca vão para logs.
+ * Variáveis (só no servidor): SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY.
+ * Só responde { ok: true } depois que o banco confirma a gravação. Sem banco
+ * configurado, responde 503 e o app mantém o lead na fila.
+ * Nome e telefone nunca vão para logs nem para mensagens de erro.
  */
 import { parseLead } from '../src/core/validation.js'
 import { fail, fetchWithTimeout, isTemporary, readJson, send, supabaseConfig } from './_lib/http.js'
 
 const RETRY_AFTER = { 'Retry-After': '60' }
 
-export function webhookPayload(lead) {
+/** Linha enviada à função pitstop_upsert_lead (nomes de coluna do banco). */
+export function leadRow(lead) {
   return {
     id: lead.id,
     revisao: lead.revisao,
-    origem: 'Pitstop Hemissul',
+    origem: 'pitstop',
     posto: lead.posto,
     nome: lead.nome,
     telefone: lead.telefone,
     roda_por_aplicativo: lead.app,
     atividade: lead.atividade,
     protecao_cobre_app: lead.protecao,
+    proposta_solicitada_em: lead.propostaSolicitadaEm,
     jogos: lead.jogos,
     partidas: lead.partidas,
     visitas: lead.visitas,
     aceite_lgpd: true,
     criado_em: lead.criadoEm,
-    enviado_em: new Date().toISOString(),
   }
 }
 
-function toSupabase(lead, sb, fetchImpl, timeout) {
-  return fetchWithTimeout(
-    `${sb.url}/rest/v1/rpc/pitstop_upsert_lead`,
-    { method: 'POST', headers: sb.headers, body: JSON.stringify({ p: webhookPayload(lead) }) },
-    { timeout, fetchImpl },
-  )
-}
-
-function toWebhook(lead, env, fetchImpl, timeout) {
-  const headers = { 'Content-Type': 'application/json', 'Idempotency-Key': `${lead.id}:${lead.revisao}` }
-  if (env.LEAD_WEBHOOK_TOKEN) headers.Authorization = `Bearer ${env.LEAD_WEBHOOK_TOKEN}`
-  return fetchWithTimeout(
-    env.LEAD_WEBHOOK_URL,
-    { method: 'POST', headers, body: JSON.stringify(webhookPayload(lead)) },
-    { timeout, fetchImpl },
-  )
-}
-
-export function createLeadHandler({
-  env = process.env,
-  fetchImpl = globalThis.fetch,
-  log = console,
-  timeouts = { supabase: 4000, crm: 5000 },
-} = {}) {
+export function createLeadHandler({ env = process.env, fetchImpl = globalThis.fetch, log = console, timeout = 5000 } = {}) {
   return async function handler(req, res) {
     if (req.method !== 'POST') return fail(res, 405, 'metodo', {}, { Allow: 'POST' })
 
@@ -71,32 +49,26 @@ export function createLeadHandler({
     if (!v.ok) return fail(res, 400, 'invalido', { campo: v.campo, mensagem: v.mensagem })
     const lead = v.lead
 
-    const sb = env.LEAD_SUPABASE === '1' ? supabaseConfig(env) : null
-    const hasWebhook = Boolean(env.LEAD_WEBHOOK_URL)
-    if (!sb && !hasWebhook) {
-      log.warn('[pitstop/lead] nenhum destino configurado')
+    const sb = supabaseConfig(env)
+    if (!sb) {
+      log.warn('[pitstop/lead] banco não configurado')
       return fail(res, 503, 'nao_configurado', {}, { 'Retry-After': '300' })
     }
 
-    // Grava primeiro no banco (quando existe) e depois avisa o CRM.
-    const destinos = []
-    for (const [nome, run] of [
-      ['supabase', sb && (() => toSupabase(lead, sb, fetchImpl, timeouts.supabase))],
-      ['crm', hasWebhook && (() => toWebhook(lead, env, fetchImpl, timeouts.crm))],
-    ]) {
-      if (!run) continue
-      const r = await run()
-      if (!r.ok) {
-        // Log sem dados pessoais: só destino, status e id do lead.
-        log.error(`[pitstop/lead] destino=${nome} status=${r.status} erro=${r.error} lead=${lead.id}`)
-        return isTemporary(r)
-          ? fail(res, 503, 'indisponivel', { destino: nome }, RETRY_AFTER)
-          : fail(res, 502, 'destino_recusou', { destino: nome, retryable: true }, RETRY_AFTER)
-      }
-      destinos.push(nome)
+    const r = await fetchWithTimeout(
+      `${sb.url}/rest/v1/rpc/pitstop_upsert_lead`,
+      { method: 'POST', headers: sb.headers, body: JSON.stringify({ p: leadRow(lead) }) },
+      { timeout, fetchImpl },
+    )
+    if (!r.ok) {
+      // Log sem dados pessoais: só status, erro e id do lead.
+      log.error(`[pitstop/lead] gravação status=${r.status} erro=${r.error} lead=${lead.id}`)
+      return isTemporary(r)
+        ? fail(res, 503, 'indisponivel', {}, RETRY_AFTER)
+        : fail(res, 502, 'destino_recusou', { retryable: true }, RETRY_AFTER)
     }
 
-    return send(res, 200, { ok: true, id: lead.id, revisao: lead.revisao, destinos })
+    return send(res, 200, { ok: true, id: lead.id, revisao: lead.revisao })
   }
 }
 
