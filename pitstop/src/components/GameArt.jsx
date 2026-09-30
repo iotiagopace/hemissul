@@ -5,6 +5,7 @@ export default function GameArt({ id }) {
   const common = {
     className: 'game-card__art',
     viewBox: id === 'corrida' ? '0 0 280 64' : '0 0 80 64',
+    preserveAspectRatio: id === 'corrida' ? 'xMidYMid slice' : 'xMidYMid meet',
     'aria-hidden': true,
     focusable: false,
   }

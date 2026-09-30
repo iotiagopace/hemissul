@@ -19,6 +19,15 @@ export default function Home({
   return (
     <main className="home">
       <section className="hero">
+        <img
+          className="hero__image"
+          src={`${import.meta.env.BASE_URL}brand/pitstop-hero.webp`}
+          alt=""
+          width="1920"
+          height="1080"
+          fetchPriority="high"
+        />
+        <div className="hero__overlay" aria-hidden="true" />
         <div className="shell hero__inner">
           <p className="eyebrow">Pitstop Hemissul · {posto.name}</p>
           <h1>
@@ -72,62 +81,68 @@ export default function Home({
             ))}
           </div>
         </section>
-        <button type="button" className="protection-link" onClick={onProtecao}>
-          <span>
-            <span className="eyebrow">Sua proteção</span>
-            <strong>Minha proteção cobre uso por aplicativo?</strong>
-          </span>
-          <span aria-hidden="true">↗</span>
-        </button>
-        <section className="panel" aria-labelledby="ranking">
-          <p className="eyebrow">{posto.name} · Corrida</p>
-          <h2 id="ranking" className="section-title">
-            Ranking do dia
-          </h2>
-          <div aria-live="polite" aria-busy={rankingStatus === 'loading'}>
-            {rankingStatus === 'loading' ? (
-              <p className="status-note">Carregando ranking do posto…</p>
-            ) : (
-              <>
-                {rankingStatus === 'unavailable' && (
-                  <p className="status-note">
-                    Não foi possível carregar o ranking do posto. Você pode
-                    continuar jogando.
-                  </p>
-                )}
-                {ranking?.length ? (
-                  <>
-                    {localOnly && rankingStatus === 'unavailable' && (
-                      <p className="note">Seu recorde neste aparelho</p>
-                    )}
-                    <ol className="ranking">
-                      {ranking.map((r, i) => (
-                        <li key={i} className={r.me ? 'is-me' : ''}>
-                          <span className="pos">
-                            {localOnly && rankingStatus === 'unavailable'
-                              ? '—'
-                              : `${i + 1}º`}
-                          </span>
-                          <span>{r.nome}</span>
-                          <strong>{fmt(r.pontos)} m</strong>
-                        </li>
-                      ))}
-                    </ol>
-                  </>
-                ) : (
-                  rankingStatus !== 'unavailable' && (
+        <aside className="home__aside" aria-label="Proteção e ranking">
+          <button
+            type="button"
+            className="protection-link"
+            onClick={onProtecao}
+          >
+            <span>
+              <span className="eyebrow">Sua proteção</span>
+              <strong>Minha proteção cobre uso por aplicativo?</strong>
+            </span>
+            <span aria-hidden="true">↗</span>
+          </button>
+          <section className="panel" aria-labelledby="ranking">
+            <p className="eyebrow">{posto.name} · Corrida</p>
+            <h2 id="ranking" className="section-title">
+              Ranking do dia
+            </h2>
+            <div aria-live="polite" aria-busy={rankingStatus === 'loading'}>
+              {rankingStatus === 'loading' ? (
+                <p className="status-note">Carregando ranking do posto…</p>
+              ) : (
+                <>
+                  {rankingStatus === 'unavailable' && (
                     <p className="status-note">
-                      Ainda não há recordes por aqui.{' '}
-                      {lead
-                        ? 'Jogue uma Corrida para começar.'
-                        : 'Jogue e salve seu recorde para participar.'}
+                      Não foi possível carregar o ranking do posto. Você pode
+                      continuar jogando.
                     </p>
-                  )
-                )}
-              </>
-            )}
-          </div>
-        </section>
+                  )}
+                  {ranking?.length ? (
+                    <>
+                      {localOnly && rankingStatus === 'unavailable' && (
+                        <p className="note">Seu recorde neste aparelho</p>
+                      )}
+                      <ol className="ranking">
+                        {ranking.map((r, i) => (
+                          <li key={i} className={r.me ? 'is-me' : ''}>
+                            <span className="pos">
+                              {localOnly && rankingStatus === 'unavailable'
+                                ? '—'
+                                : `${i + 1}º`}
+                            </span>
+                            <span>{r.nome}</span>
+                            <strong>{fmt(r.pontos)} m</strong>
+                          </li>
+                        ))}
+                      </ol>
+                    </>
+                  ) : (
+                    rankingStatus !== 'unavailable' && (
+                      <p className="status-note">
+                        Ainda não há recordes por aqui.{' '}
+                        {lead
+                          ? 'Jogue uma Corrida para começar.'
+                          : 'Jogue e salve seu recorde para participar.'}
+                      </p>
+                    )
+                  )}
+                </>
+              )}
+            </div>
+          </section>
+        </aside>
       </div>
       <footer className="pitstop-footer">
         <div className="shell">
