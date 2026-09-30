@@ -72,6 +72,7 @@ export default function FlowSheets({
   onHome,
   onCadastro,
   onAnswer,
+  onQuote,
   onChargeStart,
 }) {
   const [form, setForm] = useState({ nome: '', telefone: '', aceite: false })
@@ -114,7 +115,24 @@ export default function FlowSheets({
         <h2>Fim da partida</h2>
         <Score result={result} />
         {status}
-        <Actions onAgain={onAgain} onHome={onHome} />
+        <p>Seu carro segue com você depois desta pausa.</p>
+        <h3>Quer uma proposta para o seu dia a dia?</h3>
+        <p>
+          Conheça a proteção veicular da Hemissul e peça uma proposta
+          personalizada, se fizer sentido para você.
+        </p>
+        <button className="btn btn--primary btn--block" onClick={onQuote}>
+          Quero uma proposta personalizada
+        </button>
+        <a
+          className="btn btn--quiet btn--block"
+          href={PITSTOP.siteUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Conhecer a proteção veicular
+        </a>
+        <Actions quiet onAgain={onAgain} onHome={onHome} />
       </Sheet>
     )
 
@@ -136,7 +154,7 @@ export default function FlowSheets({
       </Sheet>
     )
 
-  if (type === 'cadastro') {
+  if (['cadastro', 'cadastro-antes', 'cadastro-proposta'].includes(type)) {
     const submit = (e) => {
       e.preventDefault()
       const err = validateCadastroCampo(form)
@@ -146,12 +164,20 @@ export default function FlowSheets({
       if (!err) onCadastro({ ...form, nome: form.nome.trim() })
     }
     return (
-      <Sheet label="Salvar recorde" onClose={onHome}>
-        <h2>Salve seu recorde</h2>
-        <Score result={{ ...result, record: 0, isRecord: false }} />
+      <Sheet
+        label={type === 'cadastro-antes' ? 'Antes da partida' : 'Seu cadastro'}
+        onClose={onHome}
+      >
+        <p className="eyebrow">Seu cadastro · 1 de 2</p>
+        <h2>
+          {type === 'cadastro-antes'
+            ? 'Como podemos chamar você?'
+            : 'Uma proposta para sua rotina.'}
+        </h2>
+        {result && <Score result={{ ...result, record: 0, isRecord: false }} />}
         <p>
-          Informe nome e WhatsApp para guardar a pontuação e entrar no ranking
-          do posto.
+          Informe seu nome e WhatsApp para guardar seu recorde e conversar com a
+          Hemissul sobre proteção veicular.
         </p>
         <form onSubmit={submit} noValidate className="registration-form">
           <div className="field">
@@ -255,7 +281,7 @@ export default function FlowSheets({
             </p>
           )}
           <button type="submit" className="btn btn--primary btn--block">
-            Salvar recorde
+            Continuar
           </button>
           <button
             type="button"
@@ -272,7 +298,7 @@ export default function FlowSheets({
   if (type === 'app')
     return (
       <Sheet label="Pergunta rápida">
-        <p className="eyebrow">Seu perfil</p>
+        <p className="eyebrow">Seu perfil · 2 de 2</p>
         <h2>Você roda por aplicativo?</h2>
         <p>Essa resposta ajuda a entender o uso do seu carro.</p>
         {status}
@@ -296,7 +322,7 @@ export default function FlowSheets({
   if (type === 'atividade')
     return (
       <Sheet label="Mais uma pergunta">
-        <p className="eyebrow">Seu perfil</p>
+        <p className="eyebrow">Seu perfil · 2 de 2</p>
         <h2>Como o aplicativo faz parte da sua rotina?</h2>
         {status}
         {ATIVIDADE_OPCOES.map((o) => (

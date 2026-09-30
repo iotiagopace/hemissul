@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "viewport": "360x800",
+  "screens": 14,
+  "axeViolations": 0,
+  "flows": [
+    "cadastro antes da partida",
+    "perfil de aplicativo",
+    "fila e reconexão",
+    "convite final",
+    "cadastro opcional após jogar",
+    "retorno sem repetir cadastro"
+  ],
+  "network": "API simulada e requisições externas bloqueadas"
+}

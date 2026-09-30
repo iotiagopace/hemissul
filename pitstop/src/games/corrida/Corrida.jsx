@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createRng } from '../../core/rng.js'
-import { BRAND, TRAFFIC_TONES } from '../../config/brand.js'
+import { BRAND } from '../../config/brand.js'
 import { useLoop, roundRect } from '../useLoop.js'
 import {
   CORRIDA,
@@ -16,13 +16,16 @@ function drawCar(ctx, x, y, color, player) {
   ctx.fillStyle = color
   roundRect(ctx, x - car.w / 2, y, car.w, car.h, 10)
   ctx.fill()
-  ctx.fillStyle = BRAND.navy
+  ctx.strokeStyle = BRAND.navy
+  ctx.lineWidth = 2
+  ctx.stroke()
+  ctx.fillStyle = player ? BRAND.branco : BRAND.navy
   roundRect(ctx, x - car.w / 2 + 7, y + (player ? 18 : 52), car.w - 14, 18, 5)
   ctx.fill()
   roundRect(ctx, x - car.w / 2 + 7, y + (player ? 60 : 14), car.w - 14, 12, 4)
   ctx.fill()
   if (player) {
-    ctx.fillStyle = BRAND.azul
+    ctx.fillStyle = BRAND.branco
     ctx.font = '700 17px "Neue Montreal", sans-serif'
     ctx.textAlign = 'center'
     ctx.fillRect(x - 6, y + 43, 12, 3)
@@ -32,6 +35,7 @@ function drawCar(ctx, x, y, color, player) {
 export default function Corrida({ paused, onScore, onEnd }) {
   const canvas = useRef(null)
   const state = useRef(null)
+  const road = useRef(BRAND.branco)
   const [running, setRunning] = useState(true)
 
   if (!state.current) state.current = createCorrida(createRng())
@@ -40,20 +44,32 @@ export default function Corrida({ paused, onScore, onEnd }) {
     const ctx = canvas.current?.getContext('2d')
     if (!ctx) return
     const s = state.current
-    ctx.fillStyle = BRAND.navy
+    ctx.fillStyle = road.current
     ctx.fillRect(0, 0, W, H)
     ctx.fillStyle = BRAND.azul
     ctx.fillRect(0, 0, 14, H)
     ctx.fillRect(W - 14, 0, 14, H)
-    ctx.fillStyle = BRAND.lavanda
+    ctx.fillStyle = BRAND.navy
     for (let y = -60 + (s.scroll % 60); y < H; y += 60) {
       ctx.fillRect(123, y, 5, 32)
       ctx.fillRect(232, y, 5, 32)
     }
     s.traffic.forEach((t) =>
-      drawCar(ctx, lanes[t.lane], t.y, TRAFFIC_TONES[t.tone], false),
+      drawCar(
+        ctx,
+        lanes[t.lane],
+        t.y,
+        [
+          BRAND.branco,
+          BRAND.lavanda,
+          BRAND.branco,
+          BRAND.periwinkle,
+          BRAND.branco,
+        ][t.tone],
+        false,
+      ),
     )
-    drawCar(ctx, s.x, playerY, BRAND.branco, true)
+    drawCar(ctx, s.x, playerY, BRAND.azul, true)
   }
 
   useLoop((dt) => {
@@ -67,7 +83,13 @@ export default function Corrida({ paused, onScore, onEnd }) {
     }
   }, running && !paused)
 
-  useEffect(draw, [])
+  useEffect(() => {
+    road.current =
+      getComputedStyle(canvas.current)
+        .getPropertyValue('--color-rule')
+        .trim() || BRAND.branco
+    draw()
+  }, [])
 
   useEffect(() => {
     const onKey = (e) => {
