@@ -30,6 +30,9 @@ const TIMEOUT_MS = 10000
 const BACKOFF_MS = { base: 5000, max: 10 * 60 * 1000 }
 
 const volatile = {}
+/** Resultado de cada envio desta sessão, por `key#v`. Não depende do localStorage. */
+const resultados = new Map()
+const listeners = new Set()
 
 function readQueue(name) {
   return volatile[name] ?? load(name, [])
@@ -80,10 +83,21 @@ export async function postJson(url, body, { timeout = TIMEOUT_MS, fetchImpl = gl
   }
 }
 
+const idDe = (item) => `${item.key}#${item.v}`
+
+function registrar(item, status, extra = {}) {
+  resultados.set(idDe(item), { status, ...extra })
+  if (resultados.size > 200) resultados.delete(resultados.keys().next().value)
+  const [tipo, id] = item.key.split(':')
+  emit({ tipo: tipo === 'lead' ? 'lead' : 'partida', id, versao: item.v, status, ...extra })
+}
+
 function reject(item, result) {
-  const list = load(REJECTED, [])
-  list.push({ key: item.key, url: item.url, error: result.error, campo: result.campo ?? null, em: new Date().toISOString(), body: item.body })
-  save(REJECTED, list.slice(-20))
+  // A recusa fica registrada em memória mesmo se o localStorage falhar.
+  registrar(item, 'recusado', { campo: result.campo ?? null })
+  const list = readQueue(REJECTED)
+  list.push({ key: item.key, v: item.v, url: item.url, error: result.error, campo: result.campo ?? null, em: new Date().toISOString(), body: item.body })
+  writeQueue(REJECTED, list.slice(-20))
 }
 
 /** Tira o item da fila, a menos que ele tenha sido trocado por uma versão mais nova durante o envio. */
@@ -95,6 +109,8 @@ function dropIfSame(name, item) {
 }
 
 function postpone(name, item, now) {
+  const [tipo, id] = item.key.split(':')
+  queueMicrotask(() => emit({ tipo: tipo === 'lead' ? 'lead' : 'partida', id, versao: item.v, status: 'na_fila' }))
   const tentativas = (item.tentativas || 0) + 1
   const wait = Math.min(BACKOFF_MS.max, BACKOFF_MS.base * 2 ** (tentativas - 1))
   writeQueue(
@@ -107,8 +123,10 @@ async function drain(name, now, force) {
   for (const item of readQueue(name)) {
     if (!force && item.proxima && item.proxima > now) break
     const result = await postJson(item.url, item.body)
-    if (result.ok) dropIfSame(name, item)
-    else if (!result.retryable) {
+    if (result.ok) {
+      registrar(item, 'enviado')
+      dropIfSame(name, item)
+    } else if (!result.retryable) {
       reject(item, result)
       dropIfSame(name, item)
     } else {
@@ -160,9 +178,33 @@ export function queueStatus() {
   return {
     leads: readQueue(QUEUE.lead).length,
     partidas: readQueue(QUEUE.score).length,
-    recusados: load(REJECTED, []).length,
-    salvo: !volatile[QUEUE.lead] && !volatile[QUEUE.score],
+    recusados: readQueue(REJECTED).length,
+    salvo: !volatile[QUEUE.lead] && !volatile[QUEUE.score] && !volatile[REJECTED],
   }
+}
+
+function emit(evento) {
+  if (!listeners.size) return
+  const status = { ...queueStatus(), evento }
+  for (const fn of listeners) {
+    try {
+      fn(status)
+    } catch {
+      /* um ouvinte com erro não interrompe a fila */
+    }
+  }
+}
+
+/**
+ * Avisa a cada envio confirmado ou recusado, e a cada nova espera.
+ * O ouvinte recebe `queueStatus()` mais `evento`:
+ * `{ tipo: 'lead' | 'partida', id, versao, status: 'enviado' | 'recusado' | 'na_fila', campo? }`.
+ * Devolve a função que cancela a inscrição. Não altera o contrato de
+ * sendLead, sendScore e queueStatus.
+ */
+export function subscribeQueue(fn) {
+  listeners.add(fn)
+  return () => listeners.delete(fn)
 }
 
 function enqueue(name, item, max) {
@@ -173,9 +215,19 @@ function enqueue(name, item, max) {
   return writeQueue(name, items.slice(-max))
 }
 
-function outcome(name, key, salvo) {
+/**
+ * Resultado da versão `v` do item `key`:
+ * 1. ainda na fila (esta versão ou uma mais nova do mesmo lead) -> na_fila;
+ * 2. resultado registrado nesta sessão -> enviado ou recusado;
+ * 3. recusa registrada no localStorage para esta mesma versão -> recusado;
+ * 4. senão, outra aba enviou -> enviado.
+ * Recusas de versões anteriores não contaminam o resultado de uma nova.
+ */
+function outcome(name, key, v, salvo) {
   if (readQueue(name).some((x) => x.key === key)) return { status: 'na_fila', salvo }
-  const recusado = load(REJECTED, []).find((x) => x.key === key)
+  const r = resultados.get(`${key}#${v}`)
+  if (r) return r.status === 'recusado' ? { status: 'recusado', salvo, campo: r.campo } : { status: 'enviado', salvo }
+  const recusado = readQueue(REJECTED).find((x) => x.key === key && x.v === v)
   return recusado ? { status: 'recusado', salvo, campo: recusado.campo } : { status: 'enviado', salvo }
 }
 
@@ -193,7 +245,7 @@ export async function sendLead(lead, extra = {}) {
   const key = `lead:${lead.id}`
   const salvo = enqueue(QUEUE.lead, { key, v: revisao, url: PITSTOP.leadEndpoint, body, tentativas: 0, proxima: 0 }, 20)
   await flushQueue()
-  return outcome(QUEUE.lead, key, salvo)
+  return outcome(QUEUE.lead, key, revisao, salvo)
 }
 
 /**
@@ -210,7 +262,7 @@ export async function sendScore({ leadId, nome, posto, jogo, pontos, duracao }) 
   const key = `score:${partidaId}`
   const salvo = enqueue(QUEUE.score, { key, v: 1, url: PITSTOP.rankingEndpoint, body, tentativas: 0, proxima: 0 }, MAX_SCORES)
   await flushQueue()
-  return { ...outcome(QUEUE.score, key, salvo), partidaId }
+  return { ...outcome(QUEUE.score, key, 1, salvo), partidaId }
 }
 
 /** Ranking do dia. `null` quando indisponível (sem backend, erro ou resposta que não é JSON). */

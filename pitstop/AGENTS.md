@@ -42,6 +42,7 @@ src/
   styles/tokens.css        CÓPIA dos tokens do site oficial. Não editar valores
   styles/app.css           interface do Pitstop
 api/lead.js, api/ranking.js  Vercel Functions (publicadas por hemissul-site/api/pitstop/*)
+api/admin/leads.js           consulta e exportação restritas para o time da Hemissul
 tests/                       testes das APIs, da fila e da validação
 supabase/migrations/         SQL do ranking e dos leads
 ```
@@ -118,7 +119,7 @@ Resumo aplicado (detalhes em `docs/BRAND.md`):
   do navegador ou URLs de analytics.
 - Aceite LGPD obrigatório no cadastro, com link para
   https://www.hemissul.com.br/privacidade.
-- Segredos (webhook, Supabase service role) só em variáveis de ambiente do
+- Segredos (Supabase service role) só em variáveis de ambiente do
   servidor, sem prefixo `VITE_`.
 
 ## Requisitos de uso

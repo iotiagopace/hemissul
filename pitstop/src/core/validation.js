@@ -77,6 +77,9 @@ export function parseLead(body) {
   if (protecao != null && !PROTECAO_OPCOES.includes(protecao)) return invalido('protecao')
   if (body.posto != null && !isPosto(body.posto)) return invalido('posto')
   if (body.criadoEm != null && !dataIso(body.criadoEm)) return invalido('criadoEm')
+  // Interesse em proposta só existe quando a interface envia a ação explícita
+  // (ver docs/BACKEND.md). Nunca é deduzido de cadastro, partida ou tela aberta.
+  if (body.propostaSolicitadaEm != null && !dataIso(body.propostaSolicitadaEm)) return invalido('propostaSolicitadaEm')
   if (body.partidas != null && !inteiro(body.partidas, 0, 100000)) return invalido('partidas')
   if (body.visitas != null && !inteiro(body.visitas, 0, 100000)) return invalido('visitas')
   if (body.jogos != null && !(Array.isArray(body.jogos) && body.jogos.length <= JOGOS.length && body.jogos.every((j) => JOGOS.includes(j))))
@@ -95,6 +98,7 @@ export function parseLead(body) {
       protecao: protecao ?? null,
       posto: body.posto || 'sem-posto',
       criadoEm: body.criadoEm || null,
+      propostaSolicitadaEm: body.propostaSolicitadaEm ? new Date(body.propostaSolicitadaEm).toISOString() : null,
       partidas: body.partidas ?? 0,
       visitas: body.visitas ?? 1,
       jogos: body.jogos ? [...new Set(body.jogos)] : [],

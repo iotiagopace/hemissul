@@ -191,3 +191,59 @@ describe('respostas ambíguas', () => {
     expect(r).toMatchObject({ ok: false, retryable: true })
   })
 })
+
+describe('resultado por versão', () => {
+  beforeEach(async () => {
+    vi.resetModules()
+    globalThis.localStorage = memoryStorage()
+    globalThis.fetch = vi.fn(async () => ok())
+    api = await import('../src/core/api.js')
+  })
+
+  it('recusa antiga do mesmo lead não contamina um envio posterior aceito', async () => {
+    fetch.mockResolvedValueOnce(json(400, { ok: false, error: 'invalido', campo: 'posto', retryable: false }))
+    expect((await api.sendLead(LEAD)).status).toBe('recusado')
+    fetch.mockResolvedValue(ok())
+    expect((await api.sendLead({ ...LEAD, app: true })).status).toBe('enviado')
+    // A recusa continua registrada para a versão antiga.
+    expect(api.queueStatus().recusados).toBe(1)
+  })
+
+  it('recusa com localStorage bloqueado continua "recusado", nunca "enviado"', async () => {
+    localStorage.broken = true
+    fetch.mockResolvedValue(json(400, { ok: false, error: 'invalido', campo: 'telefone', retryable: false }))
+    const r = await api.sendLead(LEAD)
+    expect(r).toMatchObject({ status: 'recusado', salvo: false, campo: 'telefone' })
+    expect(api.queueStatus()).toMatchObject({ leads: 0, recusados: 1, salvo: false })
+  })
+
+  it('partida recusada com localStorage bloqueado também fica "recusado"', async () => {
+    localStorage.broken = true
+    fetch.mockResolvedValue(json(400, { ok: false, error: 'invalido', campo: 'pontos', retryable: false }))
+    const r = await api.sendScore({ leadId: ID, nome: 'Ana', posto: '01', jogo: 'sudoku', pontos: 9999 })
+    expect(r.status).toBe('recusado')
+  })
+
+  it('subscribeQueue avisa confirmação, espera e recusa, e pode ser cancelada', async () => {
+    const eventos = []
+    const off = api.subscribeQueue((s) => eventos.push({ ...s.evento, leads: s.leads }))
+    fetch.mockRejectedValueOnce(new TypeError('offline'))
+    await api.sendLead(LEAD)
+    await Promise.resolve()
+    fetch.mockResolvedValue(ok())
+    await api.flushLeadQueue()
+    expect(eventos.map((e) => e.status)).toEqual(['na_fila', 'enviado'])
+    expect(eventos[1]).toMatchObject({ tipo: 'lead', id: ID })
+    off()
+    await api.sendLead({ ...LEAD, app: true })
+    expect(eventos).toHaveLength(2)
+  })
+
+  it('contrato mantido: formatos de sendLead, sendScore e queueStatus', async () => {
+    expect(await api.sendLead(LEAD)).toEqual({ status: 'enviado', salvo: true })
+    const s = await api.sendScore({ leadId: ID, nome: 'Ana', posto: '01', jogo: 'corrida', pontos: 10, duracao: 12 })
+    expect(Object.keys(s).sort()).toEqual(['partidaId', 'salvo', 'status'])
+    expect(JSON.parse(fetch.mock.calls[1][1].body).duracao).toBe(12)
+    expect(Object.keys(api.queueStatus()).sort()).toEqual(['leads', 'partidas', 'recusados', 'salvo'])
+  })
+})
