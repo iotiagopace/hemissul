@@ -37,15 +37,24 @@ export default function Blocos({ paused, onScore, onEnd }) {
       ctx.fillStyle = [
         BRAND.azul,
         BRAND.royal,
-        BRAND.periwinkle,
-        BRAND.lavanda,
+        BRAND.branco,
+        BRAND.branco,
         BRAND.royal,
         BRAND.navy,
-        BRAND.periwinkle,
+        BRAND.branco,
       ][i - 1]
       ctx.fillRect(x * SZ + 1, y * SZ + 1, SZ - 2, SZ - 2)
       ctx.strokeStyle = BRAND.navy
       ctx.strokeRect(x * SZ + 1, y * SZ + 1, SZ - 2, SZ - 2)
+      // Marcas diferentes ajudam a distinguir peças sem depender da cor.
+      ctx.fillStyle = [3, 4, 7].includes(i) ? BRAND.navy : BRAND.branco
+      if (i % 3 === 0) ctx.fillRect(x * SZ + 8, y * SZ + 8, 12, 12)
+      else if (i % 3 === 1) ctx.fillRect(x * SZ + 7, y * SZ + 12, 14, 3)
+      else {
+        ctx.beginPath()
+        ctx.arc(x * SZ + 14, y * SZ + 14, 3, 0, Math.PI * 2)
+        ctx.fill()
+      }
     }
     s.grid.forEach((row, y) => row.forEach((v, x) => v && cell(x, y, v)))
     if (!s.over)

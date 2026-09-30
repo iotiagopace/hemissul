@@ -5,33 +5,42 @@ export default function GameArt({ id }) {
   const common = {
     className: 'game-card__art',
     viewBox: id === 'corrida' ? '0 0 280 64' : '0 0 80 64',
+    preserveAspectRatio: id === 'corrida' ? 'xMidYMid slice' : 'xMidYMid meet',
     'aria-hidden': true,
     focusable: false,
   }
   if (id === 'corrida')
     return (
       <svg {...common}>
-        <rect width="280" height="64" fill={BRAND.navy} />
+        <rect width="280" height="64" fill="var(--color-rule)" />
         {[0, 36, 72, 108, 144, 180, 216, 252].map((x) => (
-          <g key={x} fill={BRAND.lavanda}>
+          <g key={x} fill={BRAND.navy}>
             <rect x={x} y="20" width="20" height="2" />
             <rect x={x + 12} y="43" width="20" height="2" />
           </g>
         ))}
         {[
-          [45, 3, BRAND.periwinkle],
-          [128, 47, BRAND.royal],
-          [200, 26, BRAND.branco],
+          [45, 3, BRAND.branco],
+          [128, 47, BRAND.branco],
+          [200, 26, BRAND.azul],
         ].map(([x, y, color]) => (
           <g key={x}>
-            <rect x={x} y={y} width="40" height="14" rx="4" fill={color} />
+            <rect
+              x={x}
+              y={y}
+              width="40"
+              height="14"
+              rx="4"
+              fill={color}
+              stroke={BRAND.navy}
+            />
             <rect
               x={x + 25}
               y={y + 2}
               width="6"
               height="10"
               rx="2"
-              fill={BRAND.navy}
+              fill={color === BRAND.azul ? BRAND.branco : BRAND.navy}
             />
             <rect
               x={x + 7}
@@ -39,7 +48,7 @@ export default function GameArt({ id }) {
               width="5"
               height="10"
               rx="2"
-              fill={BRAND.navy}
+              fill={color === BRAND.azul ? BRAND.branco : BRAND.navy}
             />
           </g>
         ))}
@@ -48,7 +57,7 @@ export default function GameArt({ id }) {
   if (id === 'blocos')
     return (
       <svg {...common}>
-        <rect width="80" height="64" fill={BRAND.lavanda} />
+        <rect width="80" height="64" fill="var(--color-paper-2)" />
         {[
           [0, 3],
           [1, 3],
@@ -70,7 +79,8 @@ export default function GameArt({ id }) {
             width="11"
             height="11"
             rx="1"
-            fill={[BRAND.azul, BRAND.royal, BRAND.periwinkle][i % 3]}
+            fill={[BRAND.azul, BRAND.branco, BRAND.navy][i % 3]}
+            stroke={BRAND.navy}
           />
         ))}
       </svg>
@@ -78,7 +88,7 @@ export default function GameArt({ id }) {
   if (id === 'sudoku')
     return (
       <svg {...common}>
-        <rect width="80" height="64" fill={BRAND.lavanda} />
+        <rect width="80" height="64" fill="var(--color-paper-2)" />
         {'5 3 7  2 '.split('').map((v, i) => (
           <g key={i}>
             <rect
@@ -105,7 +115,7 @@ export default function GameArt({ id }) {
     )
   return (
     <svg {...common}>
-      <rect width="80" height="64" fill={BRAND.lavanda} />
+      <rect width="80" height="64" fill="var(--color-paper-2)" />
       {'RODA'.split('').map((ch, i) => (
         <g key={i}>
           <rect

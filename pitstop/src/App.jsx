@@ -1,17 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { currentPosto } from './config/pitstop.js'
 import { GAMES } from './games/registry.js'
-import { nextStep, shouldOfferQuote, perfil } from './core/lead.js'
+import { shouldOfferQuote, perfil } from './core/lead.js'
 import { load, save, registerVisit } from './core/storage.js'
 import {
   fetchRanking,
   flushLeadQueue,
   sendLead,
   sendScore,
+  queueStatus,
 } from './core/api.js'
 import { track, EVENTS } from './core/tracking.js'
 import { Header, useChargeTimer } from './components/ui.jsx'
 import FlowSheets from './components/FlowSheets.jsx'
+import GameIntro from './components/GameIntro.jsx'
 import Home from './screens/Home.jsx'
 import Play from './screens/Play.jsx'
 
@@ -28,24 +30,51 @@ export default function App() {
   const [visitas] = useState(() => registerVisit())
   const [ranking, setRanking] = useState(null)
   const [rankingStatus, setRankingStatus] = useState('loading')
-  const [leadStatus, setLeadStatus] = useState(() =>
-    load('lead-queue', []).length ? 'queued' : 'idle',
-  )
+  const [delivery, setDelivery] = useState(() => ({
+    queue: queueStatus(),
+    localSaved: true,
+  }))
+  const requestVersions = useRef({ lead: 0, score: 0 })
+  const afterProfile = useRef(null)
 
-  const pendingLeadRequests = useRef(0)
-  const updateLeadStatus = () =>
-    setLeadStatus(
-      load('lead-queue', []).length
-        ? 'queued'
-        : pendingLeadRequests.current
-          ? 'sending'
-          : 'sent',
+  const refreshQueue = () => {
+    const queue = queueStatus()
+    setDelivery((previous) =>
+      JSON.stringify(previous.queue) === JSON.stringify(queue)
+        ? previous
+        : { ...previous, queue },
     )
+  }
 
   useEffect(() => {
     track(EVENTS.view, { posto: posto.id, visitas, cadastrado: !!lead })
-    flushLeadQueue().then(updateLeadStatus)
+    flushLeadQueue().then(refreshQueue)
+    // O contrato não oferece assinatura; acompanha também as tentativas automáticas.
+    const timer = setInterval(refreshQueue, 1000)
+    window.addEventListener('storage', refreshQueue)
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('storage', refreshQueue)
+    }
   }, [])
+
+  const deliver = (kind, send) => {
+    const version = ++requestVersions.current[kind]
+    setDelivery((previous) => ({ ...previous, [kind]: { status: 'sending' } }))
+    send().then((result) => {
+      if (version !== requestVersions.current[kind]) return
+      setDelivery((previous) => ({
+        ...previous,
+        [kind]: result,
+        queue: queueStatus(),
+      }))
+    })
+  }
+
+  const remember = (key, value) => {
+    if (!save(key, value))
+      setDelivery((previous) => ({ ...previous, localSaved: false }))
+  }
 
   useEffect(() => {
     if (screen !== 'home') return
@@ -69,18 +98,19 @@ export default function App() {
     }
   }, [screen])
 
+  useEffect(() => {
+    if (sheet?.type === 'cotacao') {
+      track(EVENTS.quoteView, { perfil: perfil(lead), posto: posto.id })
+    }
+  }, [sheet?.type])
+
   const persistLead = (next, extra) => {
     setLead(next)
-    save('lead', next)
-    pendingLeadRequests.current += 1
-    setLeadStatus('sending')
-    sendLead(next, { partidas, visitas, ...extra }).then(() => {
-      pendingLeadRequests.current -= 1
-      updateLeadStatus()
-    })
+    remember('lead', next)
+    deliver('lead', () => sendLead(next, { partidas, visitas, ...extra }))
   }
 
-  const play = (id) => {
+  const startGame = (id) => {
     setSheet(null)
     setGameId(id)
     setRunKey((k) => k + 1)
@@ -89,13 +119,44 @@ export default function App() {
     track(EVENTS.gameStart, { jogo: id, posto: posto.id })
   }
 
+  const play = (id) => {
+    setGameId(id)
+    setSheet({ type: 'intro' })
+  }
+
+  const registerBefore = () => {
+    afterProfile.current = 'play'
+    setSheet({
+      type: lead ? (lead.app == null ? 'app' : 'atividade') : 'cadastro-antes',
+    })
+  }
+
+  const completeProfile = () => {
+    const action = afterProfile.current
+    afterProfile.current = null
+    if (action === 'play') return startGame(gameId)
+    setSheet({ type: action === 'quote' ? 'cotacao' : 'pronto' })
+  }
+
+  const requestQuote = () => {
+    if (!lead) {
+      afterProfile.current = 'quote'
+      return setSheet({ type: 'cadastro-proposta', result: sheet?.result })
+    }
+    if (lead.app == null || (lead.app && !lead.atividade)) {
+      afterProfile.current = 'quote'
+      return setSheet({ type: lead.app == null ? 'app' : 'atividade' })
+    }
+    setSheet({ type: 'cotacao' })
+  }
+
   const home = () => {
     setSheet(null)
     setScreen('home')
     window.scrollTo(0, 0)
   }
 
-  const onEnd = (score) => {
+  const onEnd = (score, duracao) => {
     const game = GAMES[gameId]
     const record = records[gameId] || 0
     const isRecord = score > record
@@ -110,6 +171,7 @@ export default function App() {
     })
     const result = {
       score,
+      duracao,
       unit: game.unit,
       isRecord: !!lead && isRecord,
       record,
@@ -118,19 +180,21 @@ export default function App() {
     if (lead && isRecord) {
       const next = { ...records, [gameId]: score }
       setRecords(next)
-      save('records', next)
+      remember('records', next)
     }
     if (lead)
-      sendScore({
-        leadId: lead.id,
-        nome: lead.nome,
-        posto: posto.id,
-        jogo: gameId,
-        pontos: score,
-      })
+      deliver('score', () =>
+        sendScore({
+          leadId: lead.id,
+          nome: lead.nome,
+          posto: posto.id,
+          jogo: gameId,
+          pontos: score,
+          duracao,
+        }),
+      )
 
-    const step = nextStep(lead, total)
-    setSheet({ type: step, result })
+    setSheet({ type: 'resultado', result })
   }
 
   const onCadastro = ({ nome, telefone, aceite }) => {
@@ -146,20 +210,26 @@ export default function App() {
       posto: posto.id,
       criadoEm: new Date().toISOString(),
     }
-    const nextRecords = {
-      ...records,
-      [gameId]: Math.max(records[gameId] || 0, result.score),
-    }
+    const nextRecords = result
+      ? {
+          ...records,
+          [gameId]: Math.max(records[gameId] || 0, result.score),
+        }
+      : records
     setRecords(nextRecords)
-    save('records', nextRecords)
+    remember('records', nextRecords)
     persistLead(novo, { jogos: Object.keys(nextRecords) })
-    sendScore({
-      leadId: novo.id,
-      nome,
-      posto: posto.id,
-      jogo: gameId,
-      pontos: result.score,
-    })
+    if (result)
+      deliver('score', () =>
+        sendScore({
+          leadId: novo.id,
+          nome,
+          posto: posto.id,
+          jogo: gameId,
+          pontos: result.score,
+          duracao: result.duracao,
+        }),
+      )
     track(EVENTS.lead, { posto: posto.id, jogo: gameId })
     setSheet({ type: 'app' })
   }
@@ -168,12 +238,13 @@ export default function App() {
     if (field === 'app') {
       persistLead({ ...lead, app: value })
       track(EVENTS.profile, { app: value })
-      return setSheet({ type: value ? 'atividade' : 'pronto' })
+      if (value) return setSheet({ type: 'atividade' })
+      return completeProfile()
     }
     if (field === 'atividade') {
       persistLead({ ...lead, atividade: value })
       track(EVENTS.profile, { app: true, atividade: value })
-      return setSheet({ type: 'pronto' })
+      return completeProfile()
     }
     if (field === 'protecao') {
       if (value) {
@@ -184,7 +255,6 @@ export default function App() {
         setLead({ ...lead, protecao: lead.protecao ?? 'pulou' })
       }
       if (shouldOfferQuote(value)) {
-        track(EVENTS.quoteView, { perfil: perfil(lead), posto: posto.id })
         return setSheet({ type: 'cotacao' })
       }
       return setSheet({ type: 'combinado' })
@@ -194,7 +264,6 @@ export default function App() {
   const onProtecao = () => {
     if (!lead) return setSheet({ type: 'primeiro' })
     if (lead.protecao && lead.protecao !== 'pulou') {
-      track(EVENTS.quoteView, { perfil: perfil(lead), posto: posto.id })
       return setSheet({ type: 'cotacao' })
     }
     setSheet({ type: 'protecao' })
@@ -214,7 +283,7 @@ export default function App() {
             records={records}
             ranking={ranking}
             rankingStatus={rankingStatus}
-            leadStatus={leadStatus}
+            delivery={delivery}
             lead={lead}
             onPlay={play}
             onProtecao={onProtecao}
@@ -230,16 +299,28 @@ export default function App() {
           />
         )}
       </div>
+      {sheet?.type === 'intro' && (
+        <GameIntro
+          gameId={gameId}
+          registered={
+            !!lead && lead.app != null && (!lead.app || !!lead.atividade)
+          }
+          onRegister={registerBefore}
+          onPlay={() => startGame(gameId)}
+          onClose={() => setSheet(null)}
+        />
+      )}
       <FlowSheets
-        sheet={sheet}
+        sheet={sheet?.type === 'intro' ? null : sheet}
         lead={lead}
-        leadStatus={leadStatus}
+        delivery={delivery}
         posto={posto}
         onClose={() => setSheet(null)}
         onAgain={() => play(sheet?.type === 'primeiro' ? 'corrida' : gameId)}
         onHome={home}
         onCadastro={onCadastro}
         onAnswer={onAnswer}
+        onQuote={requestQuote}
         onChargeStart={(m) => {
           charge.start(m)
           setSheet(null)

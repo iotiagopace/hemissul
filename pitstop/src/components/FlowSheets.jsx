@@ -6,12 +6,13 @@ import {
   PROTECAO_OPCOES,
   maskTelefone,
   perfil,
-  validateCadastro,
+  validateCadastroCampo,
   whatsappText,
   whatsappUrl,
 } from '../core/lead.js'
 import { track, EVENTS } from '../core/tracking.js'
 import { Bubble, Sheet } from './ui.jsx'
+import DeliveryStatus from './DeliveryStatus.jsx'
 
 const fmt = (n) => n.toLocaleString('pt-BR')
 
@@ -64,13 +65,14 @@ function Actions({
 export default function FlowSheets({
   sheet,
   lead,
-  leadStatus = 'idle',
+  delivery,
   posto,
   onClose,
   onAgain,
   onHome,
   onCadastro,
   onAnswer,
+  onQuote,
   onChargeStart,
 }) {
   const [form, setForm] = useState({ nome: '', telefone: '', aceite: false })
@@ -78,13 +80,7 @@ export default function FlowSheets({
   const [errorField, setErrorField] = useState(null)
   if (!sheet) return null
   const { type, result } = sheet
-  const status = ['sending', 'queued'].includes(leadStatus) && (
-    <p className="status-note" role="status">
-      {leadStatus === 'sending'
-        ? 'Enviando seu cadastro…'
-        : 'Cadastro na fila de envio. Abra o Pitstop novamente com conexão para tentar enviar.'}
-    </p>
-  )
+  const status = <DeliveryStatus delivery={delivery} />
 
   if (type === 'charge')
     return (
@@ -118,7 +114,25 @@ export default function FlowSheets({
       <Sheet label="Fim da partida" onClose={onHome}>
         <h2>Fim da partida</h2>
         <Score result={result} />
-        <Actions onAgain={onAgain} onHome={onHome} />
+        {status}
+        <p>Seu carro segue com você depois desta pausa.</p>
+        <h3>Quer uma proposta para o seu dia a dia?</h3>
+        <p>
+          Conheça a proteção veicular da Hemissul e peça uma proposta
+          personalizada, se fizer sentido para você.
+        </p>
+        <button className="btn btn--primary btn--block" onClick={onQuote}>
+          Quero uma proposta personalizada
+        </button>
+        <a
+          className="btn btn--quiet btn--block"
+          href={PITSTOP.siteUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Conhecer a proteção veicular
+        </a>
+        <Actions quiet onAgain={onAgain} onHome={onHome} />
       </Sheet>
     )
 
@@ -140,29 +154,30 @@ export default function FlowSheets({
       </Sheet>
     )
 
-  if (type === 'cadastro') {
+  if (['cadastro', 'cadastro-antes', 'cadastro-proposta'].includes(type)) {
     const submit = (e) => {
       e.preventDefault()
-      const err = validateCadastro(form)
-      setError(err)
-      // O validador continua sendo a única fonte das regras e mensagens.
-      const valid = { nome: 'Nome', telefone: '95900000000', aceite: true }
-      const field =
-        err &&
-        Object.keys(valid).find(
-          (key) => validateCadastro({ ...valid, [key]: form[key] }) === err,
-        )
-      setErrorField(field)
-      if (field) e.currentTarget.elements.namedItem(field)?.focus()
+      const err = validateCadastroCampo(form)
+      setError(err?.mensagem ?? null)
+      setErrorField(err?.campo ?? null)
+      if (err) e.currentTarget.elements.namedItem(err.campo)?.focus()
       if (!err) onCadastro({ ...form, nome: form.nome.trim() })
     }
     return (
-      <Sheet label="Salvar recorde" onClose={onHome}>
-        <h2>Salve seu recorde</h2>
-        <Score result={{ ...result, record: 0, isRecord: false }} />
+      <Sheet
+        label={type === 'cadastro-antes' ? 'Antes da partida' : 'Seu cadastro'}
+        onClose={onHome}
+      >
+        <p className="eyebrow">Seu cadastro · 1 de 2</p>
+        <h2>
+          {type === 'cadastro-antes'
+            ? 'Como podemos chamar você?'
+            : 'Uma proposta para sua rotina.'}
+        </h2>
+        {result && <Score result={{ ...result, record: 0, isRecord: false }} />}
         <p>
-          Informe nome e WhatsApp para guardar a pontuação e entrar no ranking
-          do posto.
+          Informe seu nome e WhatsApp para guardar seu recorde e conversar com a
+          Hemissul sobre proteção veicular.
         </p>
         <form onSubmit={submit} noValidate className="registration-form">
           <div className="field">
@@ -266,7 +281,7 @@ export default function FlowSheets({
             </p>
           )}
           <button type="submit" className="btn btn--primary btn--block">
-            Salvar recorde
+            Continuar
           </button>
           <button
             type="button"
@@ -283,9 +298,9 @@ export default function FlowSheets({
   if (type === 'app')
     return (
       <Sheet label="Pergunta rápida">
-        <p className="eyebrow">Seu perfil</p>
+        <p className="eyebrow">Seu perfil · 2 de 2</p>
         <h2>Você roda por aplicativo?</h2>
-        <p>Seu recorde foi registrado neste aparelho.</p>
+        <p>Essa resposta ajuda a entender o uso do seu carro.</p>
         {status}
         <button
           type="button"
@@ -307,7 +322,7 @@ export default function FlowSheets({
   if (type === 'atividade')
     return (
       <Sheet label="Mais uma pergunta">
-        <p className="eyebrow">Seu perfil</p>
+        <p className="eyebrow">Seu perfil · 2 de 2</p>
         <h2>Como o aplicativo faz parte da sua rotina?</h2>
         {status}
         {ATIVIDADE_OPCOES.map((o) => (
@@ -325,12 +340,9 @@ export default function FlowSheets({
 
   if (type === 'pronto')
     return (
-      <Sheet label="Pronto" onClose={onHome}>
-        <h2>Tudo pronto para a próxima.</h2>
-        <p>
-          Seu recorde fica neste aparelho. O ranking do posto depende do envio
-          com conexão.
-        </p>
+      <Sheet label="Próxima partida" onClose={onHome}>
+        <h2>Escolha sua próxima partida.</h2>
+        <p>Sua pontuação só entra no ranking quando o envio é confirmado.</p>
         {status}
         <Actions onAgain={onAgain} onHome={onHome} />
       </Sheet>
@@ -341,6 +353,7 @@ export default function FlowSheets({
       <Sheet label="Sua proteção" onClose={onHome}>
         <h2>{result ? 'Fim da partida' : 'Sua proteção'}</h2>
         <Score result={result} />
+        {status}
         <p className="question">
           Sua proteção atual cobre o uso do carro por aplicativo?
         </p>
@@ -380,6 +393,7 @@ export default function FlowSheets({
       <Sheet label="Cotação" onClose={onHome}>
         <h2>Cotação em um toque</h2>
         <Bubble>{MENSAGENS[p]}</Bubble>
+        {status}
         <details className="quote-details">
           <summary>Ver mensagem para o WhatsApp</summary>
           <div className="quote-preview">{whatsappText(lead, posto.name)}</div>
