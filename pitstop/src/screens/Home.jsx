@@ -1,6 +1,7 @@
 import { PITSTOP } from '../config/pitstop.js'
 import { GAME_LIST } from '../games/registry.js'
 import GameArt from '../components/GameArt.jsx'
+import DeliveryStatus from '../components/DeliveryStatus.jsx'
 
 const fmt = (n) => n.toLocaleString('pt-BR')
 
@@ -10,7 +11,7 @@ export default function Home({
   ranking,
   rankingStatus = 'ready',
   lead,
-  leadStatus = 'idle',
+  delivery,
   onPlay,
   onProtecao,
 }) {
@@ -35,12 +36,7 @@ export default function Home({
         </div>
       </section>
       <div className="shell home__content">
-        {leadStatus === 'queued' && (
-          <p className="status-note" role="status">
-            Cadastro na fila de envio. Abra o Pitstop novamente com conexão para
-            tentar enviar.
-          </p>
-        )}
+        <DeliveryStatus delivery={delivery} />
         <section className="game-selection" aria-labelledby="jogos">
           <div className="section-heading">
             <h2 id="jogos" className="section-title">

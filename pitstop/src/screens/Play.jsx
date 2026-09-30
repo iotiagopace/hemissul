@@ -47,9 +47,35 @@ export default function Play({
   const [score, setScore] = useState({ value: 0, label: game.name })
   const [announcement, setAnnouncement] = useState('')
   const latest = useRef('')
+  const elapsed = useRef({
+    milliseconds: 0,
+    since: null,
+    started: false,
+    ended: false,
+  })
+  const isPaused = paused || externalPaused
+  const updateClock = () => {
+    const clock = elapsed.current
+    const now = performance.now()
+    if (clock.since !== null) clock.milliseconds += now - clock.since
+    clock.since = clock.started && !clock.ended && !isPaused ? now : null
+  }
+  useEffect(updateClock, [isPaused])
+  const finish = (points) => {
+    if (elapsed.current.ended) return
+    updateClock()
+    elapsed.current.ended = true
+    elapsed.current.since = null
+    onEnd(points, Math.max(1, Math.ceil(elapsed.current.milliseconds / 1000)))
+  }
   const { Component } = game
-  const onScore = (value, label) =>
+  const onScore = (value, label) => {
+    if (!elapsed.current.started) {
+      elapsed.current.started = true
+      updateClock()
+    }
     setScore({ value, label: label || game.name })
+  }
   const shown =
     typeof score.value === 'number'
       ? `${fmt(score.value)} ${game.unit === 'pts' ? 'pontos' : game.unit}`
@@ -111,7 +137,7 @@ export default function Play({
             key={runKey}
             paused={paused || externalPaused}
             onScore={onScore}
-            onEnd={onEnd}
+            onEnd={finish}
           />
         </Suspense>
       </GameBoundary>

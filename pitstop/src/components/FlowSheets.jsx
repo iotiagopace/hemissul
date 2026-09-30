@@ -6,12 +6,13 @@ import {
   PROTECAO_OPCOES,
   maskTelefone,
   perfil,
-  validateCadastro,
+  validateCadastroCampo,
   whatsappText,
   whatsappUrl,
 } from '../core/lead.js'
 import { track, EVENTS } from '../core/tracking.js'
 import { Bubble, Sheet } from './ui.jsx'
+import DeliveryStatus from './DeliveryStatus.jsx'
 
 const fmt = (n) => n.toLocaleString('pt-BR')
 
@@ -64,7 +65,7 @@ function Actions({
 export default function FlowSheets({
   sheet,
   lead,
-  leadStatus = 'idle',
+  delivery,
   posto,
   onClose,
   onAgain,
@@ -78,13 +79,7 @@ export default function FlowSheets({
   const [errorField, setErrorField] = useState(null)
   if (!sheet) return null
   const { type, result } = sheet
-  const status = ['sending', 'queued'].includes(leadStatus) && (
-    <p className="status-note" role="status">
-      {leadStatus === 'sending'
-        ? 'Enviando seu cadastro…'
-        : 'Cadastro na fila de envio. Abra o Pitstop novamente com conexão para tentar enviar.'}
-    </p>
-  )
+  const status = <DeliveryStatus delivery={delivery} />
 
   if (type === 'charge')
     return (
@@ -118,6 +113,7 @@ export default function FlowSheets({
       <Sheet label="Fim da partida" onClose={onHome}>
         <h2>Fim da partida</h2>
         <Score result={result} />
+        {status}
         <Actions onAgain={onAgain} onHome={onHome} />
       </Sheet>
     )
@@ -143,17 +139,10 @@ export default function FlowSheets({
   if (type === 'cadastro') {
     const submit = (e) => {
       e.preventDefault()
-      const err = validateCadastro(form)
-      setError(err)
-      // O validador continua sendo a única fonte das regras e mensagens.
-      const valid = { nome: 'Nome', telefone: '95900000000', aceite: true }
-      const field =
-        err &&
-        Object.keys(valid).find(
-          (key) => validateCadastro({ ...valid, [key]: form[key] }) === err,
-        )
-      setErrorField(field)
-      if (field) e.currentTarget.elements.namedItem(field)?.focus()
+      const err = validateCadastroCampo(form)
+      setError(err?.mensagem ?? null)
+      setErrorField(err?.campo ?? null)
+      if (err) e.currentTarget.elements.namedItem(err.campo)?.focus()
       if (!err) onCadastro({ ...form, nome: form.nome.trim() })
     }
     return (
@@ -285,7 +274,7 @@ export default function FlowSheets({
       <Sheet label="Pergunta rápida">
         <p className="eyebrow">Seu perfil</p>
         <h2>Você roda por aplicativo?</h2>
-        <p>Seu recorde foi registrado neste aparelho.</p>
+        <p>Essa resposta ajuda a entender o uso do seu carro.</p>
         {status}
         <button
           type="button"
@@ -325,12 +314,9 @@ export default function FlowSheets({
 
   if (type === 'pronto')
     return (
-      <Sheet label="Pronto" onClose={onHome}>
-        <h2>Tudo pronto para a próxima.</h2>
-        <p>
-          Seu recorde fica neste aparelho. O ranking do posto depende do envio
-          com conexão.
-        </p>
+      <Sheet label="Próxima partida" onClose={onHome}>
+        <h2>Escolha sua próxima partida.</h2>
+        <p>Sua pontuação só entra no ranking quando o envio é confirmado.</p>
         {status}
         <Actions onAgain={onAgain} onHome={onHome} />
       </Sheet>
@@ -341,6 +327,7 @@ export default function FlowSheets({
       <Sheet label="Sua proteção" onClose={onHome}>
         <h2>{result ? 'Fim da partida' : 'Sua proteção'}</h2>
         <Score result={result} />
+        {status}
         <p className="question">
           Sua proteção atual cobre o uso do carro por aplicativo?
         </p>
@@ -380,6 +367,7 @@ export default function FlowSheets({
       <Sheet label="Cotação" onClose={onHome}>
         <h2>Cotação em um toque</h2>
         <Bubble>{MENSAGENS[p]}</Bubble>
+        {status}
         <details className="quote-details">
           <summary>Ver mensagem para o WhatsApp</summary>
           <div className="quote-preview">{whatsappText(lead, posto.name)}</div>

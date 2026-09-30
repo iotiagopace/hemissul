@@ -8,6 +8,7 @@ import {
   flushLeadQueue,
   sendLead,
   sendScore,
+  queueStatus,
 } from './core/api.js'
 import { track, EVENTS } from './core/tracking.js'
 import { Header, useChargeTimer } from './components/ui.jsx'
@@ -28,24 +29,50 @@ export default function App() {
   const [visitas] = useState(() => registerVisit())
   const [ranking, setRanking] = useState(null)
   const [rankingStatus, setRankingStatus] = useState('loading')
-  const [leadStatus, setLeadStatus] = useState(() =>
-    load('lead-queue', []).length ? 'queued' : 'idle',
-  )
+  const [delivery, setDelivery] = useState(() => ({
+    queue: queueStatus(),
+    localSaved: true,
+  }))
+  const requestVersions = useRef({ lead: 0, score: 0 })
 
-  const pendingLeadRequests = useRef(0)
-  const updateLeadStatus = () =>
-    setLeadStatus(
-      load('lead-queue', []).length
-        ? 'queued'
-        : pendingLeadRequests.current
-          ? 'sending'
-          : 'sent',
+  const refreshQueue = () => {
+    const queue = queueStatus()
+    setDelivery((previous) =>
+      JSON.stringify(previous.queue) === JSON.stringify(queue)
+        ? previous
+        : { ...previous, queue },
     )
+  }
 
   useEffect(() => {
     track(EVENTS.view, { posto: posto.id, visitas, cadastrado: !!lead })
-    flushLeadQueue().then(updateLeadStatus)
+    flushLeadQueue().then(refreshQueue)
+    // O contrato não oferece assinatura; acompanha também as tentativas automáticas.
+    const timer = setInterval(refreshQueue, 1000)
+    window.addEventListener('storage', refreshQueue)
+    return () => {
+      clearInterval(timer)
+      window.removeEventListener('storage', refreshQueue)
+    }
   }, [])
+
+  const deliver = (kind, send) => {
+    const version = ++requestVersions.current[kind]
+    setDelivery((previous) => ({ ...previous, [kind]: { status: 'sending' } }))
+    send().then((result) => {
+      if (version !== requestVersions.current[kind]) return
+      setDelivery((previous) => ({
+        ...previous,
+        [kind]: result,
+        queue: queueStatus(),
+      }))
+    })
+  }
+
+  const remember = (key, value) => {
+    if (!save(key, value))
+      setDelivery((previous) => ({ ...previous, localSaved: false }))
+  }
 
   useEffect(() => {
     if (screen !== 'home') return
@@ -71,13 +98,8 @@ export default function App() {
 
   const persistLead = (next, extra) => {
     setLead(next)
-    save('lead', next)
-    pendingLeadRequests.current += 1
-    setLeadStatus('sending')
-    sendLead(next, { partidas, visitas, ...extra }).then(() => {
-      pendingLeadRequests.current -= 1
-      updateLeadStatus()
-    })
+    remember('lead', next)
+    deliver('lead', () => sendLead(next, { partidas, visitas, ...extra }))
   }
 
   const play = (id) => {
@@ -95,7 +117,7 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
-  const onEnd = (score) => {
+  const onEnd = (score, duracao) => {
     const game = GAMES[gameId]
     const record = records[gameId] || 0
     const isRecord = score > record
@@ -110,6 +132,7 @@ export default function App() {
     })
     const result = {
       score,
+      duracao,
       unit: game.unit,
       isRecord: !!lead && isRecord,
       record,
@@ -118,16 +141,19 @@ export default function App() {
     if (lead && isRecord) {
       const next = { ...records, [gameId]: score }
       setRecords(next)
-      save('records', next)
+      remember('records', next)
     }
     if (lead)
-      sendScore({
-        leadId: lead.id,
-        nome: lead.nome,
-        posto: posto.id,
-        jogo: gameId,
-        pontos: score,
-      })
+      deliver('score', () =>
+        sendScore({
+          leadId: lead.id,
+          nome: lead.nome,
+          posto: posto.id,
+          jogo: gameId,
+          pontos: score,
+          duracao,
+        }),
+      )
 
     const step = nextStep(lead, total)
     setSheet({ type: step, result })
@@ -151,15 +177,18 @@ export default function App() {
       [gameId]: Math.max(records[gameId] || 0, result.score),
     }
     setRecords(nextRecords)
-    save('records', nextRecords)
+    remember('records', nextRecords)
     persistLead(novo, { jogos: Object.keys(nextRecords) })
-    sendScore({
-      leadId: novo.id,
-      nome,
-      posto: posto.id,
-      jogo: gameId,
-      pontos: result.score,
-    })
+    deliver('score', () =>
+      sendScore({
+        leadId: novo.id,
+        nome,
+        posto: posto.id,
+        jogo: gameId,
+        pontos: result.score,
+        duracao: result.duracao,
+      }),
+    )
     track(EVENTS.lead, { posto: posto.id, jogo: gameId })
     setSheet({ type: 'app' })
   }
@@ -214,7 +243,7 @@ export default function App() {
             records={records}
             ranking={ranking}
             rankingStatus={rankingStatus}
-            leadStatus={leadStatus}
+            delivery={delivery}
             lead={lead}
             onPlay={play}
             onProtecao={onProtecao}
@@ -233,7 +262,7 @@ export default function App() {
       <FlowSheets
         sheet={sheet}
         lead={lead}
-        leadStatus={leadStatus}
+        delivery={delivery}
         posto={posto}
         onClose={() => setSheet(null)}
         onAgain={() => play(sheet?.type === 'primeiro' ? 'corrida' : gameId)}
