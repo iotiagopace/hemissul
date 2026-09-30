@@ -114,8 +114,8 @@ export default function Cruzadas({ paused, onScore, onEnd }) {
           ›
         </button>
       </div>
-      <details className="crossword-map">
-        <summary>Ver grade completa</summary>
+      <details className="crossword-map" open>
+        <summary>Grade completa</summary>
         <div className={`paused-wrap${paused ? ' is-paused' : ''}`}>
           <div
             className="cgrid"
