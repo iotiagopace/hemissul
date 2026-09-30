@@ -1,0 +1,44 @@
+[
+  {
+    "width": 360,
+    "contentWidth": 328,
+    "dialogWidth": 336,
+    "axe": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "contentWidth": 398,
+    "dialogWidth": 406,
+    "axe": 0,
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "contentWidth": 720,
+    "dialogWidth": 576,
+    "axe": 0,
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "contentWidth": 976,
+    "dialogWidth": 576,
+    "axe": 0,
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "contentWidth": 1152,
+    "dialogWidth": 576,
+    "axe": 0,
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "contentWidth": 1152,
+    "dialogWidth": 576,
+    "axe": 0,
+    "overflow": false
+  }
+]
