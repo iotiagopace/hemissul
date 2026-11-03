@@ -55,6 +55,7 @@ export default function HomeHero({ slides }) {
     [clock, slides],
   )
   const activeSlide = visibleSlides[activeIndex] || visibleSlides[0]
+  const isArtwork = activeSlide?.layout === 'artwork'
   const hasMultipleSlides = visibleSlides.length > 1
 
   useEffect(() => {
@@ -116,7 +117,7 @@ export default function HomeHero({ slides }) {
     }
 
     video.play().catch(() => {})
-  }, [activeIndex, paused])
+  }, [activeIndex, paused, videoReady])
 
   const togglePlayback = () => {
     setPaused((current) => !current)
@@ -126,7 +127,7 @@ export default function HomeHero({ slides }) {
 
   return (
     <section
-      className="home-banner"
+      className={`home-banner${isArtwork ? ' home-banner--artwork' : ''}`}
       role="region"
       aria-roledescription={hasMultipleSlides ? 'carrossel' : undefined}
       aria-label="Destaque Hemissul"
@@ -146,18 +147,23 @@ export default function HomeHero({ slides }) {
       <motion.div
         className="home-banner__media"
         key={activeSlide.id}
-        initial={animateSlides ? { opacity: 0, scale: 1.025 } : false}
+        initial={animateSlides && !reduceMotion ? { opacity: 0, scale: 1.025 } : false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden="true"
       >
-        <img
-          src={activeSlide.poster || activeSlide.src}
-          alt=""
-          width="1920"
-          height="1080"
-          fetchPriority="high"
-        />
+        <picture>
+          {activeSlide.srcMobile && (
+            <source media="(max-width: 639.98px)" srcSet={activeSlide.srcMobile} />
+          )}
+          <img
+            src={activeSlide.poster || activeSlide.src}
+            alt=""
+            width={activeSlide.mediaWidth || 1920}
+            height={activeSlide.mediaHeight || 1080}
+            fetchPriority="high"
+          />
+        </picture>
         {activeSlide.type === 'video' && !reduceMotion && videoReady && (
           <video
             ref={videoRef}
@@ -172,13 +178,13 @@ export default function HomeHero({ slides }) {
         )}
       </motion.div>
 
-      <div className="home-banner__veil" aria-hidden="true" />
+      {!isArtwork && <div className="home-banner__veil" aria-hidden="true" />}
 
       <div className="site-container home-banner__inner">
         <motion.div
           className="home-banner__content"
           key={`${activeSlide.id}-content`}
-          initial={animateSlides ? { opacity: 0, y: 28 } : false}
+          initial={animateSlides && !reduceMotion ? { opacity: 0, y: 28 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >

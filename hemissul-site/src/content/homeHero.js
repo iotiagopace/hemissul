@@ -18,6 +18,9 @@ import { SITE } from '../config/site'
  *   primaryAction → botão verde de conversão { label, to } ou { label, href, external }
  *   secondaryAction → botão secundário (mesmo formato)
  *   mediaPosition / mediaPositionMobile → enquadramento da mídia (object-position)
+ *   layout        → 'artwork' preserva uma arte com texto, sem corte ou sobreposição
+ *   mediaWidth / mediaHeight → dimensões originais da arte (padrão 1920 × 1080)
+ *   srcMobile     → arte alternativa para telas abaixo de 640 px
  *   enabled       → false esconde o banner (útil para campanhas agendadas)
  *   expiresAt     → data ISO em que o banner some sozinho (ex.: fim de promoção)
  *
@@ -54,7 +57,24 @@ export const HOME_HERO_SLIDES = [
     mediaPositionMobile: '56% center',
   },
 
-  // 2) Nova unidade — Manaus/AM
+  // Campanha: mantém a arte original inteira dentro da mesma altura dos demais.
+  // Encerra à meia-noite de 1º/dez no horário de Boa Vista e Manaus (UTC−4).
+  {
+    id: 'black-november-2026',
+    type: 'image',
+    layout: 'artwork',
+    src: '/banners/black-november-2026.png',
+    srcMobile: '/banners/black-november-2026-mobile.webp',
+    mediaWidth: 1140,
+    mediaHeight: 470,
+    eyebrow: 'Black November',
+    title: '50% OFF na adesão.',
+    description: 'Durante todo o mês de novembro.',
+    primaryAction: { label: 'Aproveitar promoção', to: '/cotacao' },
+    expiresAt: '2026-12-01T00:00:00-04:00',
+  },
+
+  // Nova unidade — Manaus/AM
   //    Banner da campanha oficial, 16:9. O hero é mais largo que 16:9, então o
   //    object-fit: cover corta na vertical. Alinhado pelo topo (não ao centro)
   //    porque o domo do Teatro Amazonas começa a ~10px da borda superior da
@@ -78,7 +98,7 @@ export const HOME_HERO_SLIDES = [
     mediaPositionMobile: '32% center',
   },
 
-  // 3) Institucional — confiança
+  // 4) Institucional — confiança
   //    Mesmo motivo do banner de Manaus: alinhado pelo topo porque a cabeça do
   //    pai começa a ~8px da borda superior da arte, e centralizar cortava o
   //    rosto dele. O corte sai todo da base.
@@ -96,7 +116,7 @@ export const HOME_HERO_SLIDES = [
     mediaPositionMobile: '40% center',
   },
 
-  // 4) MODELO de banner de campanha (desativado). Ative com enabled: true e
+  // 5) MODELO de banner de campanha (desativado). Ative com enabled: true e
   //    defina expiresAt para a promoção sumir sozinha ao fim da vigência.
   {
     id: 'campanha-promocional-modelo',
