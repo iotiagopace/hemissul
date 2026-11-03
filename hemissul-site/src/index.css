@@ -663,6 +663,25 @@
     margin-block-start: 0;
   }
 
+  @media (min-width: 60rem) {
+    .home-banner--artwork {
+      max-height: 62vw;
+      min-height: 0;
+    }
+
+    .home-banner--artwork .home-banner__media {
+      inset: 0;
+    }
+
+    .home-banner--artwork .home-banner__media img {
+      object-fit: cover;
+    }
+
+    .home-banner--artwork .home-banner__inner {
+      padding-block: 0 2rem;
+    }
+  }
+
   .home-hero {
     display: grid;
     background: var(--color-paper);

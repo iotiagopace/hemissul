@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { AlertTriangle, ArrowRight, Pause, Play } from 'lucide-react'
 import RotatingWords from './RotatingWords'
 import HeroHeadline from './HeroHeadline'
+import { getVisibleHeroSlides } from '../content/heroSchedule'
 
 function HeroAction({ action, className }) {
   if (!action) return null
@@ -46,12 +47,7 @@ export default function HomeHero({ slides }) {
   }
   const [clock, setClock] = useState(() => Date.now())
   const visibleSlides = useMemo(
-    () =>
-      slides.filter(
-        (slide) =>
-          slide.enabled !== false &&
-          (!slide.expiresAt || clock < new Date(slide.expiresAt).getTime()),
-      ),
+    () => getVisibleHeroSlides(slides, clock),
     [clock, slides],
   )
   const activeSlide = visibleSlides[activeIndex] || visibleSlides[0]

@@ -22,6 +22,7 @@ import { SITE } from '../config/site'
  *   mediaWidth / mediaHeight → dimensões originais da arte (padrão 1920 × 1080)
  *   srcMobile     → arte alternativa para telas abaixo de 640 px
  *   enabled       → false esconde o banner (útil para campanhas agendadas)
+ *   exclusive     → true exibe só essa campanha enquanto ela estiver vigente
  *   expiresAt     → data ISO em que o banner some sozinho (ex.: fim de promoção)
  *
  * As artes ficam em public/banners/ e são referenciadas como /banners/arquivo.
@@ -57,12 +58,13 @@ export const HOME_HERO_SLIDES = [
     mediaPositionMobile: '56% center',
   },
 
-  // Campanha: mantém a arte original inteira dentro da mesma altura dos demais.
+  // Campanha exclusiva: os destaques institucionais voltam após a expiração.
   // Encerra à meia-noite de 1º/dez no horário de Boa Vista e Manaus (UTC−4).
   {
     id: 'black-november-2026',
     type: 'image',
     layout: 'artwork',
+    exclusive: true,
     src: '/banners/black-november-2026.png',
     srcMobile: '/banners/black-november-2026-mobile.webp',
     mediaWidth: 1140,
