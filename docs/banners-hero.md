@@ -63,6 +63,20 @@ Nesse instante, a campanha sai e o vídeo institucional, Manaus e confiança
 voltam automaticamente, na ordem anterior, inclusive com a página aberta.
 Os destaques institucionais continuam configurados e não precisam de novo deploy.
 
+## Cores da Home na Black November
+
+A Home usa a paleta aprovada em preto, grafite e dourado, com a marca branca
+no cabeçalho. As demais páginas mantêm a identidade institucional.
+O tema está isolado pela classe `.black-november-theme` e não modifica os
+estilos originais. A data `BLACK_NOVEMBER_ENDS_AT`, em `src/content/blackNovember.js`,
+é compartilhada entre o tema e o banner: em **01/12/2026 às 00h de Boa Vista/Manaus
+(UTC−4)**, voltam as cores anteriores, a marca azul e os três destaques originais.
+
+O relógio é compartilhado pela Home e pelo carrossel. A troca funciona com a
+página aberta, reprograma prazos maiores que o limite de `setTimeout` e confere
+novamente o horário quando o visitante retorna à aba. Não requer publicação
+manual em dezembro. O parâmetro da antiga prévia não força o tema após o prazo.
+
 Atenção ao nome do arquivo de origem: a pasta do design tem dois conjuntos
 parecidos, `banner_1080x1920_*` (vertical, story) e `banner_1920x1080_*`
 (horizontal). O hero usa o **horizontal**.

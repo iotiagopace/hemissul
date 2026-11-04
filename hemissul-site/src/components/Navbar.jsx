@@ -11,6 +11,7 @@ import {
   X,
 } from 'lucide-react'
 import logo from '../assets/logo/logo-transparente/hemissul-logo-azul-transparente-800px.png'
+import whiteLogo from '../assets/logo/logo-negativa-transparente/hemissul-logo-branca-transparente-800px.png'
 import { SITE } from '../config/site'
 
 const navGroups = [
@@ -55,7 +56,7 @@ const navGroups = [
   },
 ]
 
-export default function Navbar() {
+export default function Navbar({ campaignActive = false }) {
   const [open, setOpen] = useState(false)
   const location = useLocation()
 
@@ -85,7 +86,7 @@ export default function Navbar() {
     <header className={`site-nav${open ? ' site-nav--open' : ''}`}>
       <div className="site-nav__bar">
         <Link className="site-nav__logo" to="/" aria-label="Hemissul, página inicial">
-          <img src={logo} alt="Hemissul" width="800" height="266" decoding="async" />
+          <img src={campaignActive ? whiteLogo : logo} alt="Hemissul" width="800" height="266" decoding="async" />
         </Link>
 
         <div className="site-nav__actions">

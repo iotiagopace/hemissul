@@ -1,5 +1,6 @@
 import rangerImage from '../assets/antes-depois/depois-ranger.jpeg'
 import { SITE } from '../config/site'
+import { BLACK_NOVEMBER_ENDS_AT } from './blackNovember'
 
 /**
  * BANNERS DA HOME (carrossel do topo)
@@ -73,7 +74,7 @@ export const HOME_HERO_SLIDES = [
     title: '50% OFF na adesão.',
     description: 'Durante todo o mês de novembro.',
     primaryAction: { label: 'Aproveitar promoção', to: '/cotacao' },
-    expiresAt: '2026-12-01T00:00:00-04:00',
+    expiresAt: BLACK_NOVEMBER_ENDS_AT,
   },
 
   // Nova unidade — Manaus/AM

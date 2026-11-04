@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
 import ScrollProgress from './components/ScrollProgress'
 import RouteSeo from './components/RouteSeo'
@@ -10,6 +10,10 @@ import CampaignBanner from './components/CampaignBanner'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { usePageTracking } from './hooks/usePageTracking'
+import './styles/blackNovember.css'
+import { HOME_HERO_SLIDES } from './content/homeHero'
+import { isBlackNovemberActive } from './content/blackNovember'
+import { useScheduledClock } from './hooks/useScheduledClock'
 const Home = lazy(() => import('./pages/Home'))
 const ProtecaoVeicular = lazy(() => import('./pages/ProtecaoVeicular'))
 const ProtecaoCarros = lazy(() => import('./pages/ProtecaoCarros'))
@@ -35,25 +39,31 @@ const TrabalheConosco = lazy(() => import('./pages/TrabalheConosco'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
 const LegalPage = lazy(() => import('./pages/LegalPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const heroDeadlines = HOME_HERO_SLIDES
+  .filter((slide) => slide.enabled !== false && slide.expiresAt)
+  .map((slide) => slide.expiresAt)
 
 export default function App() {
+  const { pathname } = useLocation()
+  const clock = useScheduledClock(heroDeadlines)
+  const campaignActive = isBlackNovemberActive(pathname, clock)
   // Fica aqui, no App, de propósito: efeito de componente-pai roda depois dos
   // efeitos dos filhos, então o <RouteSeo /> já atualizou o document.title
   // quando este hook o lê para montar o page view.
   usePageTracking()
 
-  return (
+  const content = (
     <>
       <ScrollToTop />
       <RouteSeo />
       <Analytics />
-      <Navbar />
+      <Navbar campaignActive={campaignActive} />
       <ScrollProgress />
       <main className="pt-20">
         <CampaignBanner />
         <Suspense fallback={<div className="route-loading" aria-label="Carregando página" />}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home clock={clock} />} />
             <Route path="/protecao-veicular" element={<ProtecaoVeicular />} />
             <Route path="/protecao-veicular/carros" element={<ProtecaoCarros />} />
             <Route path="/protecao-veicular/motos" element={<ProtecaoMotos />} />
@@ -87,5 +97,9 @@ export default function App() {
       <CookieConsent />
       <Footer />
     </>
+  )
+
+  return (
+    <div className={campaignActive ? 'black-november-theme' : undefined}>{content}</div>
   )
 }

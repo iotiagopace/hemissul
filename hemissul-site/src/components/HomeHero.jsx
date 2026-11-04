@@ -29,7 +29,7 @@ function HeroAction({ action, className }) {
   )
 }
 
-export default function HomeHero({ slides }) {
+export default function HomeHero({ slides, clock }) {
   const reduceMotion = useReducedMotion()
   const videoRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -45,7 +45,6 @@ export default function HomeHero({ slides }) {
     setAnimateSlides(true)
     setActiveIndex(index)
   }
-  const [clock, setClock] = useState(() => Date.now())
   const visibleSlides = useMemo(
     () => getVisibleHeroSlides(slides, clock),
     [clock, slides],
@@ -64,23 +63,6 @@ export default function HomeHero({ slides }) {
       window.clearTimeout(timeout)
     }
   }, [videoReady])
-
-  useEffect(() => {
-    const nextExpiration = slides
-      .filter((slide) => slide.enabled !== false && slide.expiresAt)
-      .map((slide) => new Date(slide.expiresAt).getTime())
-      .filter((timestamp) => timestamp > clock)
-      .sort((a, b) => a - b)[0]
-
-    if (!nextExpiration) return undefined
-
-    const timeout = window.setTimeout(
-      () => setClock(Date.now()),
-      Math.min(nextExpiration - Date.now() + 100, 2_147_483_647),
-    )
-
-    return () => window.clearTimeout(timeout)
-  }, [clock, slides])
 
   useEffect(() => {
     if (activeIndex >= visibleSlides.length) setActiveIndex(0)

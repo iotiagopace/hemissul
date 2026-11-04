@@ -230,11 +230,11 @@ function CtaLink({ children, to = '/cotacao' }) {
   )
 }
 
-export default function Home() {
+export default function Home({ clock }) {
   return (
     <div className="home-page">
       {/* 01 · Hero + stats + selo SUSEP */}
-      <HomeHero slides={HOME_HERO_SLIDES} />
+      <HomeHero slides={HOME_HERO_SLIDES} clock={clock} />
 
       <section className="home-proof" aria-label="Números da Hemissul">
         <div className="home-proof__grid">
